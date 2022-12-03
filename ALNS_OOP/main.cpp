@@ -42,6 +42,8 @@ void print_sol(Sol S)
 
 int main(){
 	
+	cout << "Hello world!" << endl;
+	
 	// Objeto ALNS
 	ALNS meta;
 	
