@@ -21,6 +21,9 @@ public:
 	// Número de iterações pelas quais a heurística passou: talvez inicializar como 1
 	int n_it {0};
 	
+	// Número total de iterações pelas quais a heurística passou: talvez inicializar como 1
+	int n_it_total {0};
+	
 	// ... Demais parâmetros específicos de cada heurística
 	
 	// Shaw's Removal:
@@ -68,7 +71,7 @@ public:
 	// Methods
 	
 	// Método de aplicação da heurística: tem como entrada uma solução e como saída uma solução alterada (Rotas, L e A)
-	Sol apply(Sol S);
+	Sol apply(Sol &S);
 	
 	
 

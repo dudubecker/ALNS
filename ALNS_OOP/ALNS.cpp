@@ -236,6 +236,12 @@ void ALNS::atualizar_pontuacoes(bool CA, bool BKS,int index_h_rem, int index_h_i
 	removal_heuristics[index_h_rem].n_it += 1;
 	insertion_heuristics[index_h_ins].n_it += 1;
 	
+	// Incrementando a quantidade total de iterações da heurística (debug):
+	
+	removal_heuristics[index_h_rem].n_it_total += 1;
+	insertion_heuristics[index_h_ins].n_it_total += 1;
+	
+	
 }
 
 void ALNS::zerar_pontuacoes(){

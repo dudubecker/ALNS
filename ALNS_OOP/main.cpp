@@ -47,7 +47,7 @@ int main(){
 	
 	// Objeto instância
 	Instance inst;
-	inst.read("BB30");
+	inst.read("BB20");
 	
 	// Inicializando objeto solução;
 	//Sol s(inst);
@@ -107,7 +107,7 @@ int main(){
 	
 	meta.Temperature = T_inicial;
 	
-	meta.algo(100);
+	meta.algo(400);
 	
 	meta.S_p.print_sol();
 	meta.S_p.FO();
@@ -132,7 +132,7 @@ int main(){
 	
 	for (auto &heuristic: meta.removal_heuristics){
 		
-		cout << heuristic.name << ": " << heuristic.processing_time/soma_tempos << "%" << endl;
+		cout << heuristic.name << ": " << heuristic.processing_time/soma_tempos << "% " << heuristic.n_it_total << endl;
 		// soma_tempos += heuristic.processing_time;
 		
 		
@@ -141,7 +141,7 @@ int main(){
 		
 	for (auto &heuristic: meta.insertion_heuristics){
 		
-		cout << heuristic.name << ": " << heuristic.processing_time/soma_tempos << "%" << endl;
+		cout << heuristic.name << ": " << heuristic.processing_time/soma_tempos << "% " << heuristic.n_it_total << endl;
 		// soma_tempos += heuristic.processing_time;
 		
 	}

@@ -67,16 +67,16 @@ public:
 	double delta_FO_rem(double pedido);
 	
 	// Método para inserção de um pedido
-	void inserir_pedido(double pedido, int index_rota, int pos_no_pickup, int pos_no_delivery); // Somente posições factíveis?
+	void inserir_pedido(double &pedido, int &index_rota, int &pos_no_pickup, int &pos_no_delivery); // Somente posições factíveis?
 	
 	// Método para remoção de um pedido
-	void remover_pedido(double pedido);
+	void remover_pedido(double &pedido);
 	
 	// Checagem se uma solução é factível ou não:
 	bool isFeasible();
 	
 	// Checagem se uma rota da solução é factível ou não:
-	bool isFeasible(int index_rota);
+	bool isFeasible(int &index_rota);
 	
 	// Método para melhor inserção de um pedido em uma solução: recebe um objeto solução e um pedido e retorna um objeto solução com a melhor inserção possível para o pedido
 	Sol melhor_insercao(double pedido);

@@ -35,6 +35,8 @@ double Sol::FO(){
 			
 		}
 	}
+	
+	
 	return (double) custos_totais;
 }
 
@@ -69,7 +71,7 @@ void Sol::print_sol(){
 	
 	for (auto &rota: Rotas){
 		
-		for (auto node: rota){
+		for (auto &node: rota){
 			
 			std::cout << node << " ";
 		}
@@ -102,7 +104,7 @@ void Sol::print_sol(){
 
 
 // Método para inserção de um pedido
-void Sol::inserir_pedido(double pedido, int index_rota, int pos_no_pickup, int pos_no_delivery){
+void Sol::inserir_pedido(double &pedido, int &index_rota, int &pos_no_pickup, int &pos_no_delivery){
 	
 	// Vetor que sofrerá inserção
 	//std::vector novaRota = Rotas.at(index_rota);
@@ -133,7 +135,7 @@ void Sol::inserir_pedido(double pedido, int index_rota, int pos_no_pickup, int p
 
 
 // Método para remoção de um pedido
-void Sol::remover_pedido(double pedido){
+void Sol::remover_pedido(double &pedido){
 	
 	// Índice do nó de pickup correspondente ao request
 	int no_pickup {pedido};
@@ -345,7 +347,7 @@ bool Sol::isFeasible(){
 }
 
 // Método para checar factibilidade da rota
-bool Sol::isFeasible(int index_rota){
+bool Sol::isFeasible(int &index_rota){
 	
 	// *** Checando factibilidade da rota ***
 	// *OBS: não é necessário testar pairing e precedence, porque os pedidos são inseridos em pares nas rotas e as posições de inserção já asseguram precedência
@@ -432,11 +434,11 @@ Sol Sol::melhor_insercao(double pedido){
 	int index_rota_min {};
 	
 	// Realizando inserções
-	for (unsigned index_rota {0}; index_rota < Rotas.size(); index_rota++){
+	for (auto index_rota {0}; index_rota < Rotas.size(); index_rota++){
 		
-		for (unsigned pos_insercao_no_pickup {1}; pos_insercao_no_pickup < Rotas[index_rota].size() + 1; pos_insercao_no_pickup++){
+		for (auto pos_insercao_no_pickup {1}; pos_insercao_no_pickup < Rotas[index_rota].size() + 1; pos_insercao_no_pickup++){
 			
-			for (unsigned pos_insercao_no_delivery {1}; pos_insercao_no_delivery < Rotas[index_rota].size() + 1; pos_insercao_no_delivery++){
+			for (auto pos_insercao_no_delivery {1}; pos_insercao_no_delivery < Rotas[index_rota].size() + 1; pos_insercao_no_delivery++){
 				
 				// Testando apenas índices de inserção válidos: índice de delivery maior do que o de pickup (precedence) e diferente dele!
 				// A iteração começa em 1 e termina no tamanho da rota porque não se considera a primeira e última posição da rota, que são o depósito
@@ -505,9 +507,9 @@ double Sol::delta_melhor_insercao(double pedido, int index_rota){
 	
 	// Realizando inserções
 		
-	for (unsigned pos_insercao_no_pickup {1}; pos_insercao_no_pickup < Rotas[index_rota].size() + 1; pos_insercao_no_pickup++){
+	for (auto pos_insercao_no_pickup {1}; pos_insercao_no_pickup < Rotas[index_rota].size() + 1; pos_insercao_no_pickup++){
 		
-		for (unsigned pos_insercao_no_delivery {1}; pos_insercao_no_delivery < Rotas[index_rota].size() + 1; pos_insercao_no_delivery++){
+		for (auto pos_insercao_no_delivery {1}; pos_insercao_no_delivery < Rotas[index_rota].size() + 1; pos_insercao_no_delivery++){
 			
 			// Testando apenas índices de inserção válidos: índice de delivery maior do que o de pickup (precedence) e diferente dele!
 			// A iteração começa em 1 e termina no tamanho da rota porque não se considera a primeira e última posição da rota, que são o depósito
@@ -570,11 +572,11 @@ double Sol::delta_melhor_insercao(double pedido){
 	double delta_min {9999};
 	
 	// Realizando inserções
-	for (unsigned index_rota {0}; index_rota < Rotas.size(); index_rota++){
+	for (auto index_rota {0}; index_rota < Rotas.size(); index_rota++){
 		
-		for (unsigned pos_insercao_no_pickup {1}; pos_insercao_no_pickup < Rotas[index_rota].size() + 1; pos_insercao_no_pickup++){
+		for (auto pos_insercao_no_pickup {1}; pos_insercao_no_pickup < Rotas[index_rota].size() + 1; pos_insercao_no_pickup++){
 			
-			for (unsigned pos_insercao_no_delivery {1}; pos_insercao_no_delivery < Rotas[index_rota].size() + 1; pos_insercao_no_delivery++){
+			for (auto pos_insercao_no_delivery {1}; pos_insercao_no_delivery < Rotas[index_rota].size() + 1; pos_insercao_no_delivery++){
 				
 				// Testando apenas índices de inserção válidos: índice de delivery maior do que o de pickup (precedence) e diferente dele!
 				// A iteração começa em 1 e termina no tamanho da rota porque não se considera a primeira e última posição da rota, que são o depósito
