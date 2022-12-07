@@ -60,12 +60,6 @@ public:
 	// Cálculo da função objetivo penalizada:
 	double FO_W();
 	
-	// Incremento por inserção: calcula o custo de inserção de um pedido em posições pré-determinadas e sem checar factibilidade!
-	double delta_FO_ins(double pedido, int index_rota, int pos_no_pickup, int pos_no_delivery);
-	
-	// Decréscimo por remoção: calcula o decréscimo na FO pela remoção de um pedido
-	double delta_FO_rem(double pedido);
-	
 	// Método para inserção de um pedido
 	void inserir_pedido(double &pedido, int index_rota, int pos_no_pickup, int pos_no_delivery); // Somente posições factíveis?
 	
@@ -77,15 +71,6 @@ public:
 	
 	// Checagem se uma rota da solução é factível ou não:
 	bool isFeasible(int &index_rota);
-	
-	// Método para melhor inserção de um pedido em uma solução: recebe um objeto solução e um pedido e retorna um objeto solução com a melhor inserção possível para o pedido
-	Sol melhor_insercao(double pedido);
-	
-	// Método para a variação na função objetivo dada pela melhor inserção de um pedido na solução
-	double delta_melhor_insercao(double pedido);
-	
-	// Método para a variação na função objetivo dada pela melhor inserção de um pedido em uma rota da solução
-	double delta_melhor_insercao(double pedido, int index_rota);
 	
 	// Método para printar solução
 	void print_sol();
