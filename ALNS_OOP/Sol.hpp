@@ -67,7 +67,7 @@ public:
 	double delta_FO_rem(double pedido);
 	
 	// Método para inserção de um pedido
-	void inserir_pedido(double &pedido, int &index_rota, int &pos_no_pickup, int &pos_no_delivery); // Somente posições factíveis?
+	void inserir_pedido(double &pedido, int index_rota, int pos_no_pickup, int pos_no_delivery); // Somente posições factíveis?
 	
 	// Método para remoção de um pedido
 	void remover_pedido(double &pedido);

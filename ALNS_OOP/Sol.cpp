@@ -24,17 +24,29 @@ double Sol::FO(){
 	// Custos totais
 	double custos_totais = 0;
 	
-	for (unsigned index_rota {0}; index_rota < Rotas.size(); index_rota++){
+	for (auto &rota: Rotas){
 		
 		custos_totais += custo_veiculo;
-		std::vector Rota = Rotas[index_rota];
 		
-		for (unsigned index_no {0}; index_no < Rota.size() - 1; index_no++){
+		for (unsigned index_no {0}; index_no < rota.size() - 1; index_no++){
 			
-			custos_totais += inst.t[Rota[index_no]][Rota[index_no + 1]];
+			custos_totais += inst.t[rota[index_no]][rota[index_no + 1]];
 			
 		}
 	}
+	
+	//for (unsigned index_rota {0}; index_rota < Rotas.size(); index_rota++){
+		
+	//	custos_totais += custo_veiculo;
+	//	std::vector Rota = Rotas[index_rota];
+		
+	//	for (unsigned index_no {0}; index_no < Rota.size() - 1; index_no++){
+			
+	//		custos_totais += inst.t[Rota[index_no]][Rota[index_no + 1]];
+			
+	//	}
+	//}
+	
 	
 	
 	return (double) custos_totais;
@@ -104,7 +116,7 @@ void Sol::print_sol(){
 
 
 // Método para inserção de um pedido
-void Sol::inserir_pedido(double &pedido, int &index_rota, int &pos_no_pickup, int &pos_no_delivery){
+void Sol::inserir_pedido(double &pedido, int index_rota, int pos_no_pickup, int pos_no_delivery){
 	
 	// Vetor que sofrerá inserção
 	//std::vector novaRota = Rotas.at(index_rota);
@@ -450,7 +462,11 @@ Sol Sol::melhor_insercao(double pedido){
 					// Inserindo nós na rota, nas posições da iteração
 					S_teste.inserir_pedido(pedido, index_rota, pos_insercao_no_pickup, pos_insercao_no_delivery);
 					
+					// S.inserir_pedido(pedido, index_rota, pos_insercao_no_pickup, pos_insercao_no_delivery);
+					
+					
 					if (S_teste.isFeasible(index_rota)){
+					//if (S.isFeasible(index_rota)){
 						
 						num_rotas_factiveis += 1;
 						
@@ -472,6 +488,8 @@ Sol Sol::melhor_insercao(double pedido){
 						
 					}
 					
+					// S.remover_pedido(pedido);
+					
 				}
 			}		
 		}			
@@ -488,7 +506,6 @@ Sol Sol::melhor_insercao(double pedido){
 }
 
 double Sol::delta_melhor_insercao(double pedido, int index_rota){
-	
 	
 	// Criando uma cópia do objeto solução:
 	Sol S(Rotas, L, A, inst);
@@ -521,7 +538,11 @@ double Sol::delta_melhor_insercao(double pedido, int index_rota){
 				// Inserindo nós na rota, nas posições da iteração
 				S_teste.inserir_pedido(pedido, index_rota, pos_insercao_no_pickup, pos_insercao_no_delivery);
 				
+				//S.inserir_pedido(pedido, index_rota, pos_insercao_no_pickup, pos_insercao_no_delivery);
+				
+				
 				if (S_teste.isFeasible(index_rota)){
+				//if (S.isFeasible(index_rota)){
 					
 					num_rotas_factiveis += 1;
 					
@@ -535,6 +556,8 @@ double Sol::delta_melhor_insercao(double pedido, int index_rota){
 					
 					
 				}
+				
+				//S.remover_pedido(pedido);
 				
 			}
 		}		
@@ -585,10 +608,15 @@ double Sol::delta_melhor_insercao(double pedido){
 					// Criando cópia do objeto, para testar inserção (achar um jeito melhor de fazer isso!)
 					Sol S_teste = S;
 					
+					
 					// Inserindo nós na rota, nas posições da iteração
 					S_teste.inserir_pedido(pedido, index_rota, pos_insercao_no_pickup, pos_insercao_no_delivery);
 					
+					// S.inserir_pedido(pedido, index_rota, pos_insercao_no_pickup, pos_insercao_no_delivery);
+					
+					
 					if (S_teste.isFeasible(index_rota)){
+					// if (S.isFeasible(index_rota)){
 						
 						num_rotas_factiveis += 1;
 						
@@ -602,6 +630,8 @@ double Sol::delta_melhor_insercao(double pedido){
 						
 						
 					}
+					
+					// S.remover_pedido(pedido);
 					
 				}
 			}		

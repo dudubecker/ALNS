@@ -76,13 +76,13 @@ public:
 	void atualizar_pesos();
 	
 	// Método para atualização de pontuações: necessário saber se a heurística passou pelo critério de aceitação, valor da melhor solução global, solução incumbente e solução recém-alterada (S);
-	void atualizar_pontuacoes(bool CA, bool BKS, int index_h_rem, int index_h_ins, double FO);
+	void atualizar_pontuacoes(bool &CA, bool &BKS, int &index_h_rem, int &index_h_ins, double &FO);
 	
 	// Método para zerar pontuações
 	void zerar_pontuacoes();
 	
 	// Método para critério de aceitação: retorna valor booleano caso o critério tenha sido aceito ou não
-	bool criterio_aceitacao(Sol S);
+	bool criterio_aceitacao(Sol &S);
 	
 	// Método para escolher heurísticas: retorna o índice de uma heurística a partir de uma escolha aleatória considerando os pesos
 	int escolher_heuristica(char type);

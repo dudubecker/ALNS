@@ -47,7 +47,7 @@ int main(){
 	
 	// Objeto instância
 	Instance inst;
-	inst.read("BB20");
+	inst.read("BB30");
 	
 	// Inicializando objeto solução;
 	//Sol s(inst);
@@ -107,10 +107,10 @@ int main(){
 	
 	meta.Temperature = T_inicial;
 	
-	meta.algo(400);
+	meta.algo(100);
 	
-	meta.S_p.print_sol();
-	meta.S_p.FO();
+	//meta.S_p.print_sol();
+	//meta.S_p.FO();
 	
 	auto soma_tempos {0};
 	

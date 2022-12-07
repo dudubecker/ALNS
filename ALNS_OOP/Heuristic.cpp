@@ -243,6 +243,192 @@ double delta_melhor_insercao(Sol &S, double &pedido){
 	
 }
 
+// Tentativa: retornar, em vez de apenas o delta, um vetor com o delta, rota e posições e melhor inserção!
+
+std::vector<double> delta_melhor_insercao(Sol &S, double &pedido, char teste){
+	
+	// Índice do nó de pickup correspondente ao request
+	int no_pickup {pedido};
+	
+	// Índice do nó de delivery correspondente ao request
+	int no_delivery {pedido + S.inst.n};
+	
+	// Variável que controlará o número de rotas factíveis encontradas
+	int num_rotas_factiveis {0};
+	
+	// Delta mínimo pela inserção do pedido da iteração
+	double delta_min {9999};
+	
+	// Posição de inserção de nó de pickup com delta mínimo
+	int pos_insercao_no_pickup_min {};
+	
+	// Posição de inserção de nó de delivery com delta mínimo
+	int pos_insercao_no_delivery_min {};
+	
+	// Índice da rota com o menor valor de inserção
+	int index_rota_min {};
+	
+	// Vetor a ser retornado pela função:
+	std::vector<double> return_vector {};
+	
+	// Realizando inserções
+	for (auto index_rota {0}; index_rota < S.Rotas.size(); index_rota++){
+		
+		for (auto pos_insercao_no_pickup {1}; pos_insercao_no_pickup < S.Rotas[index_rota].size() + 1; pos_insercao_no_pickup++){
+			
+			for (auto pos_insercao_no_delivery {1}; pos_insercao_no_delivery < S.Rotas[index_rota].size() + 1; pos_insercao_no_delivery++){
+				
+				// Testando apenas índices de inserção válidos: índice de delivery maior do que o de pickup (precedence) e diferente dele!
+				// A iteração começa em 1 e termina no tamanho da rota porque não se considera a primeira e última posição da rota, que são o depósito
+				if ((pos_insercao_no_pickup != pos_insercao_no_delivery) and (pos_insercao_no_pickup < pos_insercao_no_delivery)){
+					
+					// Criando cópia do objeto, para testar inserção (achar um jeito melhor de fazer isso!)
+					Sol S_teste = S;
+					
+					// Inserindo nós na rota, nas posições da iteração
+					S_teste.inserir_pedido(pedido, index_rota, pos_insercao_no_pickup, pos_insercao_no_delivery);
+					
+					if (S_teste.isFeasible(index_rota)){
+						
+						num_rotas_factiveis += 1;
+						
+						double delta_S = delta_FO_ins(S, pedido, index_rota, pos_insercao_no_pickup, pos_insercao_no_delivery);
+						
+						if (delta_S < delta_min){
+							
+							delta_min = delta_S;
+							
+							pos_insercao_no_pickup_min = pos_insercao_no_pickup;
+							
+							pos_insercao_no_delivery_min = pos_insercao_no_delivery;
+							
+							index_rota_min = index_rota;
+							
+							
+						}
+						
+						
+					}
+					
+				}
+			}		
+		}			
+	}
+	
+	//return_vector = {delta_min, pos_insercao_no_pickup_min, pos_insercao_no_delivery_min, index_rota_min};
+	
+	if (num_rotas_factiveis > 0){
+		
+		return_vector = {delta_min, index_rota_min, pos_insercao_no_pickup_min, pos_insercao_no_delivery_min};
+		
+	} else {
+		
+		return_vector = {99999, 0, 0,0};
+		
+		//return 99999;
+		
+	}
+	
+	return return_vector;
+	
+	//return delta_min;
+	
+}
+
+// Delta melhor inserção considerando rota (regret insertion):
+
+std::vector<double> delta_melhor_insercao(Sol &S, double &pedido, int &index_rota, char teste){
+	
+	// Criando uma cópia do objeto solução:
+	// Sol S(Rotas, L, A, inst);
+	
+	// Índice do nó de pickup correspondente ao request
+	int no_pickup {pedido};
+	
+	// Índice do nó de delivery correspondente ao request
+	int no_delivery {pedido + S.inst.n};
+	
+	// Variável que controlará o número de rotas factíveis encontradas
+	int num_rotas_factiveis {0};
+	
+	// Delta mínimo pela inserção do pedido da iteração
+	double delta_min {9999};
+	
+	// Posição de inserção de nó de pickup com delta mínimo
+	int pos_insercao_no_pickup_min {};
+	
+	// Posição de inserção de nó de delivery com delta mínimo
+	int pos_insercao_no_delivery_min {};
+	
+	// Índice da rota com o menor valor de inserção
+	int index_rota_min {};
+	
+	// Vetor a ser retornado pela função:
+	std::vector<double> return_vector {};
+	
+	// Realizando inserções
+		
+	for (auto pos_insercao_no_pickup {1}; pos_insercao_no_pickup < S.Rotas[index_rota].size() + 1; pos_insercao_no_pickup++){
+		
+		for (auto pos_insercao_no_delivery {1}; pos_insercao_no_delivery < S.Rotas[index_rota].size() + 1; pos_insercao_no_delivery++){
+			
+			// Testando apenas índices de inserção válidos: índice de delivery maior do que o de pickup (precedence) e diferente dele!
+			// A iteração começa em 1 e termina no tamanho da rota porque não se considera a primeira e última posição da rota, que são o depósito
+			if ((pos_insercao_no_pickup != pos_insercao_no_delivery) and (pos_insercao_no_pickup < pos_insercao_no_delivery)){
+				
+				// Criando cópia do objeto, para testar inserção (achar um jeito melhor de fazer isso!)
+				Sol S_teste = S;
+				
+				// Inserindo nós na rota, nas posições da iteração
+				S_teste.inserir_pedido(pedido, index_rota, pos_insercao_no_pickup, pos_insercao_no_delivery);
+				
+				if (S_teste.isFeasible(index_rota)){
+					
+					num_rotas_factiveis += 1;
+					
+					double delta_S = S.delta_FO_ins(pedido, index_rota, pos_insercao_no_pickup, pos_insercao_no_delivery);
+					
+					if (delta_S < delta_min){
+						
+						delta_min = delta_S;
+						
+						pos_insercao_no_pickup_min = pos_insercao_no_pickup;
+							
+						pos_insercao_no_delivery_min = pos_insercao_no_delivery;
+							
+						index_rota_min = index_rota;
+						
+						
+					}
+					
+					
+				}
+				
+			}
+		}		
+	}			
+	
+	if (num_rotas_factiveis > 0){
+		
+		// return delta_min;
+		return_vector = {delta_min, index_rota_min, pos_insercao_no_pickup_min, pos_insercao_no_delivery_min};
+		
+		
+	} else {
+		
+		// Possível problema em retornar um valor grande: se não for factível, como busca-se maximizar, vai dar problema!
+		// return 0;
+		
+		return_vector = {0, 0, 0,0};
+		
+		
+	}
+	
+	return return_vector;
+	
+}
+
+
 Sol melhor_insercao(Sol &S,double &pedido){
 	
 	// Criando uma cópia do objeto solução:
@@ -808,15 +994,26 @@ Sol Heuristic::apply(Sol &S){
 				// Pedido correspondente ao menor delta de inserção
 				double pedido_min {};
 				
+				// Dados de rota e posição dos nós para o pedido de menor delta:
+				std::vector<double> dados_melhor_insercao_min {};
+				
 				for (auto &pedido: S.L){
 					
+					// Obtendo dados para melhor insercao do pedido (chamando função com parâmetro char)
+					std::vector<double> dados_melhor_insercao = delta_melhor_insercao(S, pedido, 'A');
+					
 					// Variação na função objetivo dada pela melhor inserção possível do pedido em S:
-					double delta = delta_melhor_insercao(S, pedido);
+					// double delta = delta_melhor_insercao(S, pedido);
+					
+					// Delta FO -> Primeiro dado do vetor retornado pela função
+					double delta = dados_melhor_insercao.at(0);
 					
 					if (delta < delta_min){
 						
 						delta_min = delta;
 						pedido_min = pedido;
+						
+						dados_melhor_insercao_min = dados_melhor_insercao;
 						
 						// A função retornará um valor maior do que 9999 para delta! Por isso a contagem de inserções factíveis está aqui!
 						qtd_insercoes_factiveis += 1;
@@ -828,7 +1025,10 @@ Sol Heuristic::apply(Sol &S){
 				// Caso se tenha achado pelo menos uma posição de inserção factível (delta_min < 9999)
 				if (delta_min < 9999){
 					
-					S = melhor_insercao(S, pedido_min);
+					// S = melhor_insercao(S, pedido_min);
+					// Inserindo pedido de delta mínimo, com dados do vetor retornado pela função
+					S.inserir_pedido(pedido_min, dados_melhor_insercao_min.at(1), dados_melhor_insercao_min.at(2), dados_melhor_insercao_min.at(3));
+					
 					qtd_inseridos += 1;
 					
 				// Caso não tenha se achado pelo menos uma posição de inserção factível (delta_min == 99999, valor retornado pela função)
@@ -890,6 +1090,9 @@ Sol Heuristic::apply(Sol &S){
 				// Delta de inserção mínimo correspondente ao pedido com o número mínimo de inserções factíveis
 				double delta_min_pedido_min_insercoes {9999};
 				
+				// Dados de rota e posição dos nós para o pedido de menor delta
+				std::vector<double> dados_melhor_insercao_min {};
+				
 				// Iterando para cada pedido não atendido no objeto solução
 				for (auto &pedido: S.L){
 					
@@ -899,19 +1102,38 @@ Sol Heuristic::apply(Sol &S){
 					// Variável que controlará o número de inserções factíveis encontradas pelo pedido da iteração (para ter controle do pedido com mínimo número de inserções factíveis)
 					int qtd_insercoes_factiveis_pedido {0};
 					
+					// Dados de rota e posição dos nós para o pedido de menor delta:
+					std::vector<double> dados_melhor_insercao_pedido_min {};
+					
+					// Delta correspondente à posição de mínima inserção para cada rota (inicia-se alto)
+					double delta_min {9999};
+					
 					// Para cada rota da solução, será determinado o delta da melhor inserção
 					for (auto index_rota {0}; index_rota < m; index_rota++){
 						
-						double delta_min = delta_melhor_insercao(S, pedido, index_rota);
+						// double delta_min = delta_melhor_insercao(S, pedido, index_rota);
+						
+						std::vector<double> dados_melhor_insercao_rota = delta_melhor_insercao(S, pedido, index_rota,'A');
+						
+						double delta_rota = dados_melhor_insercao_rota.at(0);
 						
 						// Se houver uma posição de inserção factível para a rota (delta_min > 0, valor retornado pela função caso não tenha se achado posições factíveis)
-						if (delta_min > 0){
+						if (delta_rota > 0){
+						//if (delta_min > 0){
 							
-							delta_min_por_rota.push_back(delta_min);
+							// delta_min_por_rota.push_back(delta_min);
+							delta_min_por_rota.push_back(delta_rota);
 							
 							qtd_insercoes_factiveis_total += 1;
 							
 							qtd_insercoes_factiveis_pedido += 1;
+							
+							if (delta_rota < delta_min){
+								
+								delta_min = delta_rota;
+								dados_melhor_insercao_pedido_min = dados_melhor_insercao_rota;
+								
+							}
 							
 						}
 						
@@ -929,13 +1151,14 @@ Sol Heuristic::apply(Sol &S){
 						// Caso o número de inserções seja igual ao mínimo já encontrado, atualizam-se os valores apenas se o delta for menor do que o já encontrado!
 						if (qtd_insercoes_factiveis_pedido == qtd_insercoes_factiveis_pedido_min){
 							
-							double delta_min = delta_melhor_insercao(S, pedido);
+							// double delta_min = delta_melhor_insercao(S, pedido);
 							
 							if (delta_min < delta_min_pedido_min_insercoes){
 								
 								pedido_min_insercoes = pedido;
 								delta_min_pedido_min_insercoes = delta_min;
 								
+								dados_melhor_insercao_min = dados_melhor_insercao_pedido_min;
 							}
 						
 						// Caso o número de inserções seja menor do que o mínimo já encontrado, atualizam-se todos os valores!
@@ -948,6 +1171,8 @@ Sol Heuristic::apply(Sol &S){
 							pedido_min_insercoes = pedido;
 							
 							qtd_insercoes_factiveis_pedido_min = qtd_insercoes_factiveis_pedido;
+							
+							dados_melhor_insercao_min = dados_melhor_insercao_pedido_min;
 							
 						}
 						
@@ -979,6 +1204,8 @@ Sol Heuristic::apply(Sol &S){
 								max_regret = regret_k;
 								
 								pedido_max_regret = pedido;
+								
+								dados_melhor_insercao_min = dados_melhor_insercao_pedido_min;
 							}
 						}
 					}
@@ -993,13 +1220,16 @@ Sol Heuristic::apply(Sol &S){
 						
 						//std::cout << pedido_max_regret << "\n\n" << std::endl;
 						
-						S = melhor_insercao(S, pedido_max_regret);
+						// S = melhor_insercao(S, pedido_max_regret);
+						S.inserir_pedido(pedido_max_regret, dados_melhor_insercao_min.at(1), dados_melhor_insercao_min.at(2), dados_melhor_insercao_min.at(3));
+						
 						qtd_inseridos += 1;
 					
 					// Caso contrário, isso significará que deve-se optar pelo pedido com o mínimo de posições de inserção encontradas!
 					} else {
 						
-						S = melhor_insercao(S, pedido_min_insercoes);
+						// S = melhor_insercao(S, pedido_min_insercoes);
+						S.inserir_pedido(pedido_min_insercoes, dados_melhor_insercao_min.at(1), dados_melhor_insercao_min.at(2), dados_melhor_insercao_min.at(3));
 						qtd_inseridos += 1;
 						
 					}
@@ -1024,7 +1254,7 @@ Sol Heuristic::apply(Sol &S){
 	}
 	
 	
-	S.print_sol();
+	// S.print_sol();
 	
 	auto end = std::chrono::high_resolution_clock::now();
     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);

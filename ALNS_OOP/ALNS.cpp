@@ -83,7 +83,7 @@ void ALNS::atualizar_pesos(){
 
 // Método para critério de aceitação:
 
-bool ALNS::criterio_aceitacao(Sol S){
+bool ALNS::criterio_aceitacao(Sol &S){
 	
 	// Para gerar números aleatórios:
 	// srand(time(NULL));
@@ -197,7 +197,7 @@ int ALNS::escolher_heuristica(char type){
 	
 }
 
-void ALNS::atualizar_pontuacoes(bool CA, bool BKS,int index_h_rem, int index_h_ins, double FO){
+void ALNS::atualizar_pontuacoes(bool &CA, bool &BKS,int &index_h_rem, int &index_h_ins, double &FO){
 	
 	//std::cout << FO << std::endl;
 	
