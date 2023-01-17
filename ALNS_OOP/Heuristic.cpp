@@ -492,9 +492,6 @@ Sol Heuristic::apply(Sol &S){
 			
 			std::cout << "Solucao apos regret insertion" << std::endl;
 			
-			// Definindo o valor "k";
-			// double k = 2;
-			
 			// Variável que controlará o número de pedidos inseridos pelo algoritmo
 			int qtd_inseridos {0};
 			
@@ -625,7 +622,6 @@ Sol Heuristic::apply(Sol &S){
 							
 							double regret_k = delta_min_por_rota.at(pos) - delta_min_por_rota.at(0);
 							
-							
 							if (regret_k >= max_regret){
 								
 								max_regret = regret_k;
@@ -636,7 +632,17 @@ Sol Heuristic::apply(Sol &S){
 							}
 						}
 					}
+							
 				}
+				
+				
+				// Tratando exceção: bug raro de quando não são retornados dados para melhor inserção. A operação, é, então, interrompida
+				if (dados_melhor_insercao_min.size() == 0){
+					
+					break;
+					
+				}
+				
 				
 				// Inserções: avaliando se houve ao menos uma posição de inserção factível encontrada:
 				
@@ -677,7 +683,7 @@ Sol Heuristic::apply(Sol &S){
 	}
 	
 	
-	S.print_sol();
+	// S.print_sol();
 	
 	auto end = std::chrono::high_resolution_clock::now();
     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);

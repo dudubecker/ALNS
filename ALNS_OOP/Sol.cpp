@@ -35,6 +35,14 @@ double Sol::FO(){
 		}
 	}
 	
+	// Adição: penalizando número de pedidos não atendidos:
+	for (auto &pedido: L){
+		
+		custos_totais += 10000;
+		
+	}
+	
+	
 	return (double) custos_totais;
 }
 

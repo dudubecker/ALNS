@@ -276,6 +276,7 @@ void ALNS::algo(int max_it){
 	
 	while (n_it < max_it){
 		
+		std::cout << "Iteracao " << n_it << std::endl;
 		
 		// Modificando a solução incumbente
 		Sol S = S_i;
@@ -297,12 +298,13 @@ void ALNS::algo(int max_it){
 		
 		S = insertion_heuristics.at(index_h_ins).apply(S);
 		
+		
 		// Analisando se a solução é a melhor já encontrada e armazenando seu valor na região de soluções encontradas
 		
 		// Variável para armazenar função objetivo
 		double FO = (double) S.FO();
 		
-		std::cout << "FO: " << FO << "\n\n";
+		// std::cout << "FO: " << FO << "\n\n";
 		
 		bool BKS = false;
 		
