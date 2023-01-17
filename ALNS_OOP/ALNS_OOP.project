@@ -93,6 +93,8 @@
     </Configuration>
   </Settings>
   <VirtualDirectory Name="src">
+    <File Name="heuristicsFunctions.h"/>
+    <File Name="heuristicsFunctions.cpp"/>
     <File Name="ALNS.cpp"/>
     <File Name="ALNS.hpp"/>
     <File Name="Heuristic.cpp"/>

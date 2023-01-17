@@ -5,6 +5,7 @@
 #include "Instance.hpp"
 
 
+
 class Heuristic
 {
 public:

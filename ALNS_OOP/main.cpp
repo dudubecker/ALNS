@@ -78,8 +78,18 @@ int main(){
 	// Greedy insertion:
 	Heuristic H_g('G');
 	
-	// Regret insertion:
-	Heuristic H_a('A', 2);
+	// Regret insertion 1:
+	Heuristic H_a_1('A', 1);
+	
+	// Regret insertion 2:
+	Heuristic H_a_2('A', 2);
+	
+	// Regret insertion 3:
+	Heuristic H_a_3('A', 3);
+	
+	// Regret insertion 2:
+	Heuristic H_a_4('A', 4);
+	
 	
 	// Construindo solução:
 	s = H_c.apply(s);
@@ -94,11 +104,9 @@ int main(){
 	meta.S_i = s;
 	
 	// Definindo vetores de heurísticas
-	meta.insertion_heuristics = {H_g, H_a};
+	// meta.insertion_heuristics = {H_g};
 	
-	//for (){
-		
-	//}
+	meta.insertion_heuristics = {H_g, H_a_1};
 	
 	meta.removal_heuristics = {H_r,H_s,H_w, H_s_TTR, H_s_STR, H_s_DER};
 	
@@ -109,8 +117,8 @@ int main(){
 	
 	meta.algo(100);
 	
-	//meta.S_p.print_sol();
-	//meta.S_p.FO();
+	meta.S_p.print_sol();
+	meta.S_p.FO();
 	
 	auto soma_tempos {0};
 	
