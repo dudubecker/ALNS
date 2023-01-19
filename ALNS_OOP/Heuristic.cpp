@@ -671,6 +671,14 @@ Sol Heuristic::apply(Sol &S){
 				}
 			}
 			
+			
+			
+			for (auto &pedido: S.L){
+				
+				S = melhor_insercao(S, pedido);
+				
+			}
+			
 			// Fim da heurística de regret insertion
 			break;
 			

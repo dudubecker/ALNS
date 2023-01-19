@@ -46,30 +46,6 @@ double Sol::FO(){
 	return (double) custos_totais;
 }
 
-// Método de cálculo da função objetivo penalizada, como em Gasque 2022
-
-/*
-double Sol::FO_W(){
-	
-	// Custos totais
-	double custos_totais {};
-	
-	for (unsigned index_rota {0}; index_rota < Rotas.size(); index_rota++){
-		
-		//custos_totais += custo_veiculo;
-		//std::vector Rota = Rotas[index_rota];
-		
-		for (unsigned index_no {0}; index_no < Rota.size() - 1; index_no++){
-			
-			custos_totais += inst.t[Rota[index_no]][Rota[index_no + 1]];
-			
-		}
-	}
-	
-}
-
-*/
-
 void Sol::print_sol(){
 	
 	std::cout << "S: " << std::endl;

@@ -88,7 +88,10 @@ public:
 	int escolher_heuristica(char type);
 	
 	// Método para o algoritmo geral, que utiliza todos os métodos acima e retorna a melhor função encontrada
-	void algo(int max_it);
+	void algo(int max_it_ALNS, int max_it_RRH);
+	
+	// Método de inicialização para redução de rotas
+	Sol routeReductionHeuristic(Sol &S_i, int max_it_RRH);
 	
 
 };

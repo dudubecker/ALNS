@@ -52,7 +52,7 @@ int main(){
 	
 	// Objeto instância
 	Instance inst;
-	inst.read("CC50");
+	inst.read("BB30");
 	
 	// Inicializando objeto solução;
 	//Sol s(inst);
@@ -95,7 +95,6 @@ int main(){
 	// Regret insertion 4:
 	Heuristic H_a_4('A', 4);
 	
-	
 	// Construindo solução:
 	s = H_c.apply(s);
 	
@@ -117,22 +116,24 @@ int main(){
 	
 	// meta.insertion_heuristics = {H_g, H_a_1};
 	
-	// meta.removal_heuristics = {H_r,H_s,H_w, H_s_TTR, H_s_STR, H_s_DER};
+	meta.removal_heuristics = {H_r,H_s,H_w, H_s_TTR, H_s_STR, H_s_DER};
 	
-	meta.insertion_heuristics = {H_a_3};
+	meta.insertion_heuristics = {H_a_1, H_a_2 ,H_g};
 	
-	meta.removal_heuristics = {H_r};
+	// meta.removal_heuristics = {H_r};
 	
-	// Definindo temperatura inicial:
+	// Definindo teomperatura inicial:
 	double T_inicial = (meta.S_i.FO())*((0.3)/log(0.5));
 	
 	meta.Temperature = T_inicial;
 	
-	meta.algo(2000);
+	meta.algo(5000, 30);
 	
 	meta.S_p.print_sol();
 	
-	cout << "\n FO: " << std::setprecision(7) << meta.S_p.FO() << endl; ;
+	cout << "\n FO: " << std::setprecision(7) << meta.S_p.FO() << endl;
+	
+	cout << "\n Factibilidade:  " << meta.S_p.isFeasible() << endl;
 	
 	auto soma_tempos {0};
 	
@@ -168,7 +169,7 @@ int main(){
 		
 	}
 	
-	
+	std::cout << soma_tempos << std::endl;
 	
 	return 0;
 }

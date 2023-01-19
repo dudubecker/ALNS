@@ -158,8 +158,6 @@ int ALNS::escolher_heuristica(char type){
 		
 	}
 	
-	// Para gerar números aleatórios:
-	// srand( (unsigned)time( NULL ) );
 	
 	// Probabilidade acumulada
 	double prob_acumulada {0};
@@ -266,17 +264,85 @@ void ALNS::zerar_pontuacoes(){
 	
 }
 
+Sol ALNS::routeReductionHeuristic(Sol &S_i, int max_it_RRH){
+	
+	// Criando uma cópia da rota:
+	Sol S = S_i;
+	
+	// Solução para armazenar a melhor solução (de menor número de rotas)
+	Sol BKS = S_i;
+	
+	// Para gerar números aleatórios
+	srand(time(NULL));
+	
+	// Variável para o número de iterações:
+	int n_it {0};
+	
+	while (n_it < max_it_RRH){
+		
+		std::cout << "Iteracao " << n_it << " para remocao de rotas" << std::endl;
+		
+		// Caso "L" esteja vazio, a rota é excluída e os pedidos são colocados no banco de pedidos não atendidos
+		if (S.L.size() == 0){
+			
+			BKS = S;
+			
+			// Quantidade "m" de rotas na solução:
+			int m = S.Rotas.size();
+			
+			// Escolhendo índice da rota que será removida
+			double index_rota = rand()%(m);
+			
+			std::vector<double> Rota = S.Rotas.at(index_rota);
+			
+			// Removendo nós da solução
+			for (auto &node: Rota){
+				
+				// Caso seja um nó correspondente a um pedido de pickup:
+				if ((node > 0) && (node <= S.inst.n)){
+					
+					S.remover_pedido(node);
+					
+				}
+				
+			}
+			
+			// Removendo rota vazia da solução
+			S.Rotas.erase(S.Rotas.begin() + index_rota);
+		
+		}
+		
+		// Escolhendo heurísticas e aplicando-as à solução
+		
+		int index_h_rem = escolher_heuristica('R');
+		int index_h_ins = escolher_heuristica('I');
+		
+		S = removal_heuristics.at(index_h_rem).apply(S);
+		
+		S = insertion_heuristics.at(index_h_ins).apply(S);
+		
+		n_it += 1;
+	}
+	
+	return BKS;
+	
+}
+
 
 // Método do algoritmo em si
 
-void ALNS::algo(int max_it){
+void ALNS::algo(int max_it_ALNS, int max_it_RRH){
+	
+	S_i = routeReductionHeuristic(S_i, max_it_RRH);
+	
+	S_i.print_sol();
 	
 	// Variável para o número de iterações:
 	int n_it {};
 	
-	while (n_it < max_it){
+	while (n_it < max_it_ALNS){
 		
-		std::cout << "Iteracao " << n_it << std::endl;
+		std::cout << "Iteracao " << n_it << " da ALNS" << std::endl;
 		
 		// Modificando a solução incumbente
 		Sol S = S_i;
