@@ -9,6 +9,8 @@
 
 // Funções utilizadas ao longo da implementação das heurísticas:
 
+/*
+
 // Incremento por inserção: calcula o custo de inserção de um pedido em posições pré-determinadas e sem checar factibilidade!
 double delta_FO_ins(Sol &S_ins, double &pedido, int &index_rota, int &pos_no_pickup, int &pos_no_delivery){
 	
@@ -542,5 +544,8 @@ bool isInsertionFeasible(Sol &S, double &pedido, int index_rota, int &pos_no_pic
 	return factivel;
 	
 }
+
+*/
+
 
 // Fim das funções utilizadas ao longo da implementação das heurísticas

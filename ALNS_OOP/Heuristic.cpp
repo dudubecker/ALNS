@@ -62,7 +62,7 @@ Sol Heuristic::apply(Sol &S){
 				// Objeto solução, que tentará fazer melhor inserção
 				// Sol S_best = melhor_insercao(S, pedido);
 				
-				std::vector<double> dados_melhor_insercao = delta_melhor_insercao(S, pedido);
+				std::vector<double> dados_melhor_insercao = S.delta_melhor_insercao(pedido);
 				
 				// Caso o pedido tenha sido inserido:
 				
@@ -157,7 +157,7 @@ Sol Heuristic::apply(Sol &S){
 				for (auto pedido: pedidos){
 					
 					// Calculando variação no custo da rota com a remoção do pedido
-					double delta = delta_FO_rem(S, pedido);
+					double delta = S.delta_FO_rem(pedido);
 					
 					delta_custos.push_back(delta);
 					
@@ -436,10 +436,7 @@ Sol Heuristic::apply(Sol &S){
 				for (auto &pedido: S.L){
 					
 					// Obtendo dados para melhor insercao do pedido (chamando função com parâmetro char)
-					std::vector<double> dados_melhor_insercao = delta_melhor_insercao(S, pedido);
-					
-					// Variação na função objetivo dada pela melhor inserção possível do pedido em S:
-					// double delta = delta_melhor_insercao(S, pedido);
+					std::vector<double> dados_melhor_insercao = S.delta_melhor_insercao(pedido);
 					
 					// Delta FO -> Primeiro dado do vetor retornado pela função
 					double delta = dados_melhor_insercao.at(0);
@@ -546,7 +543,7 @@ Sol Heuristic::apply(Sol &S){
 						
 						// double delta_min = delta_melhor_insercao(S, pedido, index_rota);
 						
-						std::vector<double> dados_melhor_insercao_rota = delta_melhor_insercao(S, pedido, index_rota);
+						std::vector<double> dados_melhor_insercao_rota = S.delta_melhor_insercao(pedido, index_rota);
 						
 						double delta_rota = dados_melhor_insercao_rota.at(0);
 						
@@ -676,7 +673,8 @@ Sol Heuristic::apply(Sol &S){
 			
 			for (auto &pedido: S.L){
 				
-				S = melhor_insercao(S, pedido);
+				// S = melhor_insercao(S, pedido);
+				S.executar_melhor_insercao(pedido);
 				
 			}
 			

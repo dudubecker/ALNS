@@ -62,11 +62,17 @@ int main(){
 	// Construtiva:
 	Heuristic H_c('C');
 	
+	// Worst removal:
+	Heuristic H_w('W');
+	
 	// Random removal:
 	Heuristic H_r('R');
 	
 	// Greedy insertion:
 	Heuristic H_g('G');
+	
+	// Regret insertion
+	Heuristic H_a('A');
 	
 	// Aplicando heurística construtiva:
 	H_c.apply(S);
@@ -81,9 +87,9 @@ int main(){
 	
 	// Aplicando remoção aleatória:
 	
-	H_r.apply(S);
+	H_w.apply(S);
 	
-	std::cout << "\nSolucao apos remocao aleatoria: \n";
+	std::cout << "\nSolucao apos worst removal: \n";
 	
 	S.print_sol();
 	
@@ -99,6 +105,23 @@ int main(){
 	
 	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
 	
+	// Aplicando remoção aleatória:
+	H_r.apply(S);
+	
+	std::cout << "\nSolucao apos remocao aleatoria: \n";
+	
+	S.print_sol();
+	
+	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
+	
+	// Aplicando inserção por arrependimento:
+	H_a.apply(S);
+	
+	std::cout << "\nSolucao apos regret insertion: \n";
+	
+	S.print_sol();
+	
+	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
 	
 	/*
 	// std::vector<std::string> instancias = {"instances/AA25","instances/CC20","instances/CC25","instances/DD25","instances/DD30"};
