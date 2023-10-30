@@ -114,9 +114,9 @@ void Instance::read(std::string file_name){
 		for(int j = 0; j < 2*n + 2; j++)
 		{
 			// Calculando distância e atribuindo à variável
-			t[i][j] = floor(sqrt(pow(x[i]-x[j], 2) + pow(y[i]-y[j],2))*10.0)/10.0;
+			t[i][j] = floor(sqrt(pow(x[i]-x[j], 2) + pow(y[i]-y[j],2))*10000.0)/10000.0;
 			
-					// Determinando maiores e menores tempos de viagem (útil para normalização dos dados)
+			// Determinando maiores e menores tempos de viagem (útil para normalização dos dados)
 			if (t[i][j] > max_t){
 				max_t = t[i][j];
 			}
@@ -155,7 +155,6 @@ void Instance::read(std::string file_name){
 			t_norm[i][j] = (t[i][j] - min_t)/(max_t - min_t);
 		}
 	}
-	
 	
 }
 

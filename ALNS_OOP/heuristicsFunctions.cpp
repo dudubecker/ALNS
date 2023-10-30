@@ -316,7 +316,7 @@ std::vector<double> delta_melhor_insercao(Sol &S, double &pedido, int &index_rot
 	
 }
 
-Sol melhor_insercao(Sol &S_in,double &pedido){
+Sol melhor_insercao(Sol &S_in, double &pedido){
 	
 	// Criando uma cópia do objeto solução (construtiva deu um bug inexplicável se não fizesse isso)
 	Sol S(S_in.Rotas, S_in.L, S_in.A, S_in.inst);

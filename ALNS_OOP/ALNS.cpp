@@ -1,9 +1,10 @@
-#include <ALNS.hpp>
-#include <Sol.hpp>
-#include <Heuristic.hpp>
+#include "ALNS.hpp"
+#include "Sol.hpp"
+#include "Heuristic.hpp"
 #include <cmath>
 #include <ctime>
 #include <time.h>
+#include <chrono>
 
 //ALNS::ALNS()
 //{
@@ -280,7 +281,15 @@ Sol ALNS::routeReductionHeuristic(Sol &S_i, int max_it_RRH){
 	
 	while (n_it < max_it_RRH){
 		
-		std::cout << "Iteracao " << n_it << " para remocao de rotas" << std::endl;
+		if (n_it%100 == 0){
+			
+			std::cout << "Iteracao RR: " << n_it << std::endl;
+			
+		}
+		
+		
+		
+		// std::cout << "Iteracao " << n_it << " para remocao de rotas" << std::endl;
 		
 		// Caso "L" esteja vazio, a rota é excluída e os pedidos são colocados no banco de pedidos não atendidos
 		if (S.L.size() == 0){
@@ -331,7 +340,7 @@ Sol ALNS::routeReductionHeuristic(Sol &S_i, int max_it_RRH){
 
 // Método do algoritmo em si
 
-void ALNS::algo(int max_it_ALNS, int max_it_RRH){
+void ALNS::algo(int max_it_ALNS, int max_it_RRH, double max_t_ALNS){
 	
 	S_i = routeReductionHeuristic(S_i, max_it_RRH);
 	
@@ -340,9 +349,23 @@ void ALNS::algo(int max_it_ALNS, int max_it_RRH){
 	// Variável para o número de iterações:
 	int n_it {};
 	
-	while (n_it < max_it_ALNS){
+	// Variável para o tempo de execução
+	double t_ALNS {0};
+	
+	while ((n_it < max_it_ALNS) && (t_ALNS < max_t_ALNS)){
 		
-		std::cout << "Iteracao " << n_it << " da ALNS" << std::endl;
+		// std::cout << t_ALNS << std::endl;
+		
+		if (n_it%100 == 0){
+			
+			std::cout << "Iteracao ALNS: " << n_it << std::endl;
+			
+		}
+		
+		// Medindo tempo
+		auto begin = std::chrono::high_resolution_clock::now();
+		
+		// std::cout << "Iteracao " << n_it << " da ALNS" << std::endl;
 		
 		// Modificando a solução incumbente
 		Sol S = S_i;
@@ -363,7 +386,6 @@ void ALNS::algo(int max_it_ALNS, int max_it_RRH){
 		S = removal_heuristics.at(index_h_rem).apply(S);
 		
 		S = insertion_heuristics.at(index_h_ins).apply(S);
-		
 		
 		// Analisando se a solução é a melhor já encontrada e armazenando seu valor na região de soluções encontradas
 		
@@ -403,6 +425,11 @@ void ALNS::algo(int max_it_ALNS, int max_it_RRH){
 		S_encontradas.push_back(FO);
 		
 		n_it += 1;
+		
+		auto end = std::chrono::high_resolution_clock::now();
+		auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+		
+		t_ALNS += elapsed.count() * 1e-9;
 		
 	}
 	

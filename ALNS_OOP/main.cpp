@@ -1,9 +1,9 @@
 #include <iostream>
 #include <vector>
-#include <Instance.hpp>
-#include <Sol.hpp>
-#include <Heuristic.hpp>
-#include <ALNS.hpp>
+#include "Instance.hpp"
+#include "Sol.hpp"
+#include "Heuristic.hpp"
+#include "ALNS.hpp"
 #include <iomanip>
 #include <iterator>
 #include <algorithm>
@@ -47,17 +47,17 @@ void print_sol(Sol S)
 
 int main(){
 	
-	// Objeto ALNS
-	ALNS meta;
+	// String com instância
+	std::string instancia = "instances/AA20";
 	
-	// Objeto instância
+	// Objeto Instance
 	Instance inst;
-	inst.read("BB30");
+	inst.read(instancia);
 	
-	// Inicializando objeto solução;
-	//Sol s(inst);
-	Sol s;
-	s.inst = inst;
+	// Objeto Sol, inicializado a partir do objeto Instance
+	Sol S(inst);
+	
+	// Objetos Heuristic
 	
 	// Construtiva:
 	Heuristic H_c('C');
@@ -65,111 +65,147 @@ int main(){
 	// Random removal:
 	Heuristic H_r('R');
 	
-	// Worst removal:
-	Heuristic H_w('W');
-	
-	// Shaw's removal:
-	Heuristic H_s('S',0.3,0.4,0.3);
-	
-	// Shaw's removal:
-	Heuristic H_s_TTR('S',1,0,0);
-	
-	// Shaw's removal:
-	Heuristic H_s_STR('S',0,1,0);
-	
-	// Shaw's removal:
-	Heuristic H_s_DER('S',0,0,1);
-	
 	// Greedy insertion:
 	Heuristic H_g('G');
 	
-	// Regret insertion 1:
-	Heuristic H_a_1('A', 1);
+	// Aplicando heurística construtiva:
+	H_c.apply(S);
 	
-	// Regret insertion 2:
-	Heuristic H_a_2('A', 2);
+	// Vendo solução
 	
-	// Regret insertion 3:
-	Heuristic H_a_3('A', 3);
+	std::cout << "Solucao apos heuristica construtiva: \n";
 	
-	// Regret insertion 4:
-	Heuristic H_a_4('A', 4);
+	S.print_sol();
 	
-	// Construindo solução:
-	s = H_c.apply(s);
+	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
 	
-	s.print_sol();
+	// Aplicando remoção aleatória:
 	
-	cout << "\n FO: " << std::setprecision(7) << s.FO() << endl;
+	H_r.apply(S);
 	
-	// Parâmetros da ALNS:
+	std::cout << "\nSolucao apos remocao aleatoria: \n";
+	
+	S.print_sol();
+	
+	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
 	
 	
+	// Aplicando inserção gulosa:
+	H_g.apply(S);
 	
-	// Definindo soluções incumbente e melhor solução como a solução construída inicialmente
-	meta.S_p = s;
+	std::cout << "\nSolucao apos insercao gulosa: \n";
 	
-	meta.S_i = s;
+	S.print_sol();
 	
-	// Definindo vetores de heurísticas
-	// meta.insertion_heuristics = {H_g};
+	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
 	
-	// meta.insertion_heuristics = {H_g, H_a_1};
 	
-	meta.removal_heuristics = {H_r,H_s,H_w, H_s_TTR, H_s_STR, H_s_DER};
+	/*
+	// std::vector<std::string> instancias = {"instances/AA25","instances/CC20","instances/CC25","instances/DD25","instances/DD30"};
 	
-	meta.insertion_heuristics = {H_a_1, H_a_2 ,H_g};
+	std::vector<std::string> instancias = {"instances/AA25"};
 	
-	// meta.removal_heuristics = {H_r};
-	
-	// Definindo teomperatura inicial:
-	double T_inicial = (meta.S_i.FO())*((0.3)/log(0.5));
-	
-	meta.Temperature = T_inicial;
-	
-	meta.algo(5000, 30);
-	
-	meta.S_p.print_sol();
-	
-	cout << "\n FO: " << std::setprecision(7) << meta.S_p.FO() << endl;
-	
-	cout << "\n Factibilidade:  " << meta.S_p.isFeasible() << endl;
-	
-	auto soma_tempos {0};
-	
-	for (auto &heuristic: meta.removal_heuristics){
+	for (auto instancia: instancias){
 		
-		// cout << heuristic.name << ": " << heuristic.processing_time << endl;
-		soma_tempos += heuristic.processing_time;
-		
-		
+		for (auto i {0}; i < 5; i++){
+			
+			// Medindo tempo
+			auto begin = std::chrono::high_resolution_clock::now();
+			
+			// Objeto ALNS
+			ALNS meta;
+			
+			// Objeto instância
+			Instance inst;
+			inst.read(instancia);
+			
+			std::cout << "\n\n" << instancia << "\n\n" << std::endl;
+			
+			// Inicializando objeto solução;
+			//Sol s(inst);
+			Sol s;
+			s.inst = inst;
+			
+			// Construtiva:
+			Heuristic H_c('C');
+			
+			// Random removal:
+			Heuristic H_r('R');
+			
+			// Worst removal:
+			Heuristic H_w('W');
+			
+			// Shaw's removal:
+			Heuristic H_s('S',0.3,0.4,0.3);
+			
+			// Shaw's removal:
+			Heuristic H_s_TTR('S',1,0,0);
+			
+			// Shaw's removal:
+			Heuristic H_s_STR('S',0,1,0);
+			
+			// Shaw's removal:
+			Heuristic H_s_DER('S',0,0,1);
+			
+			// Greedy insertion:
+			Heuristic H_g('G');
+			
+			// Regret insertion 1:
+			Heuristic H_a_1('A', 1);
+			
+			// Regret insertion 2:
+			Heuristic H_a_2('A', 2);
+			
+			// Regret insertion 3:
+			Heuristic H_a_3('A', 3);
+			
+			// Regret insertion 4:
+			Heuristic H_a_4('A', 4);
+			
+			// Construindo solução:
+			s = H_c.apply(s);
+			
+			
+			// Parâmetros da ALNS:
+			
+			// Definindo soluções incumbente e melhor solução como a solução construída inicialmente
+			meta.S_p = s;
+			
+			meta.S_i = s;
+			
+			meta.removal_heuristics = {H_r,H_s,H_w, H_s_TTR, H_s_STR, H_s_DER};
+			
+			meta.insertion_heuristics = {H_a_1 ,H_g};
+			
+			// meta.insertion_heuristics = {H_g};
+			
+			// meta.removal_heuristics = {H_r};
+			
+			// Definindo teomperatura inicial:
+			double T_inicial = (meta.S_i.FO())*((0.3)/log(0.5));
+			
+			meta.Temperature = T_inicial;
+			
+			meta.algo(1600, 1000, 600);
+			
+			meta.S_p.print_sol();
+			
+			cout << "\n FO: " << std::setprecision(7) << meta.S_p.FO() << endl;
+			
+			cout << "\n Factibilidade:  " << meta.S_p.isFeasible() << endl;
+			
+
+			
+			auto end = std::chrono::high_resolution_clock::now();
+			auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+			
+			std::cout << "Tempo de execucao: " << elapsed.count() * 1e-9 << "segundos. " << std::endl;
+		}
 	}
-	
-		
-	for (auto &heuristic: meta.insertion_heuristics){
-		
-		// cout << heuristic.name << ": " << heuristic.processing_time << endl;
-		soma_tempos += heuristic.processing_time;
-		
-	}
-	
-	for (auto &heuristic: meta.removal_heuristics){
-		
-		cout << heuristic.name << ": " << heuristic.processing_time/soma_tempos << "% " << heuristic.n_it_total << endl;
-		// soma_tempos += heuristic.processing_time;
-		
-		
-	}
-	
-		
-	for (auto &heuristic: meta.insertion_heuristics){
-		
-		cout << heuristic.name << ": " << heuristic.processing_time/soma_tempos << "% " << heuristic.n_it_total << endl;
-		// soma_tempos += heuristic.processing_time;
-		
-	}
-	
-	std::cout << soma_tempos << std::endl;
 	
 	return 0;
+	
+	*/
+	
+	
 }

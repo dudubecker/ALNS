@@ -38,7 +38,6 @@ public:
 	// Tempo computacional empregado na heurística:
 	double processing_time {};
 	
-	
 	// Constructor/Destructor
 	
 	// Inicialização padrão, apenas com o character
@@ -73,7 +72,6 @@ public:
 	
 	// Método de aplicação da heurística: tem como entrada uma solução e como saída uma solução alterada (Rotas, L e A)
 	Sol apply(Sol &S);
-	
 	
 
 };

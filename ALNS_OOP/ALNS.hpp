@@ -2,8 +2,8 @@
 #define _ALNS_H
 #include <iostream>
 #include <Sol.hpp>
-#include <Instance.hpp>
-#include <Heuristic.hpp>
+#include "Instance.hpp"
+#include "Heuristic.hpp"
 
 class ALNS
 {
@@ -88,7 +88,7 @@ public:
 	int escolher_heuristica(char type);
 	
 	// Método para o algoritmo geral, que utiliza todos os métodos acima e retorna a melhor função encontrada
-	void algo(int max_it_ALNS, int max_it_RRH);
+	void algo(int max_it_ALNS, int max_it_RRH, double max_t_ALNS);
 	
 	// Método de inicialização para redução de rotas
 	Sol routeReductionHeuristic(Sol &S_i, int max_it_RRH);

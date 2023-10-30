@@ -38,7 +38,7 @@ Sol Heuristic::apply(Sol &S){
 		// Heurística construtiva
 		case 'C':{
 			
-			std::cout << "Solucao apos heuristica construtiva" << std::endl;
+			// std::cout << "Solucao apos heuristica construtiva" << std::endl;
 		
 			/* Criando variáveis com valores atualizados a cada inserção */
 			// Inserindo no conjunto L os pedidos não atendidos
@@ -60,15 +60,16 @@ Sol Heuristic::apply(Sol &S){
 				double pedido {S.L.at(0)};
 				
 				// Objeto solução, que tentará fazer melhor inserção
-				Sol S_best = melhor_insercao(S, pedido);
+				// Sol S_best = melhor_insercao(S, pedido);
+				
+				std::vector<double> dados_melhor_insercao = delta_melhor_insercao(S, pedido);
 				
 				// Caso o pedido tenha sido inserido:
-				if (S_best.L.size() != S.L.size()){
+				
+				if (dados_melhor_insercao.at(0) != 99999){
 					
-					S = S_best;
+					S.inserir_pedido(pedido, dados_melhor_insercao.at(1),dados_melhor_insercao.at(2),dados_melhor_insercao.at(3));
 					
-				// Caso não seja possível fazer a inserção, isso significará que não foram encontradas posições de inserção factíveis para as rotas em questão
-				// fazendo-se necessária uma nova rota
 				
 				} else {
 					
@@ -97,7 +98,7 @@ Sol Heuristic::apply(Sol &S){
 		// Random removal
 		case 'R':{
 			
-			std::cout << "Solucao apos random removal" << std::endl;
+			// std::cout << "Solucao apos random removal" << std::endl;
 			
 			// srand(time(NULL));
 			
@@ -134,7 +135,7 @@ Sol Heuristic::apply(Sol &S){
 		// Worst removal
 		case 'W':{
 			
-			std::cout << "Solucao apos worst removal" << std::endl;
+			// std::cout << "Solucao apos worst removal" << std::endl;
 			
 			// srand(time(NULL));
 			
@@ -223,7 +224,7 @@ Sol Heuristic::apply(Sol &S){
 		// Shaws removal
 		case 'S':{
 			
-			std::cout << "Solucao apos shaws removal" << std::endl;
+			// std::cout << "Solucao apos shaws removal" << std::endl;
 			
 			// Parâmetro "delta" para controle da aleatoriedade 
 			const int delta {6};
@@ -409,7 +410,7 @@ Sol Heuristic::apply(Sol &S){
 		
 		case 'G':{
 			
-			std::cout << "Solucao apos greedy insertion" << std::endl;
+			// std::cout << "Solucao apos greedy insertion" << std::endl;
 			
 			// Variável que controlará o número de pedidos inseridos pelo algoritmo
 			int qtd_inseridos {0};
@@ -490,7 +491,7 @@ Sol Heuristic::apply(Sol &S){
 		// Regret insertion
 		case 'A':{
 			
-			std::cout << "Solucao apos regret insertion" << std::endl;
+			// std::cout << "Solucao apos regret insertion" << std::endl;
 			
 			// Variável que controlará o número de pedidos inseridos pelo algoritmo
 			int qtd_inseridos {0};

@@ -1,14 +1,12 @@
-Debug/main.cpp.o: main.cpp Instance.hpp Sol.hpp Instance.hpp \
- Heuristic.hpp Sol.hpp ALNS.hpp
+Debug/main.cpp.o: main.cpp Instance.hpp Sol.hpp Heuristic.hpp ALNS.hpp \
+ Sol.hpp
 
 Instance.hpp:
 
 Sol.hpp:
-
-Instance.hpp:
 
 Heuristic.hpp:
 
-Sol.hpp:
-
 ALNS.hpp:
+
+Sol.hpp:
