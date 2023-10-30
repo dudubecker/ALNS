@@ -35,66 +35,6 @@ Sol Heuristic::apply(Sol &S){
 	
 	switch (name){
 		
-		// Heurística construtiva
-		case 'C':{
-			
-			// std::cout << "Solucao apos heuristica construtiva" << std::endl;
-		
-			/* Criando variáveis com valores atualizados a cada inserção */
-			// Inserindo no conjunto L os pedidos não atendidos
-			for(double value = 1; value < S.inst.n + 1; value++){
-				
-				S.L.push_back(value);
-			}
-			
-			// Criando uma rota inicial vazia para a solução:
-			S.Rotas.push_back({0, 2*(S.inst.n) + 1});
-			
-			// Quantidade de requests atendidos (inicia-se em 0)
-			int qtd_atendidos {0};
-			
-			// Início do algoritmo de inserção:
-			while (qtd_atendidos < S.inst.n){
-				
-				// Variável que abrigará o request a ser inserido na iteração
-				double pedido {S.L.at(0)};
-				
-				// Objeto solução, que tentará fazer melhor inserção
-				// Sol S_best = melhor_insercao(S, pedido);
-				
-				std::vector<double> dados_melhor_insercao = S.delta_melhor_insercao(pedido);
-				
-				// Caso o pedido tenha sido inserido:
-				
-				if (dados_melhor_insercao.at(0) != 99999){
-					
-					S.inserir_pedido(pedido, dados_melhor_insercao.at(1),dados_melhor_insercao.at(2),dados_melhor_insercao.at(3));
-					
-				
-				} else {
-					
-					// Rota vazia com os nós da iteração
-					std::vector <double> nova_rota {0, pedido, pedido + S.inst.n, 2*(S.inst.n) + 1};
-					S.Rotas.push_back(nova_rota);
-					
-					// Removendo pedido de L
-					S.L.erase(S.L.begin());
-					
-					// Adicionando pedido em A
-					S.A.push_back(pedido);
-					
-				}
-				
-				// Atualizando quantidade de pedidos atendidos
-				qtd_atendidos += 1;
-				
-				
-			}
-			// Fim da heurística construtiva
-			
-			break;
-		}
-		
 		// Random removal
 		case 'R':{
 			

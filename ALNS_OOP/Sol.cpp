@@ -8,6 +8,70 @@ Sol::Sol()
 	
 }
 
+// Inicialização "normal" - construtiva!
+
+Sol::Sol(Instance &inst_data){
+	
+	// Populando dados do atributo com instância
+	inst = inst_data;
+	
+	// Populando atributos da solução:
+	
+	// Inserindo no conjunto L os pedidos não atendidos
+	for(double value = 1; value < inst.n + 1; value++){
+		
+		L.push_back(value);
+	}
+	
+	// Criando uma rota inicial vazia para a solução:
+	Rotas.push_back({0, 2*(inst.n) + 1});
+	
+	// Quantidade de requests atendidos (inicia-se em 0)
+	int qtd_atendidos {0};
+	
+	// Início do algoritmo de inserção:
+	while (qtd_atendidos < inst.n){
+		
+		// Variável que abrigará o request a ser inserido na iteração
+		double pedido {L.at(0)};
+		
+		// Objeto solução, que tentará fazer melhor inserção
+		
+		std::vector<double> dados_melhor_insercao = delta_melhor_insercao(pedido);
+		
+		// Caso o pedido tenha sido inserido:
+		
+		if (dados_melhor_insercao.at(0) != 99999){
+			
+			inserir_pedido(pedido, dados_melhor_insercao.at(1),dados_melhor_insercao.at(2),dados_melhor_insercao.at(3));
+			
+		
+		} else {
+			
+			// Rota vazia com os nós da iteração
+			std::vector <double> nova_rota {0, pedido, pedido + inst.n, 2*(inst.n) + 1};
+			Rotas.push_back(nova_rota);
+			
+			// Removendo pedido de L
+			L.erase(L.begin());
+			
+			// Adicionando pedido em A
+			A.push_back(pedido);
+			
+		}
+		
+		// Atualizando quantidade de pedidos atendidos
+		qtd_atendidos += 1;
+		
+		
+	}
+	
+	// Fim da heurística construtiva
+	
+	
+}
+
+
 Sol::~Sol()
 {
 }
@@ -100,13 +164,11 @@ void Sol::inserir_pedido(double &pedido, int index_rota, int pos_no_pickup, int 
 	Rotas.at(index_rota).insert(Rotas.at(index_rota).begin() + pos_no_pickup, no_pickup);
 	Rotas.at(index_rota).insert(Rotas.at(index_rota).begin() + pos_no_delivery, no_delivery);
 	
-	//Rotas.at(index_rota) = novaRota;
-	
 	// Retirando pedido da lista de pedidos não atendidos
 	
 	L.erase(std::remove_if(L.begin(), L.end(), [&pedido](double value) -> bool { return value == pedido; }), L.end());
 	
-	// Adicionando pedido da lista de pedidos atendidos
+	// Adicionando pedido na lista de pedidos atendidos
 	
 	A.push_back(pedido);
 	
@@ -689,7 +751,6 @@ std::vector<double> Sol::delta_melhor_insercao(double &pedido, int &index_rota){
 	return return_vector;
 	
 }
-
 
 void Sol::executar_melhor_insercao(double &pedido){
 	

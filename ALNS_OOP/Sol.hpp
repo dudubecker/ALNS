@@ -20,35 +20,18 @@ public:
 	// Pedidos atendidos na solução (chamados aqui de "A")
 	std::vector<double> A {};
 	
+	// Posição do pedido na solução
+	std::vector<std::vector<int>> request_positions {};
+	
 	// Instância da solução
 	Instance inst;
 	
 	// Constructor/Destructor
 	// Constructor com objeto instance:
-	Sol(Instance inst_val){
-		inst = inst_val;
-	};
+	Sol(Instance &inst_data);
+	
 	// Adicionado na última atualização:
 	Sol();
-	
-	// Criando objeto solução a partir de inst, Rotas, L e A
-	Sol(std::vector<std::vector<double>>& Rotas_init, std::vector<double>& L_init, std::vector<double>& A_init, Instance& inst_init)
-	{
-		Rotas = Rotas_init;
-		inst = inst_init;
-		L = L_init;
-		A = A_init;
-	}
-	
-	
-	// Criando objeto solução a partir de outro
-	Sol(const Sol& S)
-	{
-		Rotas = S.Rotas;
-		inst = S.inst;
-		L = S.L;
-		A = S.A;
-	}
 	
 	~Sol();
 	

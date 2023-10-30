@@ -57,10 +57,12 @@ int main(){
 	// Objeto Sol, inicializado a partir do objeto Instance
 	Sol S(inst);
 	
+	S.print_sol();
+	
 	// Objetos Heuristic
 	
 	// Construtiva:
-	Heuristic H_c('C');
+	// Heuristic H_c('C');
 	
 	// Worst removal:
 	Heuristic H_w('W');
@@ -75,13 +77,16 @@ int main(){
 	Heuristic H_a('A');
 	
 	// Aplicando heurística construtiva:
-	H_c.apply(S);
+	// H_c.apply(S);
 	
 	// Vendo solução
 	
-	std::cout << "Solucao apos heuristica construtiva: \n";
 	
-	S.print_sol();
+	// std::cout << "Solucao apos heuristica construtiva: \n";
+	
+	// S.print_sol();
+	
+	
 	
 	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
 	
