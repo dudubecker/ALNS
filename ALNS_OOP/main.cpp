@@ -66,21 +66,13 @@ int main(){
 	// Objeto Sol, inicializado a partir do objeto Instance
 	Sol S(inst);
 	
+	std::cout << "Solucao apos heuristica construtiva: \n";
+	
 	S.print_sol();
 	
-	for (int i = 1; i <= inst.n; i++){
-		
-		std::cout << i << " :";
-		printInt(S.request_positions[i]);
-		
-	}
-	
-	/*
+	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
 	
 	// Objetos Heuristic
-	
-	// Construtiva:
-	// Heuristic H_c('C');
 	
 	// Worst removal:
 	Heuristic H_w('W');
@@ -94,21 +86,8 @@ int main(){
 	// Regret insertion
 	Heuristic H_a('A');
 	
-	// Aplicando heurística construtiva:
-	// H_c.apply(S);
 	
-	// Vendo solução
-	
-	
-	// std::cout << "Solucao apos heuristica construtiva: \n";
-	
-	// S.print_sol();
-	
-	
-	
-	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
-	
-	// Aplicando remoção aleatória:
+	// Aplicando worst removal:
 	
 	H_w.apply(S);
 	
@@ -120,6 +99,7 @@ int main(){
 	
 	
 	// Aplicando inserção gulosa:
+	
 	H_g.apply(S);
 	
 	std::cout << "\nSolucao apos insercao gulosa: \n";
@@ -127,6 +107,16 @@ int main(){
 	S.print_sol();
 	
 	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
+	
+	for (int i = 1; i <= inst.n; i++){
+		
+		std::cout << i << " :";
+		printInt(S.request_positions[i]);
+		
+	}
+	
+	
+	/*
 	
 	// Aplicando remoção aleatória:
 	H_r.apply(S);

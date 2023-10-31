@@ -268,6 +268,88 @@ void Sol::remover_pedido(double &pedido){
 	// Índice do nó de delivery correspondente ao request
 	int no_delivery {pedido + inst.n};
 	
+	// Índice da rota onde o pedido está:
+	int index_rota = request_positions[pedido].at(0);
+	
+	// Posição original de pickup do pedido
+	int pos_no_pickup = request_positions[pedido].at(1);
+	
+	// Posição original de delivery do pedido
+	int pos_no_delivery = request_positions[pedido].at(2);
+	
+	// Atualizando posições antes de realizar a remoção (mais simples)
+	
+	// Atualizando vetor de posições para o pedido removido
+	// A chave 9999 indicará que o pedido não está mais na solução!
+	request_positions[pedido] = {9999, 9999, 9999};
+	
+	// Para pedidos anteriores a P - as posições não se alteram!
+	
+	// Para pedidos entre P e D - Decréscimo de 1 unidade na posição
+	
+	// * OBS: no caso em que pos_no_pickup = pos_no_delivery - 1 (coleta e entrega consecutivas), esse laço não é executado!
+	for (int index_node {pos_no_pickup + 1}; index_node < pos_no_delivery; index_node++){
+		
+		// Nó de referência
+		int node = Rotas.at(index_rota).at(index_node);
+		
+		// Se o nó é de pickup
+		if (node <= inst.n){
+			
+			int request = node;
+			
+			// Atualizando posição no atributo de posições (pickup)
+			int posicao = request_positions.at(request).at(1) - 1;
+			request_positions.at(request).at(1) = posicao;
+			
+			
+		// Se o nó é de delivery
+		} else {
+			
+			// Índice do pedido correspondente
+			int request = node - inst.n;
+			
+			// Atualizando posição no atributo de posições (delivery)
+			int posicao = request_positions.at(request).at(2) - 1;
+			request_positions.at(request).at(2) = posicao;
+			
+		}
+		
+	}
+	
+	// Para pedidos após D - Decréscimo de 2 unidades na posição
+	
+	for (int index_node {pos_no_delivery + 1}; index_node < Rotas.at(index_rota).size() - 1; index_node++){
+		
+		// Nó de referência
+		int node = Rotas.at(index_rota).at(index_node);
+		
+		// Se o nó é de pickup
+		if (node <= inst.n){
+			
+			int request = node;
+			
+			// Atualizando posição no atributo de posições (pickup)
+			int posicao = request_positions.at(request).at(1) - 2;
+			request_positions.at(request).at(1) = posicao;
+			
+			
+		// Se o nó é de delivery
+		} else {
+			
+			// Índice do pedido correspondente
+			int request = node - inst.n;
+			
+			// Atualizando posição no atributo de posições (delivery)
+			int posicao = request_positions.at(request).at(2) - 2;
+			request_positions.at(request).at(2) = posicao;
+			
+		}
+		
+		
+	}
+	
+	
 	// "Procurando" pedido (no_pickup) na solução:
 	
 	for (auto &rota: Rotas){
