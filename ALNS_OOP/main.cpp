@@ -57,6 +57,7 @@ void print_sol(Sol S)
 
 int main(){
 	
+	/*
 	// String com instância
 	std::string instancia = "instances/AA30";
 	
@@ -116,7 +117,8 @@ int main(){
 	}
 	
 	
-	/*
+	
+	
 	
 	// Aplicando remoção aleatória:
 	H_r.apply(S);
@@ -137,20 +139,17 @@ int main(){
 	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
 	
 	
-	std::cout << "\nPosicoes de cada pedido: \n";
-	
-
-	
-	
-	
 	
 	// std::vector<std::string> instancias = {"instances/AA25","instances/CC20","instances/CC25","instances/DD25","instances/DD30"};
 	
-	std::vector<std::string> instancias = {"instances/AA25"};
+	 * 
+	 * 
+	*/
+	std::vector<std::string> instancias = {"instances/AA50"};
 	
 	for (auto instancia: instancias){
 		
-		for (auto i {0}; i < 5; i++){
+		for (auto i {0}; i < 10; i++){
 			
 			// Medindo tempo
 			auto begin = std::chrono::high_resolution_clock::now();
@@ -159,18 +158,17 @@ int main(){
 			ALNS meta;
 			
 			// Objeto instância
-			Instance inst;
-			inst.read(instancia);
+			Instance inst(instancia);
 			
 			std::cout << "\n\n" << instancia << "\n\n" << std::endl;
 			
 			// Inicializando objeto solução;
-			//Sol s(inst);
-			Sol s;
-			s.inst = inst;
+			Sol s(inst);
+			//Sol s;
+			//s.inst = inst;
 			
 			// Construtiva:
-			Heuristic H_c('C');
+			// Heuristic H_c('C');
 			
 			// Random removal:
 			Heuristic H_r('R');
@@ -206,7 +204,7 @@ int main(){
 			Heuristic H_a_4('A', 4);
 			
 			// Construindo solução:
-			s = H_c.apply(s);
+			// s = H_c.apply(s);
 			
 			
 			// Parâmetros da ALNS:
@@ -218,18 +216,15 @@ int main(){
 			
 			meta.removal_heuristics = {H_r,H_s,H_w, H_s_TTR, H_s_STR, H_s_DER};
 			
-			meta.insertion_heuristics = {H_a_1 ,H_g};
+			meta.insertion_heuristics = {H_a_1 ,H_a_2, H_g};
 			
-			// meta.insertion_heuristics = {H_g};
-			
-			// meta.removal_heuristics = {H_r};
 			
 			// Definindo teomperatura inicial:
 			double T_inicial = (meta.S_i.FO())*((0.3)/log(0.5));
 			
 			meta.Temperature = T_inicial;
 			
-			meta.algo(1600, 1000, 600);
+			meta.algo(600, 0, 600);
 			
 			meta.S_p.print_sol();
 			
@@ -248,7 +243,7 @@ int main(){
 	
 	return 0;
 	
-	*/
+	
 	
 	
 }

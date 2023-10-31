@@ -184,6 +184,7 @@ void Sol::inserir_pedido(double &pedido, int index_rota, int pos_no_pickup, int 
 	
 	A.push_back(pedido);
 	
+	/*
 	// Atualizando vetor de posições para o pedido inserido
 	request_positions[pedido] = {index_rota, pos_no_pickup, pos_no_delivery};
 	
@@ -256,8 +257,9 @@ void Sol::inserir_pedido(double &pedido, int index_rota, int pos_no_pickup, int 
 		
 	}
 	
+	*/
+	
 }
-
 
 // Método para remoção de um pedido
 void Sol::remover_pedido(double &pedido){
@@ -267,6 +269,8 @@ void Sol::remover_pedido(double &pedido){
 	
 	// Índice do nó de delivery correspondente ao request
 	int no_delivery {pedido + inst.n};
+	
+	/*
 	
 	// Índice da rota onde o pedido está:
 	int index_rota = request_positions[pedido].at(0);
@@ -350,7 +354,15 @@ void Sol::remover_pedido(double &pedido){
 	}
 	
 	
-	// "Procurando" pedido (no_pickup) na solução:
+	// Realizando remoções no vetor de rotas
+	
+	// Removendo nó de pickup
+	Rotas.at(index_rota).erase(Rotas.at(index_rota).begin() + pos_no_pickup);
+	
+	// Removendo nó de delivery (um índice a menos)
+	Rotas.at(index_rota).erase(Rotas.at(index_rota).begin() + pos_no_delivery - 1);
+	*/
+	
 	
 	for (auto &rota: Rotas){
 		
@@ -369,6 +381,7 @@ void Sol::remover_pedido(double &pedido){
 			
 		}
 	}
+
 	
 	// Adicionando pedido ao conjunto L
 	L.push_back(pedido);
@@ -539,12 +552,13 @@ double Sol::delta_FO_ins(double &pedido, int &index_rota, int &pos_no_pickup, in
 
 double Sol::delta_FO_rem(double &pedido){
 	
-	
 	// Índice do nó de pickup correspondente ao request
 	int no_pickup {pedido};
 	
 	// Índice do nó de delivery correspondente ao request
 	int no_delivery {pedido + inst.n};
+	
+	
 	
 	// Achando índice da rota que contém o pedido
 	int index_rota {0};
@@ -568,6 +582,14 @@ double Sol::delta_FO_rem(double &pedido){
 	// Índice (posição) do nó de delivery na rota
 	double pos_no_delivery = std::find(Rotas[index_rota].begin(),Rotas[index_rota].end(), no_delivery) - Rotas[index_rota].begin();
 	
+	
+	/*
+	int index_rota = request_positions.at(pedido).at(0);
+	
+	int pos_no_pickup = request_positions.at(pedido).at(1);
+	
+	int pos_no_delivery = request_positions.at(pedido).at(2);
+	*/
 	
 	// Calculando decréscimo nos custos
 	
