@@ -23,6 +23,9 @@ Sol::Sol(Instance &inst_data){
 		L.push_back(value);
 	}
 	
+	// Dando valor inicial para o número de pedidos não atendidos
+	LSize = inst.n;
+	
 	// Populando o vetor de posições
 	
 	for (int i = 1; i <= inst.n; ++i) {
@@ -33,6 +36,9 @@ Sol::Sol(Instance &inst_data){
 	
 	// Criando uma rota inicial vazia para a solução:
 	Rotas.push_back({0, 2*(inst.n) + 1});
+	
+	// Criando posição de tamanho igual a 2 no atributo com tamanhos de Rotas
+	RotasSize.push_back(2);
 	
 	// Quantidade de requests atendidos (inicia-se em 0)
 	int qtd_atendidos {0};
@@ -62,13 +68,10 @@ Sol::Sol(Instance &inst_data){
 			
 			Rotas.push_back(nova_rota);
 			
+			RotasSize.push_back(2);
+			
 			inserir_pedido(pedido, Rotas.size() - 1, 1, 2);
 			
-			// Removendo pedido de L
-			// L.erase(L.begin());
-			
-			// Adicionando pedido em A
-			// A.push_back(pedido);
 			
 		}
 		
@@ -100,13 +103,13 @@ double Sol::FO(){
 	// Custos totais
 	double custos_totais = 0;
 	
-	for (auto &rota: Rotas){
+	for (int index_rota {0}; index_rota < Rotas.size(); index_rota++){
 		
 		custos_totais += custo_veiculo;
 		
-		for (unsigned index_no {0}; index_no < rota.size() - 1; index_no++){
+		for (unsigned index_no {0}; index_no < RotasSize.at(index_rota) - 1; index_no++){
 			
-			custos_totais += inst.t[rota[index_no]][rota[index_no + 1]];
+			custos_totais += inst.t[Rotas.at(index_rota)[index_no]][Rotas.at(index_rota)[index_no + 1]];
 			
 		}
 	}
@@ -176,15 +179,23 @@ void Sol::inserir_pedido(double &pedido, int index_rota, int pos_no_pickup, int 
 	Rotas.at(index_rota).insert(Rotas.at(index_rota).begin() + pos_no_pickup, no_pickup);
 	Rotas.at(index_rota).insert(Rotas.at(index_rota).begin() + pos_no_delivery, no_delivery);
 	
+	// Aumentando o número de nós da rota correspondente
+	RotasSize.at(index_rota) += 2;
+	
 	// Retirando pedido da lista de pedidos não atendidos
 	
 	L.erase(std::remove_if(L.begin(), L.end(), [&pedido](double value) -> bool { return value == pedido; }), L.end());
+	
+	// Diminuindo o número de pedidos não atendidos
+	LSize -= 1;
 	
 	// Adicionando pedido na lista de pedidos atendidos
 	
 	A.push_back(pedido);
 	
-	/*
+	// Aumentando o número de pedidos atendidos
+	ASize += 1;
+	
 	// Atualizando vetor de posições para o pedido inserido
 	request_positions[pedido] = {index_rota, pos_no_pickup, pos_no_delivery};
 	
@@ -227,7 +238,7 @@ void Sol::inserir_pedido(double &pedido, int index_rota, int pos_no_pickup, int 
 	
 	// Para pedidos após D - Acréscimo de 2 unidades na posição
 	
-	for (int index_node {pos_no_delivery + 1}; index_node < Rotas.at(index_rota).size() - 1; index_node++){
+	for (int index_node {pos_no_delivery + 1}; index_node < RotasSize.at(index_rota) - 1; index_node++){
 		
 		// Nó de referência
 		int node = Rotas.at(index_rota).at(index_node);
@@ -257,7 +268,7 @@ void Sol::inserir_pedido(double &pedido, int index_rota, int pos_no_pickup, int 
 		
 	}
 	
-	*/
+	
 	
 }
 
@@ -269,8 +280,6 @@ void Sol::remover_pedido(double &pedido){
 	
 	// Índice do nó de delivery correspondente ao request
 	int no_delivery {pedido + inst.n};
-	
-	/*
 	
 	// Índice da rota onde o pedido está:
 	int index_rota = request_positions[pedido].at(0);
@@ -323,7 +332,7 @@ void Sol::remover_pedido(double &pedido){
 	
 	// Para pedidos após D - Decréscimo de 2 unidades na posição
 	
-	for (int index_node {pos_no_delivery + 1}; index_node < Rotas.at(index_rota).size() - 1; index_node++){
+	for (int index_node {pos_no_delivery + 1}; index_node < RotasSize.at(index_rota) - 1; index_node++){
 		
 		// Nó de referência
 		int node = Rotas.at(index_rota).at(index_node);
@@ -361,9 +370,12 @@ void Sol::remover_pedido(double &pedido){
 	
 	// Removendo nó de delivery (um índice a menos)
 	Rotas.at(index_rota).erase(Rotas.at(index_rota).begin() + pos_no_delivery - 1);
-	*/
+	
+	// Diminuindo número de nós na rota correspondente
+	RotasSize.at(index_rota) -= 2;
 	
 	
+	/*
 	for (auto &rota: Rotas){
 		
 		// Caso o nó esteja contido na rota
@@ -381,14 +393,21 @@ void Sol::remover_pedido(double &pedido){
 			
 		}
 	}
-
+	*/
+	
+	
 	
 	// Adicionando pedido ao conjunto L
 	L.push_back(pedido);
 	
+	// Aumentando o número de pedidos não atendidos
+	LSize += 1;
+	
 	// Removendo pedido do conjunto A
 	A.erase(std::remove_if(A.begin(), A.end(), [&pedido](double value) -> bool { return value == pedido; }), A.end());
 	
+	// Diminuindo o número de pedidos atendidos
+	ASize -= 1;
 	
 }
 
@@ -559,7 +578,7 @@ double Sol::delta_FO_rem(double &pedido){
 	int no_delivery {pedido + inst.n};
 	
 	
-	
+	/*
 	// Achando índice da rota que contém o pedido
 	int index_rota {0};
 	
@@ -583,13 +602,14 @@ double Sol::delta_FO_rem(double &pedido){
 	double pos_no_delivery = std::find(Rotas[index_rota].begin(),Rotas[index_rota].end(), no_delivery) - Rotas[index_rota].begin();
 	
 	
-	/*
+	*/
+	
 	int index_rota = request_positions.at(pedido).at(0);
 	
 	int pos_no_pickup = request_positions.at(pedido).at(1);
 	
 	int pos_no_delivery = request_positions.at(pedido).at(2);
-	*/
+	
 	
 	// Calculando decréscimo nos custos
 	
@@ -636,7 +656,7 @@ bool Sol::isInsertionFeasible(double &pedido, int index_rota, int &pos_no_pickup
 	// Tempo atual da rota (inicia como 0)
 	double t_atual {0};
 	
-	for (auto index_no {0}; index_no < Rotas.at(index_rota).size() + 1; index_no++){
+	for (auto index_no {0}; index_no < RotasSize.at(index_rota) + 1; index_no++){
 		
 		// Variável que guarda o nó atual considerado na checagem de factibilidade
 		int no_atual {};
@@ -793,9 +813,9 @@ std::vector<double> Sol::delta_melhor_insercao(double &pedido){
 	// Realizando inserções
 	for (auto index_rota {0}; index_rota < Rotas.size(); index_rota++){
 		
-		for (auto pos_insercao_no_pickup {1}; pos_insercao_no_pickup < Rotas[index_rota].size() + 1; pos_insercao_no_pickup++){
+		for (auto pos_insercao_no_pickup {1}; pos_insercao_no_pickup < RotasSize.at(index_rota) + 1; pos_insercao_no_pickup++){
 			
-			for (auto pos_insercao_no_delivery {1}; pos_insercao_no_delivery < Rotas[index_rota].size() + 1; pos_insercao_no_delivery++){
+			for (auto pos_insercao_no_delivery {1}; pos_insercao_no_delivery < RotasSize.at(index_rota) + 1; pos_insercao_no_delivery++){
 				
 				// Testando apenas índices de inserção válidos: índice de delivery maior do que o de pickup (precedence) e diferente dele!
 				// A iteração começa em 1 e termina no tamanho da rota porque não se considera a primeira e última posição da rota, que são o depósito
@@ -880,9 +900,9 @@ std::vector<double> Sol::delta_melhor_insercao(double &pedido, int &index_rota){
 	
 	// Realizando inserções
 		
-	for (auto pos_insercao_no_pickup {1}; pos_insercao_no_pickup < Rotas[index_rota].size() + 1; pos_insercao_no_pickup++){
+	for (auto pos_insercao_no_pickup {1}; pos_insercao_no_pickup < RotasSize.at(index_rota) + 1; pos_insercao_no_pickup++){
 		
-		for (auto pos_insercao_no_delivery {1}; pos_insercao_no_delivery < Rotas[index_rota].size() + 1; pos_insercao_no_delivery++){
+		for (auto pos_insercao_no_delivery {1}; pos_insercao_no_delivery < RotasSize.at(index_rota) + 1; pos_insercao_no_delivery++){
 			
 			// Testando apenas índices de inserção válidos: índice de delivery maior do que o de pickup (precedence) e diferente dele!
 			// A iteração começa em 1 e termina no tamanho da rota porque não se considera a primeira e última posição da rota, que são o depósito
@@ -965,9 +985,9 @@ void Sol::executar_melhor_insercao(double &pedido){
 	// Avaliando inserções
 	for (auto index_rota {0}; index_rota < Rotas.size(); index_rota++){
 		
-		for (auto pos_insercao_no_pickup {1}; pos_insercao_no_pickup < Rotas[index_rota].size() + 1; pos_insercao_no_pickup++){
+		for (auto pos_insercao_no_pickup {1}; pos_insercao_no_pickup < RotasSize.at(index_rota) + 1; pos_insercao_no_pickup++){
 			
-			for (auto pos_insercao_no_delivery {1}; pos_insercao_no_delivery < Rotas[index_rota].size() + 1; pos_insercao_no_delivery++){
+			for (auto pos_insercao_no_delivery {1}; pos_insercao_no_delivery < RotasSize.at(index_rota) + 1; pos_insercao_no_delivery++){
 				
 				// Testando apenas índices de inserção válidos: índice de delivery maior do que o de pickup (precedence) e diferente dele!
 				// A iteração começa em 1 e termina no tamanho da rota porque não se considera a primeira e última posição da rota, que são o depósito

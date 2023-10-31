@@ -2,6 +2,19 @@
 <CodeLite_Project Name="ALNS_OOP" Version="11000" InternalType="User templates">
   <Description/>
   <Dependencies/>
+  <VirtualDirectory Name="src">
+    <File Name="heuristicsFunctions.h"/>
+    <File Name="heuristicsFunctions.cpp"/>
+    <File Name="ALNS.cpp"/>
+    <File Name="ALNS.hpp"/>
+    <File Name="Heuristic.cpp"/>
+    <File Name="Heuristic.hpp"/>
+    <File Name="Sol.cpp"/>
+    <File Name="Sol.hpp"/>
+    <File Name="Instance.cpp"/>
+    <File Name="Instance.hpp"/>
+    <File Name="main.cpp"/>
+  </VirtualDirectory>
   <Settings Type="Executable">
     <GlobalSettings>
       <Compiler Options="" C_Options="" Assembler="">
@@ -52,7 +65,7 @@
       </Completion>
     </Configuration>
     <Configuration Name="Release" CompilerType="MinGW ( C:\Program Files\mingw-w64\mingw64\bin\ )" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
-      <Compiler Options="-O2;-Wall" C_Options="-O2;-Wall" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
+      <Compiler Options="-O3;-O2;-Wall" C_Options="-O3;-O2;-Wall" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
         <IncludePath Value="."/>
         <Preprocessor Value="NDEBUG"/>
       </Compiler>
@@ -92,17 +105,4 @@
       </Completion>
     </Configuration>
   </Settings>
-  <VirtualDirectory Name="src">
-    <File Name="heuristicsFunctions.h"/>
-    <File Name="heuristicsFunctions.cpp"/>
-    <File Name="ALNS.cpp"/>
-    <File Name="ALNS.hpp"/>
-    <File Name="Heuristic.cpp"/>
-    <File Name="Heuristic.hpp"/>
-    <File Name="Sol.cpp"/>
-    <File Name="Sol.hpp"/>
-    <File Name="Instance.cpp"/>
-    <File Name="Instance.hpp"/>
-    <File Name="main.cpp"/>
-  </VirtualDirectory>
 </CodeLite_Project>

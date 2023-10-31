@@ -58,6 +58,7 @@ void print_sol(Sol S)
 int main(){
 	
 	/*
+	
 	// String com instância
 	std::string instancia = "instances/AA30";
 	
@@ -72,6 +73,7 @@ int main(){
 	S.print_sol();
 	
 	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
+	
 	
 	// Objetos Heuristic
 	
@@ -118,8 +120,6 @@ int main(){
 	
 	
 	
-	
-	
 	// Aplicando remoção aleatória:
 	H_r.apply(S);
 	
@@ -138,13 +138,14 @@ int main(){
 	
 	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
 	
+	*/
+	
 	
 	
 	// std::vector<std::string> instancias = {"instances/AA25","instances/CC20","instances/CC25","instances/DD25","instances/DD30"};
 	
-	 * 
-	 * 
-	*/
+	
+	
 	std::vector<std::string> instancias = {"instances/AA50"};
 	
 	for (auto instancia: instancias){
@@ -164,11 +165,7 @@ int main(){
 			
 			// Inicializando objeto solução;
 			Sol s(inst);
-			//Sol s;
-			//s.inst = inst;
 			
-			// Construtiva:
-			// Heuristic H_c('C');
 			
 			// Random removal:
 			Heuristic H_r('R');
@@ -203,10 +200,6 @@ int main(){
 			// Regret insertion 4:
 			Heuristic H_a_4('A', 4);
 			
-			// Construindo solução:
-			// s = H_c.apply(s);
-			
-			
 			// Parâmetros da ALNS:
 			
 			// Definindo soluções incumbente e melhor solução como a solução construída inicialmente
@@ -232,7 +225,7 @@ int main(){
 			
 			cout << "\n Factibilidade:  " << meta.S_p.isFeasible() << endl;
 			
-
+			
 			
 			auto end = std::chrono::high_resolution_clock::now();
 			auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
@@ -240,6 +233,8 @@ int main(){
 			std::cout << "Tempo de execucao: " << elapsed.count() * 1e-9 << "segundos. " << std::endl;
 		}
 	}
+	
+	
 	
 	return 0;
 	

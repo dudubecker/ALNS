@@ -14,11 +14,20 @@ public:
 	// Rotas da solução:
 	std::vector<std::vector<double>> Rotas {};
 	
+	// Tamanho das rotas na solução
+	std::vector<int> RotasSize {};
+	
 	// Pedidos não atendidos na solução (chamados aqui de "L")
 	std::vector<double> L {};
 	
+	// Tamanho do vetor de pedidos não atendidos
+	int LSize {};
+	
 	// Pedidos atendidos na solução (chamados aqui de "A")
 	std::vector<double> A {};
+	
+	// Tamanho do vetor de pedidos atendidos
+	int ASize {};
 	
 	// Posição do pedido na solução
 	std::map<int, std::vector<int>> request_positions {};
