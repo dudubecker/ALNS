@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+#include <map>
 
 class Instance
 {
@@ -46,12 +47,15 @@ class Instance
 	std::vector<std::vector<double>> t_norm {};
 	
 	// Constructor/Destructor
+	
 	Instance();
+	
+	Instance(std::string file_name);
 	
 	~Instance();
 	
 	// Methods
-	void read(std::string file_name);
+	// void read();
 	
 };
 

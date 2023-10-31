@@ -21,7 +21,7 @@ public:
 	std::vector<double> A {};
 	
 	// Posição do pedido na solução
-	std::vector<std::vector<int>> request_positions {};
+	std::map<int, std::vector<int>> request_positions {};
 	
 	// Instância da solução
 	Instance inst;

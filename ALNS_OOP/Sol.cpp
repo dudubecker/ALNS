@@ -23,6 +23,14 @@ Sol::Sol(Instance &inst_data){
 		L.push_back(value);
 	}
 	
+	// Populando o vetor de posições
+	
+	for (int i = 1; i <= inst.n; ++i) {
+		
+		request_positions[i] = std::vector<int>();
+		
+	}
+	
 	// Criando uma rota inicial vazia para a solução:
 	Rotas.push_back({0, 2*(inst.n) + 1});
 	
@@ -49,14 +57,18 @@ Sol::Sol(Instance &inst_data){
 		} else {
 			
 			// Rota vazia com os nós da iteração
-			std::vector <double> nova_rota {0, pedido, pedido + inst.n, 2*(inst.n) + 1};
+			// std::vector <double> nova_rota {0, pedido, pedido + inst.n, 2*(inst.n) + 1};
+			std::vector <double> nova_rota {0, 2*(inst.n) + 1};
+			
 			Rotas.push_back(nova_rota);
 			
+			inserir_pedido(pedido, Rotas.size() - 1, 1, 2);
+			
 			// Removendo pedido de L
-			L.erase(L.begin());
+			// L.erase(L.begin());
 			
 			// Adicionando pedido em A
-			A.push_back(pedido);
+			// A.push_back(pedido);
 			
 		}
 		
@@ -172,6 +184,77 @@ void Sol::inserir_pedido(double &pedido, int index_rota, int pos_no_pickup, int 
 	
 	A.push_back(pedido);
 	
+	// Atualizando vetor de posições para o pedido inserido
+	request_positions[pedido] = {index_rota, pos_no_pickup, pos_no_delivery};
+	
+	// Atualizando vetor de posições para demais pedidos da rota 
+	
+	// Para pedidos anteriores a P - as posições não se alteram!
+	
+	
+	// Para pedidos entre P e D - Acréscimo de 1 unidade na posição
+	
+	// * OBS: no caso em que pos_no_pickup = pos_no_delivery - 1 (coleta e entrega consecutivas), esse laço não é executado!
+	for (int index_node {pos_no_pickup + 1}; index_node < pos_no_delivery; index_node++){
+		
+		// Nó de referência
+		int node = Rotas.at(index_rota).at(index_node);
+		
+		// Se o nó é de pickup
+		if (node <= inst.n){
+			
+			int request = node;
+			
+			// Atualizando posição no atributo de posições (pickup)
+			int posicao = request_positions.at(request).at(1) + 1;
+			request_positions.at(request).at(1) = posicao;
+			
+			
+		// Se o nó é de delivery
+		} else {
+			
+			// Índice do pedido correspondente
+			int request = node - inst.n;
+			
+			// Atualizando posição no atributo de posições (delivery)
+			int posicao = request_positions.at(request).at(2) + 1;
+			request_positions.at(request).at(2) = posicao;
+			
+		}
+		
+	}
+	
+	// Para pedidos após D - Acréscimo de 2 unidades na posição
+	
+	for (int index_node {pos_no_delivery + 1}; index_node < Rotas.at(index_rota).size() - 1; index_node++){
+		
+		// Nó de referência
+		int node = Rotas.at(index_rota).at(index_node);
+		
+		// Se o nó é de pickup
+		if (node <= inst.n){
+			
+			int request = node;
+			
+			// Atualizando posição no atributo de posições (pickup)
+			int posicao = request_positions.at(request).at(1) + 2;
+			request_positions.at(request).at(1) = posicao;
+			
+			
+		// Se o nó é de delivery
+		} else {
+			
+			// Índice do pedido correspondente
+			int request = node - inst.n;
+			
+			// Atualizando posição no atributo de posições (delivery)
+			int posicao = request_positions.at(request).at(2) + 2;
+			request_positions.at(request).at(2) = posicao;
+			
+		}
+		
+		
+	}
 	
 }
 

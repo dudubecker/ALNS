@@ -14,7 +14,17 @@ using namespace std;
 
 // Função para printar vetores: debug
 
-void print(std::vector<double> const &input)
+void printDouble(std::vector<double> const &input)
+{
+    for (auto const &i: input) {
+        cout << i << " ";
+    }
+	
+	cout << endl;
+	
+}
+
+void printInt(std::vector<int> const &input)
 {
     for (auto const &i: input) {
         cout << i << " ";
@@ -48,16 +58,24 @@ void print_sol(Sol S)
 int main(){
 	
 	// String com instância
-	std::string instancia = "instances/AA20";
+	std::string instancia = "instances/AA30";
 	
 	// Objeto Instance
-	Instance inst;
-	inst.read(instancia);
+	Instance inst(instancia);
 	
 	// Objeto Sol, inicializado a partir do objeto Instance
 	Sol S(inst);
 	
 	S.print_sol();
+	
+	for (int i = 1; i <= inst.n; i++){
+		
+		std::cout << i << " :";
+		printInt(S.request_positions[i]);
+		
+	}
+	
+	/*
 	
 	// Objetos Heuristic
 	
@@ -128,7 +146,14 @@ int main(){
 	
 	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
 	
-	/*
+	
+	std::cout << "\nPosicoes de cada pedido: \n";
+	
+
+	
+	
+	
+	
 	// std::vector<std::string> instancias = {"instances/AA25","instances/CC20","instances/CC25","instances/DD25","instances/DD30"};
 	
 	std::vector<std::string> instancias = {"instances/AA25"};
