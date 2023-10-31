@@ -57,7 +57,8 @@ void print_sol(Sol S)
 
 int main(){
 	
-	/*
+	// Para gerar valores aleatórios, tirar comentário:
+	// srand(time(NULL));
 	
 	// String com instância
 	std::string instancia = "instances/AA30";
@@ -111,15 +112,6 @@ int main(){
 	
 	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
 	
-	for (int i = 1; i <= inst.n; i++){
-		
-		std::cout << i << " :";
-		printInt(S.request_positions[i]);
-		
-	}
-	
-	
-	
 	// Aplicando remoção aleatória:
 	H_r.apply(S);
 	
@@ -138,7 +130,15 @@ int main(){
 	
 	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
 	
-	*/
+	
+	// Printando posições dos pedidos:
+	
+	//for (int i = 1; i <= inst.n; i++){
+		
+		//std::cout << i << " :";
+		//printInt(S.request_positions[i]);
+		
+	//}
 	
 	
 	
@@ -150,7 +150,7 @@ int main(){
 	
 	for (auto instancia: instancias){
 		
-		for (auto i {0}; i < 10; i++){
+		for (auto i {0}; i < 2; i++){
 			
 			// Medindo tempo
 			auto begin = std::chrono::high_resolution_clock::now();
@@ -225,7 +225,17 @@ int main(){
 			
 			cout << "\n Factibilidade:  " << meta.S_p.isFeasible() << endl;
 			
+			for (auto heuristic: meta.removal_heuristics){
+				
+				std::cout << heuristic.name << ": " << heuristic.processing_time << std::endl;
+				
+			}
 			
+			for (auto heuristic: meta.insertion_heuristics){
+				
+				std::cout << heuristic.name << ": " << heuristic.processing_time << std::endl;
+				
+			}
 			
 			auto end = std::chrono::high_resolution_clock::now();
 			auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);

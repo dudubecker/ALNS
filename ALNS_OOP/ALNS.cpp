@@ -274,7 +274,7 @@ Sol ALNS::routeReductionHeuristic(Sol &S_i, int max_it_RRH){
 	Sol BKS = S_i;
 	
 	// Para gerar números aleatórios
-	srand(time(NULL));
+	// srand(time(NULL));
 	
 	// Variável para o número de iterações:
 	int n_it {0};
