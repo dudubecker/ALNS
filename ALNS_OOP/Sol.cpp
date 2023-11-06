@@ -37,6 +37,9 @@ Sol::Sol(Instance &inst_data){
 	// Criando uma rota inicial vazia para a solução:
 	Rotas.push_back({0, 2*(inst.n) + 1});
 	
+	// Adicionando vetor de cargas vazio
+	Cargas.push_back({0,0});
+	
 	// Criando posição de tamanho igual a 2 no atributo com tamanhos de Rotas
 	RotasSize.push_back(2);
 	
@@ -53,11 +56,24 @@ Sol::Sol(Instance &inst_data){
 		
 		std::vector<double> dados_melhor_insercao = delta_melhor_insercao(pedido);
 		
-		// Caso o pedido tenha sido inserido:
+		// Caso haja inserções factíveis
 		
 		if (dados_melhor_insercao.at(0) != 99999){
 			
 			inserir_pedido(pedido, dados_melhor_insercao.at(1),dados_melhor_insercao.at(2),dados_melhor_insercao.at(3));
+			
+			std::cout << "\n\n\nPedido inserido: " << pedido << std::endl;
+			
+			for (auto const &i: Cargas.at(0)) {
+				std::cout << i << " ";
+			}
+			
+			std::cout << "\n";
+			
+			for (auto const &i: Rotas.at(0)) {
+				std::cout << i << " ";
+			}
+			
 			
 		
 		} else {
@@ -67,6 +83,8 @@ Sol::Sol(Instance &inst_data){
 			std::vector <double> nova_rota {0, 2*(inst.n) + 1};
 			
 			Rotas.push_back(nova_rota);
+			
+			Cargas.push_back({0,0});
 			
 			RotasSize.push_back(2);
 			
@@ -174,7 +192,7 @@ void Sol::inserir_pedido(double &pedido, int index_rota, int pos_no_pickup, int 
 	// Índice do nó de delivery correspondente ao request
 	int no_delivery {pedido + inst.n};
 	
-	// Inserindo nós na rota, nas determinadas
+	// Inserindo nós na rota, nas determinadas posições
 	
 	Rotas.at(index_rota).insert(Rotas.at(index_rota).begin() + pos_no_pickup, no_pickup);
 	Rotas.at(index_rota).insert(Rotas.at(index_rota).begin() + pos_no_delivery, no_delivery);
@@ -202,7 +220,6 @@ void Sol::inserir_pedido(double &pedido, int index_rota, int pos_no_pickup, int 
 	// Atualizando vetor de posições para demais pedidos da rota 
 	
 	// Para pedidos anteriores a P - as posições não se alteram!
-	
 	
 	// Para pedidos entre P e D - Acréscimo de 1 unidade na posição
 	
@@ -268,6 +285,50 @@ void Sol::inserir_pedido(double &pedido, int index_rota, int pos_no_pickup, int 
 		
 	}
 	
+	// Incrementando vetor de Cargas
+	
+	// Se as posições de inserção são consecutivas
+	if (pos_no_pickup + 1 == pos_no_delivery){
+		
+		// Valor da carga na posição anterior à posição de pickup
+		double carga_anterior = Cargas.at(index_rota).at(pos_no_pickup - 1);
+		
+		// [0, ..., Q, +P, -D, ..., ] -> [0, ..., Q, Q + d, Q, ..., ]
+		
+		// Adicionando carga na posição de pickup
+		Cargas.at(index_rota).insert(Cargas.at(index_rota).begin() + pos_no_pickup, carga_anterior + inst.q.at(pedido));
+		
+		// Adicionando carga na posição de delivery
+		Cargas.at(index_rota).insert(Cargas.at(index_rota).begin() + pos_no_delivery, carga_anterior);
+		
+	
+	// Se as posições de inserção não são consecutivas
+	} else {
+		
+		// Valor da carga na posição anterior à posição de pickup
+		double carga_anterior_pickup = Cargas.at(index_rota).at(pos_no_pickup - 1);
+		
+		// Valor da carga na posição anterior à posição de delivery
+		double carga_anterior_delivery = Cargas.at(index_rota).at(pos_no_delivery - 2);
+		
+		// std::cout << "\nCarga anterior pickup: " << carga_anterior_pickup << std::endl;
+		// std::cout << "Carga anterior delivery: " << carga_anterior_delivery << std::endl;
+		
+		// Adicionando carga na posição de pickup
+		Cargas.at(index_rota).insert(Cargas.at(index_rota).begin() + pos_no_pickup, carga_anterior_pickup + inst.q.at(pedido));
+		
+		// Adicionando carga na posição de delivery
+		Cargas.at(index_rota).insert(Cargas.at(index_rota).begin() + pos_no_delivery, carga_anterior_delivery);
+		
+		// Incrementando cargas intermediárias - entre nós de pickup e delivery
+		for (auto index_node {pos_no_pickup + 1}; index_node < pos_no_delivery; index_node++){
+			
+			Cargas.at(index_rota).at(index_node) += inst.q.at(pedido);
+			
+		}
+		
+		
+	}
 	
 	
 }

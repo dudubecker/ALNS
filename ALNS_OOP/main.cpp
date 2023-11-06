@@ -61,10 +61,10 @@ int main(){
 	// srand(time(NULL));
 	
 	// Para controlar a seed
-	srand(124);
+	srand(123);
 	
 	// String com instância
-	std::string instancia = "instances/AA30";
+	std::string instancia = "instances/BB30";
 	
 	// Objeto Instance
 	Instance inst(instancia);
@@ -72,48 +72,59 @@ int main(){
 	// Objeto Sol, inicializado a partir do objeto Instance
 	Sol S(inst);
 	
-	std::cout << "Solucao apos heuristica construtiva: \n";
+	std::cout << "\n\nSolucao apos heuristica construtiva: \n";
 	
 	S.print_sol();
 	
-	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
+	for (auto vec: S.Cargas){
+		
+		printDouble(vec);
+		
+	}
+	
+	
+	
+	// std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
 	
 	
 	// Objetos Heuristic
 	
 	// Worst removal:
-	Heuristic H_w('W');
+	// Heuristic H_w('W');
 	
 	// Random removal:
-	Heuristic H_r('R');
+	// Heuristic H_r('R');
 	
 	// Greedy insertion:
-	Heuristic H_g('G');
+	// Heuristic H_g('G');
 	
 	// Regret insertion
-	Heuristic H_a('A');
+	// Heuristic H_a('A');
 	
 	
 	// Aplicando worst removal:
 	
-	H_w.apply(S);
+	// H_w.apply(S);
 	
-	std::cout << "\nSolucao apos worst removal: \n";
+	// std::cout << "\nSolucao apos worst removal: \n";
 	
-	S.print_sol();
+	// S.print_sol();
 	
-	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
+	// std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
 	
 	
 	// Aplicando inserção gulosa:
 	
-	H_g.apply(S);
+	// H_g.apply(S);
 	
-	std::cout << "\nSolucao apos insercao gulosa: \n";
+	// std::cout << "\nSolucao apos insercao gulosa: \n";
 	
-	S.print_sol();
+	// S.print_sol();
 	
-	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
+	// std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
+	
+	
+	/*
 	
 	// Aplicando remoção aleatória:
 	H_r.apply(S);
@@ -142,7 +153,7 @@ int main(){
 		//printInt(S.request_positions[i]);
 		
 	//}
-	
+	*/
 	
 	
 	// std::vector<std::string> instancias = {"instances/AA25","instances/CC20","instances/CC25","instances/DD25","instances/DD30"};

@@ -14,6 +14,9 @@ public:
 	// Rotas da solução:
 	std::vector<std::vector<double>> Rotas {};
 	
+	// Vetor de cargas
+	std::vector<std::vector<double>> Cargas {};
+	
 	// Tamanho das rotas na solução
 	std::vector<int> RotasSize {};
 	
