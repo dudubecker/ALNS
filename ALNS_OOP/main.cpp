@@ -63,8 +63,9 @@ int main(){
 	// Para controlar a seed
 	srand(123);
 	
+	/*
 	// String com instância
-	std::string instancia = "instances/BB30";
+	std::string instancia = "instances/AA30";
 	
 	// Objeto Instance
 	Instance inst(instancia);
@@ -82,21 +83,19 @@ int main(){
 		
 	}
 	
-	
-	
-	// std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
+	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
 	
 	
 	// Objetos Heuristic
 	
 	// Worst removal:
-	// Heuristic H_w('W');
+	Heuristic H_w('W');
 	
 	// Random removal:
 	// Heuristic H_r('R');
 	
 	// Greedy insertion:
-	// Heuristic H_g('G');
+	Heuristic H_g('G');
 	
 	// Regret insertion
 	// Heuristic H_a('A');
@@ -104,27 +103,34 @@ int main(){
 	
 	// Aplicando worst removal:
 	
-	// H_w.apply(S);
+	H_w.apply(S);
 	
-	// std::cout << "\nSolucao apos worst removal: \n";
+	std::cout << "\nSolucao apos worst removal: \n";
 	
-	// S.print_sol();
+	S.print_sol();
 	
-	// std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
+	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
 	
 	
 	// Aplicando inserção gulosa:
 	
-	// H_g.apply(S);
+	H_g.apply(S);
 	
-	// std::cout << "\nSolucao apos insercao gulosa: \n";
+	std::cout << "\nSolucao apos insercao gulosa: \n";
 	
-	// S.print_sol();
+	S.print_sol();
 	
-	// std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
+	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
+	
+	for (auto vec: S.Cargas){
+		
+		printDouble(vec);
+		
+	}
 	
 	
-	/*
+	
+	
 	
 	// Aplicando remoção aleatória:
 	H_r.apply(S);
@@ -158,9 +164,9 @@ int main(){
 	
 	// std::vector<std::string> instancias = {"instances/AA25","instances/CC20","instances/CC25","instances/DD25","instances/DD30"};
 	
-	/*
 	
-	std::vector<std::string> instancias = {"instances/AA50"};
+	
+	std::vector<std::string> instancias = {"instances/AA30"};
 	
 	for (auto instancia: instancias){
 		
@@ -239,6 +245,15 @@ int main(){
 			
 			cout << "\n Factibilidade:  " << meta.S_p.isFeasible() << endl;
 			
+			cout << "\n Cargas: \n" ;
+			
+			for (auto vec: meta.S_p.Cargas){
+			
+				printDouble(vec);
+			
+			}
+			
+			
 			for (auto heuristic: meta.removal_heuristics){
 				
 				std::cout << heuristic.name << ": " << heuristic.processing_time << std::endl;
@@ -258,7 +273,7 @@ int main(){
 		}
 	}
 	
-	*/
+	
 	
 	return 0;
 	

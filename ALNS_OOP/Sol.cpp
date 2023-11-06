@@ -62,17 +62,17 @@ Sol::Sol(Instance &inst_data){
 			
 			inserir_pedido(pedido, dados_melhor_insercao.at(1),dados_melhor_insercao.at(2),dados_melhor_insercao.at(3));
 			
-			std::cout << "\n\n\nPedido inserido: " << pedido << std::endl;
+			//std::cout << "\n\n\nPedido inserido: " << pedido << std::endl;
 			
-			for (auto const &i: Cargas.at(0)) {
-				std::cout << i << " ";
-			}
+			//for (auto const &i: Cargas.at(0)) {
+			//	std::cout << i << " ";
+			//}
 			
-			std::cout << "\n";
+			//std::cout << "\n";
 			
-			for (auto const &i: Rotas.at(0)) {
-				std::cout << i << " ";
-			}
+			//for (auto const &i: Rotas.at(0)) {
+			//	std::cout << i << " ";
+			//}
 			
 			
 		
@@ -435,29 +435,6 @@ void Sol::remover_pedido(double &pedido){
 	// Diminuindo número de nós na rota correspondente
 	RotasSize.at(index_rota) -= 2;
 	
-	
-	/*
-	for (auto &rota: Rotas){
-		
-		// Caso o nó esteja contido na rota
-		if (count(rota.begin(), rota.end(), no_pickup)){
-			
-			// Removendo nó de pickup
-			
-			rota.erase(std::remove_if(rota.begin(), rota.end(), [&no_pickup](int value) -> bool { return value == no_pickup; }), rota.end());
-			
-			// Removendo nó de delivery
-			
-			rota.erase(std::remove_if(rota.begin(), rota.end(), [&no_delivery](int value) -> bool { return value == no_delivery; }), rota.end());
-			
-			break;
-			
-		}
-	}
-	*/
-	
-	
-	
 	// Adicionando pedido ao conjunto L
 	L.push_back(pedido);
 	
@@ -469,6 +446,25 @@ void Sol::remover_pedido(double &pedido){
 	
 	// Diminuindo o número de pedidos atendidos
 	ASize -= 1;
+	
+	// Vetor de Cargas
+	
+	// Decrementando posições entre P e D (contempla também casos onde pos_pickup = pos_delivery - 1)
+	for (auto index_node {pos_no_pickup + 1}; index_node < pos_no_delivery; index_node++){
+		
+		Cargas.at(index_rota).at(index_node) -= inst.q.at(pedido);
+		
+	}
+	
+	// Retirando posições no vetor de Cargas
+	// Posição de Pickup
+	Cargas.at(index_rota).erase(Cargas.at(index_rota).begin() + pos_no_pickup);
+	
+	// Posição de delivery (um índice a menos)
+	Cargas.at(index_rota).erase(Cargas.at(index_rota).begin() + pos_no_delivery - 1);
+	
+	
+	
 	
 }
 
