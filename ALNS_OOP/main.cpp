@@ -60,6 +60,9 @@ int main(){
 	// Para gerar valores aleatórios, tirar comentário:
 	// srand(time(NULL));
 	
+	// Para controlar a seed
+	srand(124);
+	
 	// String com instância
 	std::string instancia = "instances/AA30";
 	
@@ -144,7 +147,7 @@ int main(){
 	
 	// std::vector<std::string> instancias = {"instances/AA25","instances/CC20","instances/CC25","instances/DD25","instances/DD30"};
 	
-	
+	/*
 	
 	std::vector<std::string> instancias = {"instances/AA50"};
 	
@@ -244,7 +247,7 @@ int main(){
 		}
 	}
 	
-	
+	*/
 	
 	return 0;
 	

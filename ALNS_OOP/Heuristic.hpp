@@ -27,6 +27,8 @@ public:
 	
 	// ... Demais parâmetros específicos de cada heurística
 	
+	// Mudar de lugar!
+	
 	// Shaw's Removal:
 	double phi {};
 	double chi {};
@@ -73,7 +75,109 @@ public:
 	// Método de aplicação da heurística: tem como entrada uma solução e como saída uma solução alterada (Rotas, L e A)
 	Sol apply(Sol &S);
 	
+	/*
+	
+	// Início das alterações!
+	
+	// Métodos
+	
+	// Main method for applying heuristic
+	virtual Sol apply(Sol &S);
+	
+	// Method for initialization of removal methods
+	virtual int initializeMethod(Sol &S) = 0;
+	
+	// Method for initialization of insertion methods
+	virtual void initializeMethod() = 0;
+	
+	// Specific method for each heuristic
+	virtual Sol specificApply(Sol &S)  = 0;
+	
+	virtual ~Heuristic() {} // Adicionamos um destrutor virtual
+	
+	protected:
+	// Construtor protegido para evitar instanciar a classe Heuristic diretamente
+	Heuristic() {}
+	
+	
+};
 
+// Removal heuristic object
+
+class RemovalHeuristic : public Heuristic {
+public:
+    // Sobrescrita do método "specificApply" para a RemovalHeuristic
+    int initializeMethod(Sol &S) override;
+	
+	void initializeMethod() override {};
+	
+};
+
+// Removal heuristics inherited objects
+
+class RandomRemoval : public RemovalHeuristic {
+	
+	Sol specificApply(Sol &S) override;
+	
+};
+
+class WorstRemoval : public RemovalHeuristic {
+	
+	Sol specificApply(Sol &S) override;
+	
+};
+
+class ShawsRemoval : public RemovalHeuristic {
+	
+	// Shaw's Removal:
+	double phi {};
+	double chi {};
+	double psi {};
+	
+	// Constructor:
+	ShawsRemoval(int phi_value, int chi_value, int psi_value){
+		phi = phi_value;
+		chi = chi_value;
+		psi = psi_value;
+	};
+	
+	
+	Sol specificApply(Sol &S) override;
+	
+};
+
+// Insertion heuristic object
+
+class InsertionHeuristic : public Heuristic {
+public:
+
+	
+	// Sobrescrita do método "specificApply" para a RemovalHeuristic
+    int initializeMethod(Sol &S) override {};
+	
+	void initializeMethod() override;
+};
+
+class GreedyInsertion : public InsertionHeuristic {
+	
+	Sol specificApply(Sol &S) override;
+	
+};
+
+class RegretInsertion : public InsertionHeuristic {
+	
+	Sol specificApply(Sol &S) override;
+	
+	// Parâmetro da regret
+	double k {};
+	
+	// Constructor:
+	RegretInsertion(int k_value){
+		k = k_value;
+	};
+	
+	
+*/
 };
 
 #endif // _HEURISTIC_H_
