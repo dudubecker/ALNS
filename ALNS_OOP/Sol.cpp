@@ -40,6 +40,9 @@ Sol::Sol(Instance &inst_data){
 	// Adicionando vetor de cargas vazio
 	Cargas.push_back({0,0});
 	
+	// Adicionando vetor de tempos de visita - (0,0), já que os nós finais e inicial estão no mesmo lugar!
+	TemposDeVisita.push_back({0,0});
+	
 	// Criando posição de tamanho igual a 2 no atributo com tamanhos de Rotas
 	RotasSize.push_back(2);
 	
@@ -62,29 +65,41 @@ Sol::Sol(Instance &inst_data){
 			
 			inserir_pedido(pedido, dados_melhor_insercao.at(1),dados_melhor_insercao.at(2),dados_melhor_insercao.at(3));
 			
-			//std::cout << "\n\n\nPedido inserido: " << pedido << std::endl;
+			std::cout << "\n\n\nPedido inserido: " << pedido << std::endl;
 			
 			//for (auto const &i: Cargas.at(0)) {
 			//	std::cout << i << " ";
 			//}
 			
-			//std::cout << "\n";
 			
-			//for (auto const &i: Rotas.at(0)) {
-			//	std::cout << i << " ";
-			//}
+			
+			for (auto const &i: Rotas.at(0)) {
+				std::cout << i << " ";
+			}
+			
+			std::cout << "\n\n";
+			
+			for (auto const &i: TemposDeVisita.at(0)) {
+				std::cout << i << " ";
+			}
 			
 			
 		
 		} else {
 			
-			// Rota vazia com os nós da iteração
-			// std::vector <double> nova_rota {0, pedido, pedido + inst.n, 2*(inst.n) + 1};
+			// Rota vazia com depósito central
+			
 			std::vector <double> nova_rota {0, 2*(inst.n) + 1};
+			
+			// Adicionando informações nos vetores de rotas, cargas e tempos de visita
 			
 			Rotas.push_back(nova_rota);
 			
 			Cargas.push_back({0,0});
+			
+			TemposDeVisita.push_back({0,0});
+			
+			// Adicionando valor igual a 2 (nós do depósito central) no vetor de tamanhos de rota
 			
 			RotasSize.push_back(2);
 			
@@ -215,6 +230,7 @@ void Sol::inserir_pedido(double &pedido, int index_rota, int pos_no_pickup, int 
 	ASize += 1;
 	
 	// Atualizando vetor de posições para o pedido inserido
+	
 	request_positions[pedido] = {index_rota, pos_no_pickup, pos_no_delivery};
 	
 	// Atualizando vetor de posições para demais pedidos da rota 
@@ -330,6 +346,64 @@ void Sol::inserir_pedido(double &pedido, int index_rota, int pos_no_pickup, int 
 		
 	}
 	
+	// Incrementando vetor com tempos de visita
+	
+	/*
+	
+	// Se as posições de inserção são consecutivas
+	if (pos_no_pickup + 1 == pos_no_delivery){
+		
+		// Nó anterior
+		int no_anterior = Rotas.at(index_rota).at(pos_no_pickup - 1);
+		
+		// Nó posterior
+		int no_posterior = Rotas.at(index_rota).at(pos_no_delivery + 1);
+		
+		// Tempo do primeiro novo arco (anterior até P)
+		double tempo_arco_1 = inst.t.at(no_anterior).at(no_pickup);
+		
+		// Tempo do segundo novo arco (P até D)
+		double tempo_arco_2 = inst.t.at(no_pickup).at(no_delivery);
+		
+		// Tempo do terceiro novo arco (D até posterior)
+		double tempo_arco_3 = inst.t.at(no_delivery).at(no_posterior);
+		
+		// Tempo do arco antigo (anterior até posterior)
+		double tempo_arco_antigo = inst.t.at(no_anterior).at(no_posterior);
+		
+		// O tempo de visita do nó de pickup será igual ao tempo de visita do nó anterior mais o primeiro novo arco
+		double tempo_de_visita_no_pickup = TemposDeVisita.at(index_rota).at(pos_no_pickup - 1) + tempo_arco_1;
+		
+		// O tempo de visita do nó de pickup será igual ao tempo de visita do nó anterior mais o primeiro e o segundo novo arco
+		double tempo_de_visita_no_delivery = TemposDeVisita.at(index_rota).at(pos_no_pickup - 1) + tempo_arco_1 + tempo_arco_2;
+		
+		
+		// Inserindo novos tempos de visita no vetor
+		
+		// Adicionando tempo de visita na posição de pickup
+		TemposDeVisita.at(index_rota).insert(TemposDeVisita.at(index_rota).begin() + pos_no_pickup, tempo_de_visita_no_pickup);
+		
+		// Adicionando tempo de visita na posição de delivery
+		TemposDeVisita.at(index_rota).insert(TemposDeVisita.at(index_rota).begin() + pos_no_delivery, tempo_de_visita_no_delivery);
+		
+		// Delta PD - é o incremento do tempo de visita dos nós após D (não inclusive)
+		double delta_PD = tempo_arco_1 + tempo_arco_2 + tempo_arco_3 - tempo_arco_antigo;
+		
+		// Incrementando tempos de visita após o nó D
+		for (int index_node {pos_no_delivery + 1}; index_node < RotasSize.at(index_rota); index_node++){
+			
+			TemposDeVisita.at(index_rota).at(index_node) += delta_PD;
+			
+		}
+		
+		
+	// Se as posições de inserção não são consecutivas
+	} else {
+		
+		;
+		
+	}
+	*/
 	
 }
 

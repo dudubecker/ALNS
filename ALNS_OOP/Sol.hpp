@@ -17,6 +17,9 @@ public:
 	// Vetor de cargas
 	std::vector<std::vector<double>> Cargas {};
 	
+	// Vetor de tempos de visita
+	std::vector<std::vector<double>> TemposDeVisita {};
+	
 	// Tamanho das rotas na solução
 	std::vector<int> RotasSize {};
 	

@@ -63,9 +63,8 @@ int main(){
 	// Para controlar a seed
 	srand(123);
 	
-	/*
 	// String com instância
-	std::string instancia = "instances/AA30";
+	std::string instancia = "instances/AA5";
 	
 	// Objeto Instance
 	Instance inst(instancia);
@@ -77,14 +76,18 @@ int main(){
 	
 	S.print_sol();
 	
-	for (auto vec: S.Cargas){
-		
-		printDouble(vec);
-		
-	}
 	
 	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
 	
+	for (int i {0}; i < inst.t.size(); i++){
+		
+		
+		printDouble(S.inst.t.at(i));
+		
+		
+	}
+	
+	/*
 	
 	// Objetos Heuristic
 	
@@ -122,7 +125,14 @@ int main(){
 	
 	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
 	
+	
 	for (auto vec: S.Cargas){
+		
+		printDouble(vec);
+		
+	}
+	
+	for (auto vec: S.TemposDeVisita){
 		
 		printDouble(vec);
 		
@@ -165,7 +175,7 @@ int main(){
 	// std::vector<std::string> instancias = {"instances/AA25","instances/CC20","instances/CC25","instances/DD25","instances/DD30"};
 	
 	
-	
+	/*
 	std::vector<std::string> instancias = {"instances/AA30"};
 	
 	for (auto instancia: instancias){
@@ -273,7 +283,7 @@ int main(){
 		}
 	}
 	
-	
+	*/
 	
 	return 0;
 	
