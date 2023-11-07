@@ -63,6 +63,8 @@ int main(){
 	// Para controlar a seed
 	srand(123);
 	
+	/*
+	
 	// String com instância
 	std::string instancia = "instances/AA20";
 	
@@ -86,7 +88,7 @@ int main(){
 	}
 	
 	
-	/*
+	
 	
 	// Objetos Heuristic
 	
@@ -113,23 +115,29 @@ int main(){
 	
 	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
 	
+	for (auto vec: S.TemposDeVisita){
+		
+		printDouble(vec);
+		
+	}
+	
 	
 	// Aplicando inserção gulosa:
 	
 	H_g.apply(S);
 	
-	std::cout << "\nSolucao apos insercao gulosa: \n";
+	//std::cout << "\nSolucao apos insercao gulosa: \n";
 	
 	S.print_sol();
 	
 	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
 	
 	
-	for (auto vec: S.Cargas){
+	//for (auto vec: S.Cargas){
 		
-		printDouble(vec);
+	//	printDouble(vec);
 		
-	}
+	//}
 	
 	for (auto vec: S.TemposDeVisita){
 		
@@ -168,14 +176,14 @@ int main(){
 		//printInt(S.request_positions[i]);
 		
 	//}
-	*/
+	
 	
 	
 	// std::vector<std::string> instancias = {"instances/AA25","instances/CC20","instances/CC25","instances/DD25","instances/DD30"};
+	*/
 	
 	
-	/*
-	std::vector<std::string> instancias = {"instances/AA30"};
+	std::vector<std::string> instancias = {"instances/AA20"};
 	
 	for (auto instancia: instancias){
 		
@@ -246,7 +254,7 @@ int main(){
 			
 			meta.Temperature = T_inicial;
 			
-			meta.algo(600, 0, 600);
+			meta.algo(1200, 0, 600);
 			
 			meta.S_p.print_sol();
 			
@@ -257,6 +265,14 @@ int main(){
 			cout << "\n Cargas: \n" ;
 			
 			for (auto vec: meta.S_p.Cargas){
+			
+				printDouble(vec);
+			
+			}
+			
+			cout << "\n Tempos de visita: \n" ;
+			
+			for (auto vec: meta.S_p.TemposDeVisita){
 			
 				printDouble(vec);
 			
@@ -282,7 +298,7 @@ int main(){
 		}
 	}
 	
-	*/
+	
 	
 	return 0;
 	
