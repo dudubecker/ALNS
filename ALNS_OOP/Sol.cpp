@@ -65,7 +65,7 @@ Sol::Sol(Instance &inst_data){
 			
 			inserir_pedido(pedido, dados_melhor_insercao.at(1),dados_melhor_insercao.at(2),dados_melhor_insercao.at(3));
 			
-			std::cout << "\n\n\nPedido inserido: " << pedido << std::endl;
+			// std::cout << "\n\n\nPedido inserido: " << pedido << std::endl;
 			
 			//for (auto const &i: Cargas.at(0)) {
 			//	std::cout << i << " ";
@@ -73,15 +73,15 @@ Sol::Sol(Instance &inst_data){
 			
 			
 			
-			for (auto const &i: Rotas.at(0)) {
-				std::cout << i << " ";
-			}
+			//for (auto const &i: Rotas.at(0)) {
+			//	std::cout << i << " ";
+			//}
 			
-			std::cout << "\n\n";
+			//std::cout << "\n\n";
 			
-			for (auto const &i: TemposDeVisita.at(0)) {
-				std::cout << i << " ";
-			}
+			//for (auto const &i: TemposDeVisita.at(0)) {
+			//	std::cout << i << " ";
+			//}
 			
 			
 		
@@ -348,8 +348,6 @@ void Sol::inserir_pedido(double &pedido, int index_rota, int pos_no_pickup, int 
 	
 	// Incrementando vetor com tempos de visita
 	
-	/*
-	
 	// Se as posições de inserção são consecutivas
 	if (pos_no_pickup + 1 == pos_no_delivery){
 		
@@ -377,7 +375,6 @@ void Sol::inserir_pedido(double &pedido, int index_rota, int pos_no_pickup, int 
 		// O tempo de visita do nó de pickup será igual ao tempo de visita do nó anterior mais o primeiro e o segundo novo arco
 		double tempo_de_visita_no_delivery = TemposDeVisita.at(index_rota).at(pos_no_pickup - 1) + tempo_arco_1 + tempo_arco_2;
 		
-		
 		// Inserindo novos tempos de visita no vetor
 		
 		// Adicionando tempo de visita na posição de pickup
@@ -400,10 +397,75 @@ void Sol::inserir_pedido(double &pedido, int index_rota, int pos_no_pickup, int 
 	// Se as posições de inserção não são consecutivas
 	} else {
 		
-		;
+		
+		
+		// Nó anterior ao nó de pickup
+		int no_anterior_pickup = Rotas.at(index_rota).at(pos_no_pickup - 1);
+		
+		// Nó posterior ao nó de pickup
+		int no_posterior_pickup = Rotas.at(index_rota).at(pos_no_pickup + 1);
+		
+		// Nó anterior ao nó de delivery
+		int no_anterior_delivery = Rotas.at(index_rota).at(pos_no_delivery - 1);
+		
+		// Nó posterior ao nó de delivery
+		int no_posterior_delivery = Rotas.at(index_rota).at(pos_no_delivery + 1);
+		
+		// Tempo do novo arco entre anterior_p e P
+		double tempo_arco_1_pickup = inst.t.at(no_anterior_pickup).at(no_pickup);
+		
+		// Tempo do novo arco entre P e posterior_p
+		double tempo_arco_2_pickup = inst.t.at(no_pickup).at(no_posterior_pickup);
+		
+		// Tempo do antigo arco entre anterior_p e posterior_p
+		double tempo_arco_antigo_pickup = inst.t.at(no_anterior_pickup).at(no_posterior_pickup);
+		
+		// Tempo do novo arco entre anterior_d e D
+		double tempo_arco_1_delivery = inst.t.at(no_anterior_delivery).at(no_delivery);
+		
+		// Tempo do novo arco entre D e posterior_d
+		double tempo_arco_2_delivery = inst.t.at(no_delivery).at(no_posterior_delivery);
+		
+		// Tempo do antigo arco entre anterior_d e posterior_d
+		double tempo_arco_antigo_delivery = inst.t.at(no_anterior_delivery).at(no_posterior_delivery);
+		
+		// Tempo de visita do nó de pickup - tempo do nó anterior + tempo do novo arco 1 de pickup
+		double tempo_de_visita_no_pickup = TemposDeVisita.at(index_rota).at(pos_no_pickup - 1) + tempo_arco_1_pickup;
+		
+		// Delta P - variação dos tempos de visita dos nós entre P e D (não inclusive)
+		double delta_P = tempo_arco_1_pickup + tempo_arco_2_pickup - tempo_arco_antigo_pickup;
+		
+		// Adicionando tempo de visita na posição de pickup
+		TemposDeVisita.at(index_rota).insert(TemposDeVisita.at(index_rota).begin() + pos_no_pickup, tempo_de_visita_no_pickup);
+		
+		// Adicionando tempo de visita na posição de delivery - dummy
+		TemposDeVisita.at(index_rota).insert(TemposDeVisita.at(index_rota).begin() + pos_no_delivery, 0);
+		
+		// Incrementando tempo dos arcos entre P e D (ambos não inclusive) com delta P
+		for (int index_node {pos_no_pickup + 1}; index_node < pos_no_delivery; index_node++){
+			
+		 	TemposDeVisita.at(index_rota).at(index_node) += delta_P;
+			
+		}
+		
+		// Tempo de visita do nó de delivery - Tempo do nó anterior + delta P (já somado) + tempo de novo arco entre anterior_d e D
+		double tempo_de_visita_no_delivery = TemposDeVisita.at(index_rota).at(pos_no_delivery - 1) + tempo_arco_1_delivery;
+		
+		TemposDeVisita.at(index_rota).at(pos_no_delivery) = tempo_de_visita_no_delivery;
+		
+		// Delta D - variação dos tempos de visita dos nós após D (inclui delta_P!)
+		double delta_D = delta_P + tempo_arco_1_delivery + tempo_arco_2_delivery - tempo_arco_antigo_delivery;
+		
+		
+		// Incrementando nós após D com delta D
+		for (int index_node {pos_no_delivery + 1}; index_node < RotasSize.at(index_rota); index_node++){
+			
+			TemposDeVisita.at(index_rota).at(index_node) += delta_D;
+			
+		}
 		
 	}
-	*/
+	
 	
 }
 

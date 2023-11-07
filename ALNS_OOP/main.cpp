@@ -64,7 +64,7 @@ int main(){
 	srand(123);
 	
 	// String com instância
-	std::string instancia = "instances/AA5";
+	std::string instancia = "instances/AA20";
 	
 	// Objeto Instance
 	Instance inst(instancia);
@@ -79,13 +79,12 @@ int main(){
 	
 	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
 	
-	for (int i {0}; i < inst.t.size(); i++){
+	for (auto vec: S.TemposDeVisita){
 		
-		
-		printDouble(S.inst.t.at(i));
-		
+		printDouble(vec);
 		
 	}
+	
 	
 	/*
 	
