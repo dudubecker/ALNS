@@ -63,7 +63,7 @@ int main(){
 	// Para controlar a seed
 	srand(123);
 	
-	
+	/*
 	
 	// String com instância
 	std::string instancia = "instances/AA20";
@@ -89,7 +89,7 @@ int main(){
 	}
 	
 	
-	/*
+	
 	
 	// Objetos Heuristic
 	
@@ -145,9 +145,9 @@ int main(){
 		printDouble(vec);
 		
 	}
-	*/
 	
-	/*
+	
+	
 	
 	
 	// Aplicando remoção aleatória:
@@ -183,7 +183,7 @@ int main(){
 	// std::vector<std::string> instancias = {"instances/AA25","instances/CC20","instances/CC25","instances/DD25","instances/DD30"};
 	*/
 	
-	/*
+	// /*
 	std::vector<std::string> instancias = {"instances/AA20"};
 	
 	for (auto instancia: instancias){
@@ -299,7 +299,7 @@ int main(){
 		}
 	}
 	
-	*/
+	// */
 	
 	return 0;
 	

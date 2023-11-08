@@ -471,133 +471,6 @@ void Sol::remover_pedido(double &pedido){
 		
 	}
 	
-	// Se as posições de remoção são consecutivas
-	if (pos_no_pickup + 1 == pos_no_delivery){
-		
-		// Nó anterior
-		int no_anterior = Rotas.at(index_rota).at(pos_no_pickup - 1);
-	
-		// Nó posterior
-		int no_posterior = Rotas.at(index_rota).at(pos_no_delivery + 1);
-		
-		
-		
-		
-		// Tempo do primeiro arco antigo (anterior até P)
-		double tempo_arco_antigo_1 = inst.t.at(no_anterior).at(no_pickup);
-		
-		// Tempo do segundo arco antigo (P até D)
-		double tempo_arco_antigo_2 = inst.t.at(no_pickup).at(no_delivery);
-		
-		// Tempo do terceiro arco antigo (D até posterior)
-		double tempo_arco_antigo_3 = inst.t.at(no_delivery).at(no_posterior);
-		
-		// Tempo do novo arco (anterior até posterior)
-		double tempo_arco_novo = inst.t.at(no_anterior).at(no_posterior);
-		
-		
-		
-		// Delta PD - Variação dos tempos de visita para os nós a partir do nó posterior (inclusive)
-		// OBS: delta_PD é estritamente negativo!!!
-		double delta_PD = tempo_arco_novo - tempo_arco_antigo_1 - tempo_arco_antigo_2 - tempo_arco_antigo_3;
-		
-		// Atualizando tempos a partir do nó posterior (pos_no_delivery + 1)
-		for (int index_node {pos_no_delivery + 1}; index_node < RotasSize.at(index_rota); index_node++){
-			
-		 	TemposDeVisita.at(index_rota).at(index_node) += delta_PD;
-			
-		}
-		
-		
-		
-		// Removendo tempos de visita
-		
-		// Removendo pickup
-		TemposDeVisita.at(index_rota).erase(TemposDeVisita.at(index_rota).begin() + pos_no_pickup);
-		
-		// Removendo delivery (um índice a menos)
-		TemposDeVisita.at(index_rota).erase(TemposDeVisita.at(index_rota).begin() + pos_no_delivery - 1);
-		
-		
-		
-	// Se as posições de remoção não são consecutivas
-	} else {
-		
-		// Nós utilizados
-		
-		// Nó anterior ao nó de pickup
-		int no_anterior_pickup = Rotas.at(index_rota).at(pos_no_pickup - 1);
-		
-		// Nó posterior ao nó de pickup
-		int no_posterior_pickup = Rotas.at(index_rota).at(pos_no_pickup + 1);
-		
-		// Nó anterior ao nó de delivery
-		int no_anterior_delivery = Rotas.at(index_rota).at(pos_no_delivery - 1);
-		
-		// Nó posterior ao nó de delivery
-		int no_posterior_delivery = Rotas.at(index_rota).at(pos_no_delivery + 1);
-		
-		
-		
-		// Tempo do primeiro arco antigo (anterior_p até P)
-		double tempo_arco_antigo_1 = inst.t.at(no_anterior_pickup).at(no_pickup);
-		
-		// Tempo do segundo arco antigo de (P até posterior_p)
-		double tempo_arco_antigo_2 = inst.t.at(no_pickup).at(no_posterior_pickup);
-		
-		// Tempo do novo arco 1 (anterior_p a posterior_p)
-		double tempo_arco_novo_1 = inst.t.at(no_anterior_pickup).at(no_posterior_pickup);
-		
-		// Delta P - nós entre P e D terão esse valor subtraído!
-		// OBS: Delta P estritamente negativo!
-		double delta_P = tempo_arco_novo_1 - tempo_arco_antigo_1 - tempo_arco_antigo_2;
-		
-		// Subtraindo delta_P dos nós entre P e D (não inclusive)
-		for (int index_node {pos_no_pickup + 1}; index_node < pos_no_delivery; index_node++){
-			
-		 	TemposDeVisita.at(index_rota).at(index_node) += delta_P;
-			
-		}
-		
-		
-		
-		// Tempo do terceiro arco antigo (anterior_d até D)
-		double tempo_arco_antigo_3 = inst.t.at(no_anterior_delivery).at(no_delivery);
-		
-		// Tempo do quarto arco antigo de (D até posterior_d)
-		double tempo_arco_antigo_4 = inst.t.at(no_delivery).at(no_posterior_delivery);
-		
-		// Tempo do novo arco (anterior_d a posterior_d)
-		double tempo_arco_novo_2 =  inst.t.at(no_anterior_delivery).at(no_posterior_delivery);
-		
-		// Delta D - nós após D terão esse valor subtraído! (Esse valor inclui delta_P!)
-		double delta_D = delta_P + tempo_arco_novo_2 - tempo_arco_antigo_3 - tempo_arco_antigo_4;
-		
-		
-		
-		// Subtraindo delta_D dos nós após D (não inclusive)
-		for (int index_node {pos_no_delivery + 1}; index_node < RotasSize.at(index_rota) ; index_node++){
-			
-		 	TemposDeVisita.at(index_rota).at(index_node) += delta_D;
-			
-		}
-		
-		
-		
-		// Removendo tempos de visita
-		
-		// Removendo pickup
-		TemposDeVisita.at(index_rota).erase(TemposDeVisita.at(index_rota).begin() + pos_no_pickup);
-		
-		// Removendo delivery (um índice a menos)
-		TemposDeVisita.at(index_rota).erase(TemposDeVisita.at(index_rota).begin() + pos_no_delivery - 1);
-		
-		
-		
-	}
-	
-	
-	
 	
 	// Realizando remoções no vetor de rotas
 	
@@ -641,6 +514,33 @@ void Sol::remover_pedido(double &pedido){
 	
 	// Atualizando valores do vetor de tempos de visita
 	
+	// Posição de Pickup
+	TemposDeVisita.at(index_rota).erase(TemposDeVisita.at(index_rota).begin() + pos_no_pickup);
+	
+	// Posição de delivery (um índice a menos)
+	TemposDeVisita.at(index_rota).erase(TemposDeVisita.at(index_rota).begin() + pos_no_delivery - 1);
+	
+	// Atualizando valores a partir de pos_pickup - 1
+	
+	// Tempo inicial - a partir do nó anterior ao nó de pickup - os tempos de visitas dos nós anteriores são conservados!
+	
+	double t_atual = TemposDeVisita.at(index_rota).at(pos_no_pickup - 1);
+	
+	// Atualizando tempos de visita
+	for (int index_node {pos_no_pickup - 1}; index_node < RotasSize.at(index_rota) - 1; index_node++){
+		
+		int no_atual = Rotas.at(index_rota).at(index_node);
+		
+		int no_seguinte = Rotas.at(index_rota).at(index_node + 1);
+		
+		double delta_t = inst.t.at(no_atual).at(no_seguinte);
+		
+		// Será atribuída à variável "t_atual" o maior valor entre o delta e o tempo de abertura de TW, no caso de adiantamentos!
+		t_atual = std::max(t_atual + delta_t, inst.e.at(no_seguinte));
+		
+		TemposDeVisita.at(index_rota).at(index_node + 1) = t_atual;
+		
+	}
 	
 	
 	
