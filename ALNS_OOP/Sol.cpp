@@ -65,23 +65,21 @@ Sol::Sol(Instance &inst_data){
 			
 			inserir_pedido(pedido, dados_melhor_insercao.at(1),dados_melhor_insercao.at(2),dados_melhor_insercao.at(3));
 			
-			std::cout << "\n\n\nPedido inserido: " << pedido << std::endl;
+			// std::cout << "\n\n\nPedido inserido: " << pedido << std::endl;
 			
 			//for (auto const &i: Cargas.at(0)) {
 			//	std::cout << i << " ";
 			//}
 			
+			// for (auto const &i: Rotas.at(0)) {
+			// 	std::cout << i << " ";
+			// }
 			
+			// std::cout << "\n\n";
 			
-			for (auto const &i: Rotas.at(0)) {
-				std::cout << i << " ";
-			}
-			
-			std::cout << "\n\n";
-			
-			for (auto const &i: TemposDeVisita.at(0)) {
-				std::cout << i << " ";
-			}
+			// for (auto const &i: TemposDeVisita.at(0)) {
+			// 	std::cout << i << " ";
+			// }
 			
 			
 		
@@ -542,9 +540,6 @@ void Sol::remover_pedido(double &pedido){
 		
 	}
 	
-	
-	
-	
 }
 
 // Método para checar factibilidade
@@ -964,8 +959,9 @@ std::vector<double> Sol::delta_melhor_insercao(double &pedido){
 					// S_teste.inserir_pedido(pedido, index_rota, pos_insercao_no_pickup, pos_insercao_no_delivery);
 					
 					// if (S_teste.isFeasible(index_rota)){
-					if (isInsertionFeasible(pedido, index_rota, pos_insercao_no_pickup, pos_insercao_no_delivery)){
-						
+					// if (isInsertionFeasible(pedido, index_rota, pos_insercao_no_pickup, pos_insercao_no_delivery)){
+					if (checar_factibilidade(pedido, index_rota, pos_insercao_no_pickup, pos_insercao_no_delivery)){
+					
 						num_rotas_factiveis += 1;
 						
 						double delta_S = delta_FO_ins(pedido, index_rota, pos_insercao_no_pickup, pos_insercao_no_delivery);
@@ -1051,7 +1047,8 @@ std::vector<double> Sol::delta_melhor_insercao(double &pedido, int &index_rota){
 				// S_teste.inserir_pedido(pedido, index_rota, pos_insercao_no_pickup, pos_insercao_no_delivery);
 				
 				// if (S_teste.isFeasible(index_rota)){
-				if (isInsertionFeasible(pedido, index_rota, pos_insercao_no_pickup, pos_insercao_no_delivery)){
+				// if (isInsertionFeasible(pedido, index_rota, pos_insercao_no_pickup, pos_insercao_no_delivery)){
+				if (checar_factibilidade(pedido, index_rota, pos_insercao_no_pickup, pos_insercao_no_delivery)){
 					
 					num_rotas_factiveis += 1;
 					
@@ -1136,7 +1133,8 @@ void Sol::executar_melhor_insercao(double &pedido){
 					// S_teste.inserir_pedido(pedido, index_rota, pos_insercao_no_pickup, pos_insercao_no_delivery);
 					
 					//if (S_teste.isFeasible(index_rota)){
-					if (isInsertionFeasible(pedido, index_rota, pos_insercao_no_pickup, pos_insercao_no_delivery)){
+					//if (isInsertionFeasible(pedido, index_rota, pos_insercao_no_pickup, pos_insercao_no_delivery)){
+					if (checar_factibilidade(pedido, index_rota, pos_insercao_no_pickup, pos_insercao_no_delivery)){
 						
 						num_rotas_factiveis += 1;
 						
@@ -1182,25 +1180,139 @@ bool Sol::checar_factibilidade(double &pedido, int index_rota, int &pos_no_picku
 	// Índice do nó de delivery correspondente ao request
 	int no_delivery {pedido + inst.n};
 	
-	// Primeira checagem (para possivelmente agilizar) - checa se as time windows de pickup ou delivery do pedido são estouradas
-	if (factivel){
-		
-		;
-		
-	}
+	// Demanda a ser adicionada na chunk entre P e D
+	double demanda = inst.q.at(pedido);
 	
-	// Segunda checagem - checa se a carga é estourada no segmento que contém P e D
-	if (factivel){
-		
-		;
-		
-	}
+	// Carga atual - Anterior à posição de pickup
+	double cap_atual = Cargas.at(index_rota).at(pos_no_pickup - 1);
 	
+	// Tempo atual - Anterior à posição de pickup
+	double t_atual = TemposDeVisita.at(index_rota).at(pos_no_pickup - 1);
 	
-	// Terceira checagem - checagem completa de time windows
-	if (factivel){
+	// Iterando a partir da posição de pickup
+	
+	for (auto index_no {pos_no_pickup - 1}; index_no < RotasSize.at(index_rota) + 1; index_no++){
 		
-		;
+		// Variável que guarda o nó atual considerado na checagem de factibilidade
+		int no_atual {};
+		
+		// Variável que guarda o nó seguinte considerado na checagem de factibilidade
+		int no_seguinte {};
+		
+		// Se as posições de inserção são consecutivas (pos_no_delivery = pos_no_pickup + 1)
+		if (pos_no_delivery == pos_no_pickup + 1){
+			
+			if (index_no < pos_no_pickup - 1){
+				
+				no_atual = Rotas.at(index_rota).at(index_no);
+				
+				no_seguinte = Rotas.at(index_rota).at(index_no + 1);
+				
+			} else if (index_no == pos_no_pickup - 1){
+				
+				no_atual = Rotas.at(index_rota).at(index_no);
+				
+				no_seguinte = no_pickup;
+				
+			} else if (index_no == pos_no_pickup){
+				
+				no_atual = no_pickup;
+				
+				no_seguinte = no_delivery;
+				
+			} else if (index_no == pos_no_pickup + 1){
+				
+				no_atual = no_delivery;
+				
+				no_seguinte = Rotas.at(index_rota).at(index_no - 1);
+				
+				
+			} else {
+				
+				no_atual = Rotas.at(index_rota).at(index_no - 2);
+				
+				no_seguinte = Rotas.at(index_rota).at(index_no - 1);
+				
+			}
+			
+			
+			
+		// Se as posições de inserção não são consecutivas (pos_no_delivery > pos_no_pickup + 1)
+		} else if (pos_no_delivery > pos_no_pickup + 1){
+			
+			if (index_no < pos_no_pickup - 1){
+				
+				no_atual = Rotas.at(index_rota).at(index_no);
+				
+				no_seguinte = Rotas.at(index_rota).at(index_no + 1);
+				
+			} else if (index_no == pos_no_pickup - 1){
+				
+				no_atual = Rotas.at(index_rota).at(index_no);
+				
+				no_seguinte = no_pickup;
+				
+			} else if (index_no == pos_no_pickup){
+				
+				no_atual = no_pickup;
+				
+				no_seguinte = Rotas.at(index_rota).at(index_no);
+				
+			} else if ((index_no > pos_no_pickup) && (index_no < pos_no_delivery - 1)){
+				
+				no_atual = Rotas.at(index_rota).at(index_no - 1);
+				
+				no_seguinte = Rotas.at(index_rota).at(index_no);
+				
+			} else if (index_no == pos_no_delivery - 1){
+				
+				no_atual = Rotas.at(index_rota).at(index_no - 1);
+				
+				no_seguinte = no_delivery;
+				
+			} else if (index_no == pos_no_delivery){
+				
+				no_atual = no_delivery;
+				
+				no_seguinte = Rotas.at(index_rota).at(index_no - 1);
+				
+				
+			} else {
+				
+				no_atual = Rotas.at(index_rota).at(index_no - 2);
+				
+				no_seguinte = Rotas.at(index_rota).at(index_no - 1);
+				
+			}
+			
+			
+		}
+		
+		// Checando se ir do no atual para o nó seguinte irá violar as restrições de capacidade e time window
+		if ((cap_atual + inst.q.at(no_seguinte) > inst.Cap) || (inst.l.at(no_seguinte) < t_atual + inst.t.at(no_atual).at(no_seguinte))){
+			
+			// Atribuindo valor falso para a variável de factibilidade e quebrando o laço for
+			factivel = false;
+			break;
+			
+		// Caso seja possível, os valores são atualizados
+		} else {
+			
+			// Atualizando valores
+			
+			// Capacidade
+			cap_atual += inst.q.at(no_seguinte);
+			
+			// Tempo
+			// Caso haja adiantamento (tempo de chegada menor que a janela de tempo de abertura)
+			if (t_atual + inst.t.at(no_atual).at(no_seguinte) < inst.e.at(no_seguinte)){
+				t_atual = inst.e.at(no_seguinte);
+				
+			} else {
+				t_atual += inst.t.at(no_atual).at(no_seguinte);
+				
+			}
+		}
 		
 	}
 	

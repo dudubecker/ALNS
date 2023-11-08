@@ -184,7 +184,7 @@ int main(){
 	*/
 	
 	// /*
-	std::vector<std::string> instancias = {"instances/AA20"};
+	std::vector<std::string> instancias = {"instances/AA75"};
 	
 	for (auto instancia: instancias){
 		

@@ -1,1 +1,1 @@
-Debug/Sol.cpp.o Debug/heuristicsFunctions.cpp.o Debug/ALNS.cpp.o Debug/main.cpp.o Debug/Heuristic.cpp.o Debug/Instance.cpp.o   
+Release/Sol.cpp.o Release/heuristicsFunctions.cpp.o Release/ALNS.cpp.o Release/main.cpp.o Release/Heuristic.cpp.o Release/Instance.cpp.o   
