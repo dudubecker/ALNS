@@ -6,6 +6,8 @@
 #include <time.h>
 #include <chrono>
 
+
+
 //ALNS::ALNS()
 //{
 //}
@@ -15,6 +17,7 @@ ALNS::~ALNS()
 }
 
 // Método para atualização de pesos, realizado no início de cada segmento
+
 
 
 void ALNS::atualizar_pesos(){
@@ -31,14 +34,14 @@ void ALNS::atualizar_pesos(){
 		// Atualizando pesos para as heurísticas de remoção:
 		for (auto &heuristic: removal_heuristics){
 			
-			heuristic.weight = novo_W_removal;
+			heuristic->weight = novo_W_removal;
 			
 		}
 		
 		// Atualizando pesos para as heurísticas de inserção:
 		for (auto &heuristic: insertion_heuristics){
 			
-			heuristic.weight = novo_W_insertion;
+			heuristic->weight = novo_W_insertion;
 			
 		}
 		
@@ -58,19 +61,19 @@ void ALNS::atualizar_pesos(){
 		for (auto &heuristic: removal_heuristics){
 			
 			// Atualizando peso
-			heuristic.weight = heuristic.weight*(1-r) + r*((heuristic.score)/(heuristic.n_it));
+			heuristic->weight = heuristic->weight*(1-r) + r*((heuristic->score)/(heuristic->n_it));
 			
 			// Incrementando nova soma de pesos:
-			nova_soma_W_rem += heuristic.weight;
+			nova_soma_W_rem += heuristic->weight;
 			
 		}
 		// Atualizando pesos para as heurísticas de inserção:
 		for (auto &heuristic: insertion_heuristics){
 			
-			heuristic.weight = heuristic.weight*(1-r) + r*((heuristic.score)/(heuristic.n_it));
+			heuristic->weight = heuristic->weight*(1-r) + r*((heuristic->score)/(heuristic->n_it));
 			
 			// Incrementando nova soma de pesos:
-			nova_soma_W_ins += heuristic.weight;
+			nova_soma_W_ins += heuristic->weight;
 		}
 		
 		// Atualizando valores de soma de pesos:
@@ -81,6 +84,8 @@ void ALNS::atualizar_pesos(){
 	}
 	
 }
+
+
 
 // Método para critério de aceitação:
 
@@ -132,6 +137,8 @@ bool ALNS::criterio_aceitacao(Sol &S){
 	
 }
 
+
+
 	// Método para escolher heurísticas: retorna o índice de uma heurística ou a própria heurística?
 	
 	// OBS: ver um jeito melhor para não criar código redundante! Possivelmente passar o vetor de heurísticas como um argumento
@@ -140,7 +147,7 @@ bool ALNS::criterio_aceitacao(Sol &S){
 int ALNS::escolher_heuristica(char type){
 	
 	// Vetor de heurísticas (inicialmente vazio)
-	std::vector<Heuristic> heuristics_vector {};
+	std::vector<Heuristic*> heuristics_vector {};
 	
 	// Soma dos pesos das heurísticas 
 	double soma_W {};
@@ -171,10 +178,10 @@ int ALNS::escolher_heuristica(char type){
 	int index_heuristica {0};
 	
 	// Determinando índice da heurística de remoção:
-	for (Heuristic &heuristic: heuristics_vector){
+	for (Heuristic* &heuristic: heuristics_vector){
 		
 		// Probabilidade de escolha da heurística:
-		double prob_heuristica = heuristic.weight/soma_W;
+		double prob_heuristica = heuristic->weight/soma_W;
 		
 		prob_acumulada += prob_heuristica;
 		
@@ -196,14 +203,15 @@ int ALNS::escolher_heuristica(char type){
 	
 }
 
+
 void ALNS::atualizar_pontuacoes(bool &CA, bool &BKS,int &index_h_rem, int &index_h_ins, double &FO){
 	
 	//std::cout << FO << std::endl;
 	
 	if (BKS){
 		
-		removal_heuristics[index_h_rem].score += sigma_1;
-		insertion_heuristics[index_h_ins].score += sigma_1;
+		removal_heuristics[index_h_rem]->score += sigma_1;
+		insertion_heuristics[index_h_ins]->score += sigma_1;
 		
 		//std::cout << "Case 1" << std::endl;
 		
@@ -214,15 +222,15 @@ void ALNS::atualizar_pontuacoes(bool &CA, bool &BKS,int &index_h_rem, int &index
 			
 			if (FO < S_i.FO()){
 				
-				removal_heuristics[index_h_rem].score += sigma_2;
-				insertion_heuristics[index_h_ins].score += sigma_2;
+				removal_heuristics[index_h_rem]->score += sigma_2;
+				insertion_heuristics[index_h_ins]->score += sigma_2;
 				
 				//std::cout << "Case 2" << std::endl;
 				
 			}else{
 				
-				removal_heuristics[index_h_rem].score += sigma_3;
-				insertion_heuristics[index_h_ins].score += sigma_3;
+				removal_heuristics[index_h_rem]->score += sigma_3;
+				insertion_heuristics[index_h_ins]->score += sigma_3;
 				
 				//std::cout << "Case 3" << std::endl;
 				
@@ -232,16 +240,18 @@ void ALNS::atualizar_pontuacoes(bool &CA, bool &BKS,int &index_h_rem, int &index
 	}
 	// Incrementando a quantidade de iterações da heurística no segmento:
 	
-	removal_heuristics[index_h_rem].n_it += 1;
-	insertion_heuristics[index_h_ins].n_it += 1;
+	removal_heuristics[index_h_rem]->n_it += 1;
+	insertion_heuristics[index_h_ins]->n_it += 1;
 	
 	// Incrementando a quantidade total de iterações da heurística (debug):
 	
-	removal_heuristics[index_h_rem].n_it_total += 1;
-	insertion_heuristics[index_h_ins].n_it_total += 1;
+	removal_heuristics[index_h_rem]->n_it_total += 1;
+	insertion_heuristics[index_h_ins]->n_it_total += 1;
 	
 	
 }
+
+
 
 void ALNS::zerar_pontuacoes(){
 	
@@ -249,8 +259,8 @@ void ALNS::zerar_pontuacoes(){
 	
 	for (auto &heuristic: removal_heuristics){
 		
-		heuristic.score = 0;
-		heuristic.n_it = 0;
+		heuristic->score = 0;
+		heuristic->n_it = 0;
 		
 	}
 	
@@ -258,12 +268,14 @@ void ALNS::zerar_pontuacoes(){
 	
 	for (auto &heuristic: insertion_heuristics){
 		
-		heuristic.score = 0;
-		heuristic.n_it = 0;
+		heuristic->score = 0;
+		heuristic->n_it = 0;
 		
 	}
 	
 }
+
+
 
 Sol ALNS::routeReductionHeuristic(Sol &S_i, int max_it_RRH){
 	
@@ -309,15 +321,9 @@ Sol ALNS::routeReductionHeuristic(Sol &S_i, int max_it_RRH){
 		int index_h_rem = escolher_heuristica('R');
 		int index_h_ins = escolher_heuristica('I');
 		
-		//if (n_it == 0){
-			
-		//	insertion_heuristics.at(index_h_ins).apply(S);
-			
-		//}
+		removal_heuristics.at(index_h_rem)->apply(S);
 		
-		removal_heuristics.at(index_h_rem).apply(S);
-		
-		insertion_heuristics.at(index_h_ins).apply(S);
+		insertion_heuristics.at(index_h_ins)->apply(S);
 		
 		// S.print_sol();
 		
@@ -375,9 +381,9 @@ void ALNS::algo(int max_it_ALNS, int max_it_RRH, double max_t_ALNS){
 		int index_h_rem = escolher_heuristica('R');
 		int index_h_ins = escolher_heuristica('I');
 		
-		S = removal_heuristics.at(index_h_rem).apply(S);
+		removal_heuristics.at(index_h_rem)->apply(S);
 		
-		S = insertion_heuristics.at(index_h_ins).apply(S);
+		insertion_heuristics.at(index_h_ins)->apply(S);
 		
 		// Analisando se a solução é a melhor já encontrada e armazenando seu valor na região de soluções encontradas
 		
@@ -426,3 +432,5 @@ void ALNS::algo(int max_it_ALNS, int max_it_RRH, double max_t_ALNS){
 	}
 	
 }
+/*
+*/

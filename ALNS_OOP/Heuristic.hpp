@@ -5,7 +5,7 @@
 #include "Instance.hpp"
 
 
-
+/*
 class Heuristic
 {
 public:
@@ -75,22 +75,47 @@ public:
 	// Método de aplicação da heurística: tem como entrada uma solução e como saída uma solução alterada (Rotas, L e A)
 	Sol apply(Sol &S);
 	
-	/*
+	
+};
+*/
+
+// /*
+class Heuristic
+{
+public:
+	
+	// Nome da heurística: Cons, Shaw, Worst, Random, Greedy, Regret
+	char name {};
+	
+	// Score da heurística, atualizado dinamicamente no algoritmo
+	double score {0};
+	
+	// Peso (probabilidade de escolha) da heurística, atualizado dinamicamente no algoritmo
+	double weight {0};
+	
+	// Número de iterações pelas quais a heurística passou: talvez inicializar como 1
+	int n_it {0};
+	
+	// Número total de iterações pelas quais a heurística passou: talvez inicializar como 1
+	int n_it_total {0};
+	
+	// Tempo computacional empregado na heurística:
+	double processing_time {};
 	
 	// Início das alterações!
 	
 	// Métodos
 	
-	// Main method for applying heuristic
+	// Método "padrão" para os objetos Heuristic
 	virtual Sol apply(Sol &S);
 	
-	// Method for initialization of removal methods
+	// Método para inicialização dos operadores de remoção (calcula porcentagem de "n" a ser removida da solução)
 	virtual int initializeMethod(Sol &S) = 0;
 	
-	// Method for initialization of insertion methods
+	// Método para inicialização dos operadores de inserção (placeholder)
 	virtual void initializeMethod() = 0;
 	
-	// Specific method for each heuristic
+	// Método específico para cada heurística
 	virtual Sol specificApply(Sol &S)  = 0;
 	
 	virtual ~Heuristic() {} // Adicionamos um destrutor virtual
@@ -106,8 +131,9 @@ public:
 
 class RemovalHeuristic : public Heuristic {
 public:
-    // Sobrescrita do método "specificApply" para a RemovalHeuristic
-    int initializeMethod(Sol &S) override;
+	
+	// Sobrescrita do método "specificApply" para a RemovalHeuristic
+	int initializeMethod(Sol &S) override;
 	
 	void initializeMethod() override {};
 	
@@ -129,13 +155,14 @@ class WorstRemoval : public RemovalHeuristic {
 
 class ShawsRemoval : public RemovalHeuristic {
 	
+public:
 	// Shaw's Removal:
 	double phi {};
 	double chi {};
 	double psi {};
 	
 	// Constructor:
-	ShawsRemoval(int phi_value, int chi_value, int psi_value){
+	ShawsRemoval(double phi_value, double chi_value, double psi_value){
 		phi = phi_value;
 		chi = chi_value;
 		psi = psi_value;
@@ -150,7 +177,6 @@ class ShawsRemoval : public RemovalHeuristic {
 
 class InsertionHeuristic : public Heuristic {
 public:
-
 	
 	// Sobrescrita do método "specificApply" para a RemovalHeuristic
     int initializeMethod(Sol &S) override {};
@@ -166,6 +192,7 @@ class GreedyInsertion : public InsertionHeuristic {
 
 class RegretInsertion : public InsertionHeuristic {
 	
+public:
 	Sol specificApply(Sol &S) override;
 	
 	// Parâmetro da regret
@@ -177,7 +204,8 @@ class RegretInsertion : public InsertionHeuristic {
 	};
 	
 	
-*/
 };
+// */
+
 
 #endif // _HEURISTIC_H_

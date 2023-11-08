@@ -5,6 +5,7 @@
 #include "Instance.hpp"
 #include "Heuristic.hpp"
 
+
 class ALNS
 {
 public:
@@ -12,10 +13,10 @@ public:
 	// Atributos
 	
 	// Vetor que guardará as heurísticas de remoção já inicializadas 
-	std::vector<Heuristic> removal_heuristics {};
+	std::vector<Heuristic*> removal_heuristics {};
 	
 	// Vetor que guardará as heurísticas de inserção já inicializadas 
-	std::vector<Heuristic> insertion_heuristics {};
+	std::vector<Heuristic*> insertion_heuristics {};
 	
 	// Vetor com os pesos de cada heurística de remoção -> Talvez mais simples do que cada heurística ter um atributo "peso"!
 	// std::vector<double> W_rem {};

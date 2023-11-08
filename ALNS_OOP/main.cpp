@@ -60,11 +60,12 @@ int main(){
 	// Para gerar valores aleatórios, tirar comentário:
 	// srand(time(NULL));
 	
-	/*
 	
 	// Para controlar a seed
-	srand(123);
+	srand(125);
 	
+	
+	/*
 	
 	// String com instância
 	std::string instancia = "instances/AA20";
@@ -77,27 +78,37 @@ int main(){
 	
 	std::cout << "\n\nSolucao apos heuristica construtiva: \n";
 	
-	S.remover_rota(0);
+	S.print_sol();
+	
+	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
+	
+	// Inicializando heurísticas:
+	
+	RandomRemoval H_r {};
+	
+	WorstRemoval H_w {};
+	
+	ShawsRemoval H_s(0.3, 0.4, 0.3);
+	
+	GreedyInsertion H_g {};
+	
+	RegretInsertion H_a(2);
+	
+	// Aplicando remoção aleatória:
+	
+	H_r.apply(S);
+	
+	std::cout << "\nSolucao apos remocao aleatoria: \n";
 	
 	S.print_sol();
 	
 	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
 	
-	for (int i = 1; i <= inst.n; i++){
-		
-		std::cout << i << " :";
-		printInt(S.request_positions[i]);
-		
-	}
-	
-	
-	Heuristic H_g('G');
-	
 	// Aplicando inserção gulosa:
 	
 	H_g.apply(S);
 	
-	//std::cout << "\nSolucao apos insercao gulosa: \n";
+	std::cout << "\nSolucao apos regret: \n";
 	
 	S.print_sol();
 	
@@ -115,7 +126,7 @@ int main(){
 	Heuristic H_r('R');
 	
 	// Greedy insertion:
-	// Heuristic H_g('G');
+	Heuristic H_g('G');
 	
 	// Regret insertion
 	Heuristic H_a('A');
@@ -127,44 +138,20 @@ int main(){
 	
 	H_w.apply(S);
 	
-	
 	S.print_sol();
 	
 	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
-	
-	//for (auto vec: S.TemposDeVisita){
-		
-	//	printDouble(vec);
-		
-	//}
-	
 	
 	
 	// Aplicando inserção gulosa:
 	
 	H_g.apply(S);
 	
-	//std::cout << "\nSolucao apos insercao gulosa: \n";
+	std::cout << "\nSolucao apos insercao gulosa: \n";
 	
 	S.print_sol();
 	
 	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
-	
-	
-	
-	//for (auto vec: S.Cargas){
-		
-	//	printDouble(vec);
-		
-	//}
-	
-	//for (auto vec: S.TemposDeVisita){
-		
-	//	printDouble(vec);
-		
-	//}
-	
-	
 	
 	
 	
@@ -187,16 +174,14 @@ int main(){
 	
 	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
 	
-	
 	*/
-	
 	
 	
 	// std::vector<std::string> instancias = {"instances/AA25","instances/CC20","instances/CC25","instances/DD25","instances/DD30"};
 	
 	
 	// /*
-	std::vector<std::string> instancias = {"instances/AA75"};
+	std::vector<std::string> instancias = {"instances/AA60"};
 	
 	for (auto instancia: instancias){
 		
@@ -216,58 +201,55 @@ int main(){
 			// Inicializando objeto solução;
 			Sol s(inst);
 			
-			
 			// Random removal:
-			Heuristic H_r('R');
-			
+			RandomRemoval* H_r = new RandomRemoval;
+
 			// Worst removal:
-			Heuristic H_w('W');
-			
+			WorstRemoval* H_w = new WorstRemoval;
+
 			// Shaw's removal:
-			Heuristic H_s('S',0.3,0.4,0.3);
-			
+			ShawsRemoval* H_s = new ShawsRemoval(0.3, 0.4, 0.3);
+
 			// Shaw's removal:
-			Heuristic H_s_TTR('S',1,0,0);
-			
+			ShawsRemoval* H_s_TTR = new ShawsRemoval(1, 0, 0);
+
 			// Shaw's removal:
-			Heuristic H_s_STR('S',0,1,0);
-			
+			ShawsRemoval* H_s_STR = new ShawsRemoval(0, 1, 0);
+
 			// Shaw's removal:
-			Heuristic H_s_DER('S',0,0,1);
-			
+			ShawsRemoval* H_s_DER = new ShawsRemoval(0, 0, 1);
+
 			// Greedy insertion:
-			Heuristic H_g('G');
-			
+			GreedyInsertion* H_g = new GreedyInsertion;
+
 			// Regret insertion 1:
-			Heuristic H_a_1('A', 1);
-			
+			RegretInsertion* H_a_1 = new RegretInsertion(1);
+
 			// Regret insertion 2:
-			Heuristic H_a_2('A', 2);
-			
+			RegretInsertion* H_a_2 = new RegretInsertion(2);
+
 			// Regret insertion 3:
-			Heuristic H_a_3('A', 3);
-			
+			RegretInsertion* H_a_3 = new RegretInsertion(3);
+
 			// Regret insertion 4:
-			Heuristic H_a_4('A', 4);
-			
+			RegretInsertion* H_a_4 = new RegretInsertion(4);
+
 			// Parâmetros da ALNS:
-			
+
 			// Definindo soluções incumbente e melhor solução como a solução construída inicialmente
 			meta.S_p = s;
-			
+
 			meta.S_i = s;
-			
-			meta.removal_heuristics = {H_r,H_s,H_w, H_s_TTR, H_s_STR, H_s_DER};
-			
-			meta.insertion_heuristics = {H_a_1 ,H_a_2, H_g};
-			// meta.insertion_heuristics = {H_g};
+
+			meta.removal_heuristics = {H_r, H_s, H_w, H_s_TTR, H_s_STR, H_s_DER};
+			meta.insertion_heuristics = {H_a_1, H_a_2, H_g};
 			
 			// Definindo teomperatura inicial:
 			double T_inicial = (meta.S_i.FO())*((0.3)/log(0.5));
 			
 			meta.Temperature = T_inicial;
 			
-			meta.algo(15000, 1000, 600);
+			meta.algo(2000, 1000, 600);
 			
 			meta.S_p.print_sol();
 			
@@ -292,17 +274,17 @@ int main(){
 			}
 			
 			
-			for (auto heuristic: meta.removal_heuristics){
+			//for (auto heuristic: meta.removal_heuristics){
 				
-				std::cout << heuristic.name << ": " << heuristic.processing_time << std::endl;
+			//	std::cout << heuristic.name << ": " << heuristic.processing_time << std::endl;
 				
-			}
+			//}
 			
-			for (auto heuristic: meta.insertion_heuristics){
+			//for (auto heuristic: meta.insertion_heuristics){
 				
-				std::cout << heuristic.name << ": " << heuristic.processing_time << std::endl;
+			//	std::cout << heuristic.name << ": " << heuristic.processing_time << std::endl;
 				
-			}
+			//}
 			
 			auto end = std::chrono::high_resolution_clock::now();
 			auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
