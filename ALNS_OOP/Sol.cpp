@@ -65,7 +65,7 @@ Sol::Sol(Instance &inst_data){
 			
 			inserir_pedido(pedido, dados_melhor_insercao.at(1),dados_melhor_insercao.at(2),dados_melhor_insercao.at(3));
 			
-			// std::cout << "\n\n\nPedido inserido: " << pedido << std::endl;
+			std::cout << "\n\n\nPedido inserido: " << pedido << std::endl;
 			
 			//for (auto const &i: Cargas.at(0)) {
 			//	std::cout << i << " ";
@@ -73,15 +73,15 @@ Sol::Sol(Instance &inst_data){
 			
 			
 			
-			//for (auto const &i: Rotas.at(0)) {
-			//	std::cout << i << " ";
-			//}
+			for (auto const &i: Rotas.at(0)) {
+				std::cout << i << " ";
+			}
 			
-			//std::cout << "\n\n";
+			std::cout << "\n\n";
 			
-			//for (auto const &i: TemposDeVisita.at(0)) {
-			//	std::cout << i << " ";
-			//}
+			for (auto const &i: TemposDeVisita.at(0)) {
+				std::cout << i << " ";
+			}
 			
 			
 		
@@ -346,123 +346,35 @@ void Sol::inserir_pedido(double &pedido, int index_rota, int pos_no_pickup, int 
 		
 	}
 	
+	
 	// Incrementando vetor com tempos de visita
 	
-	// Se as posições de inserção são consecutivas
-	if (pos_no_pickup + 1 == pos_no_delivery){
+	// A alteração nos tempos de visita só se dá a partir do vetor de pickup
+	
+	// Inserindo "zeros" no vetor de tempo de visitas:
+	
+	TemposDeVisita.at(index_rota).insert(TemposDeVisita.at(index_rota).begin() + pos_no_pickup, 0);
+	
+	TemposDeVisita.at(index_rota).insert(TemposDeVisita.at(index_rota).begin() + pos_no_delivery, 0);
+	
+	// Tempo inicial - a partir do nó anterior ao nó de pickup - os tempos de visitas dos nós anteriores são conservados!
+	
+	double t_atual = TemposDeVisita.at(index_rota).at(pos_no_pickup - 1);
+	
+	// Atualizando tempos de visita
+	for (int index_node {pos_no_pickup - 1}; index_node < RotasSize.at(index_rota) - 1; index_node++){
 		
-		// Nó anterior
-		int no_anterior = Rotas.at(index_rota).at(pos_no_pickup - 1);
+		int no_atual = Rotas.at(index_rota).at(index_node);
 		
-		// Nó posterior
-		int no_posterior = Rotas.at(index_rota).at(pos_no_delivery + 1);
+		int no_seguinte = Rotas.at(index_rota).at(index_node + 1);
 		
-		// Tempo do primeiro novo arco (anterior até P)
-		double tempo_arco_1 = inst.t.at(no_anterior).at(no_pickup);
+		double delta_t = inst.t.at(no_atual).at(no_seguinte);
 		
-		// Tempo do segundo novo arco (P até D)
-		double tempo_arco_2 = inst.t.at(no_pickup).at(no_delivery);
+		// Será atribuída à variável "t_atual" o maior valor entre o delta e o tempo de abertura de TW, no caso de adiantamentos!
+		t_atual = std::max(t_atual + delta_t, inst.e.at(no_seguinte));
 		
-		// Tempo do terceiro novo arco (D até posterior)
-		double tempo_arco_3 = inst.t.at(no_delivery).at(no_posterior);
+		TemposDeVisita.at(index_rota).at(index_node + 1) = t_atual;
 		
-		// Tempo do arco antigo (anterior até posterior)
-		double tempo_arco_antigo = inst.t.at(no_anterior).at(no_posterior);
-		
-		// O tempo de visita do nó de pickup será igual ao tempo de visita do nó anterior mais o primeiro novo arco
-		double tempo_de_visita_no_pickup = TemposDeVisita.at(index_rota).at(pos_no_pickup - 1) + tempo_arco_1;
-		
-		// O tempo de visita do nó de pickup será igual ao tempo de visita do nó anterior mais o primeiro e o segundo novo arco
-		double tempo_de_visita_no_delivery = TemposDeVisita.at(index_rota).at(pos_no_pickup - 1) + tempo_arco_1 + tempo_arco_2;
-		
-		// Inserindo novos tempos de visita no vetor
-		
-		// Adicionando tempo de visita na posição de pickup
-		TemposDeVisita.at(index_rota).insert(TemposDeVisita.at(index_rota).begin() + pos_no_pickup, tempo_de_visita_no_pickup);
-		
-		// Adicionando tempo de visita na posição de delivery
-		TemposDeVisita.at(index_rota).insert(TemposDeVisita.at(index_rota).begin() + pos_no_delivery, tempo_de_visita_no_delivery);
-		
-		// Delta PD - é o incremento do tempo de visita dos nós após D (não inclusive)
-		double delta_PD = tempo_arco_1 + tempo_arco_2 + tempo_arco_3 - tempo_arco_antigo;
-		
-		// Incrementando tempos de visita após o nó D
-		for (int index_node {pos_no_delivery + 1}; index_node < RotasSize.at(index_rota); index_node++){
-			
-			TemposDeVisita.at(index_rota).at(index_node) += delta_PD;
-			
-		}
-		
-		
-	// Se as posições de inserção não são consecutivas
-	} else {
-		
-		
-		
-		// Nó anterior ao nó de pickup
-		int no_anterior_pickup = Rotas.at(index_rota).at(pos_no_pickup - 1);
-		
-		// Nó posterior ao nó de pickup
-		int no_posterior_pickup = Rotas.at(index_rota).at(pos_no_pickup + 1);
-		
-		// Nó anterior ao nó de delivery
-		int no_anterior_delivery = Rotas.at(index_rota).at(pos_no_delivery - 1);
-		
-		// Nó posterior ao nó de delivery
-		int no_posterior_delivery = Rotas.at(index_rota).at(pos_no_delivery + 1);
-		
-		// Tempo do novo arco entre anterior_p e P
-		double tempo_arco_1_pickup = inst.t.at(no_anterior_pickup).at(no_pickup);
-		
-		// Tempo do novo arco entre P e posterior_p
-		double tempo_arco_2_pickup = inst.t.at(no_pickup).at(no_posterior_pickup);
-		
-		// Tempo do antigo arco entre anterior_p e posterior_p
-		double tempo_arco_antigo_pickup = inst.t.at(no_anterior_pickup).at(no_posterior_pickup);
-		
-		// Tempo do novo arco entre anterior_d e D
-		double tempo_arco_1_delivery = inst.t.at(no_anterior_delivery).at(no_delivery);
-		
-		// Tempo do novo arco entre D e posterior_d
-		double tempo_arco_2_delivery = inst.t.at(no_delivery).at(no_posterior_delivery);
-		
-		// Tempo do antigo arco entre anterior_d e posterior_d
-		double tempo_arco_antigo_delivery = inst.t.at(no_anterior_delivery).at(no_posterior_delivery);
-		
-		// Tempo de visita do nó de pickup - tempo do nó anterior + tempo do novo arco 1 de pickup
-		double tempo_de_visita_no_pickup = TemposDeVisita.at(index_rota).at(pos_no_pickup - 1) + tempo_arco_1_pickup;
-		
-		// Delta P - variação dos tempos de visita dos nós entre P e D (não inclusive)
-		double delta_P = tempo_arco_1_pickup + tempo_arco_2_pickup - tempo_arco_antigo_pickup;
-		
-		// Adicionando tempo de visita na posição de pickup
-		TemposDeVisita.at(index_rota).insert(TemposDeVisita.at(index_rota).begin() + pos_no_pickup, tempo_de_visita_no_pickup);
-		
-		// Adicionando tempo de visita na posição de delivery - dummy
-		TemposDeVisita.at(index_rota).insert(TemposDeVisita.at(index_rota).begin() + pos_no_delivery, 0);
-		
-		// Incrementando tempo dos arcos entre P e D (ambos não inclusive) com delta P
-		for (int index_node {pos_no_pickup + 1}; index_node < pos_no_delivery; index_node++){
-			
-		 	TemposDeVisita.at(index_rota).at(index_node) += delta_P;
-			
-		}
-		
-		// Tempo de visita do nó de delivery - Tempo do nó anterior + delta P (já somado) + tempo de novo arco entre anterior_d e D
-		double tempo_de_visita_no_delivery = TemposDeVisita.at(index_rota).at(pos_no_delivery - 1) + tempo_arco_1_delivery;
-		
-		TemposDeVisita.at(index_rota).at(pos_no_delivery) = tempo_de_visita_no_delivery;
-		
-		// Delta D - variação dos tempos de visita dos nós após D (inclui delta_P!)
-		double delta_D = delta_P + tempo_arco_1_delivery + tempo_arco_2_delivery - tempo_arco_antigo_delivery;
-		
-		
-		// Incrementando nós após D com delta D
-		for (int index_node {pos_no_delivery + 1}; index_node < RotasSize.at(index_rota); index_node++){
-			
-			TemposDeVisita.at(index_rota).at(index_node) += delta_D;
-			
-		}
 		
 	}
 	
@@ -471,8 +383,6 @@ void Sol::inserir_pedido(double &pedido, int index_rota, int pos_no_pickup, int 
 
 // Método para remoção de um pedido
 void Sol::remover_pedido(double &pedido){
-	
-	
 	
 	// Índice do nó de pickup correspondente ao request
 	int no_pickup {pedido};
@@ -1360,6 +1270,45 @@ void Sol::executar_melhor_insercao(double &pedido){
 	}
 	
 }
+
+bool Sol::checar_factibilidade(double &pedido, int index_rota, int &pos_no_pickup, int &pos_no_delivery){
+	
+	// Variável booleana, que controla a factibilidade
+	bool factivel = true;
+	
+	// Índice do nó de pickup correspondente ao request
+	int no_pickup {pedido};
+	
+	// Índice do nó de delivery correspondente ao request
+	int no_delivery {pedido + inst.n};
+	
+	// Primeira checagem (para possivelmente agilizar) - checa se as time windows de pickup ou delivery do pedido são estouradas
+	if (factivel){
+		
+		;
+		
+	}
+	
+	// Segunda checagem - checa se a carga é estourada no segmento que contém P e D
+	if (factivel){
+		
+		;
+		
+	}
+	
+	
+	// Terceira checagem - checagem completa de time windows
+	if (factivel){
+		
+		;
+		
+	}
+	
+	
+	return factivel;
+	
+}
+
 
 
 
