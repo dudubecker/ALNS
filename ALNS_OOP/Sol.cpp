@@ -407,6 +407,8 @@ void Sol::remover_pedido(double &pedido){
 	
 	// Para pedidos entre P e D - Decréscimo de 1 unidade na posição
 	
+	
+	
 	// * OBS: no caso em que pos_no_pickup = pos_no_delivery - 1 (coleta e entrega consecutivas), esse laço não é executado!
 	for (int index_node {pos_no_pickup + 1}; index_node < pos_no_delivery; index_node++){
 		
@@ -539,6 +541,57 @@ void Sol::remover_pedido(double &pedido){
 		TemposDeVisita.at(index_rota).at(index_node + 1) = t_atual;
 		
 	}
+	
+}
+
+// Método para remoção de uma rota (usado na heurística de remoção de rotas)
+void Sol::remover_rota(int index_rota){
+	
+	// Removendo pedidos contidos na rota
+	
+	std::vector<double> pedidos_a_remover {};
+	
+	for (auto &node: Rotas.at(index_rota)){
+		
+		if ((node > 0) && (node <= inst.n)){
+			
+			pedidos_a_remover.push_back(node);
+			
+		}
+		
+	}
+	
+	for (auto &node: pedidos_a_remover){
+		
+		remover_pedido(node);
+		
+	}
+	
+	
+	// Atualizando índices de rota na estrutura de posições de pedidos, para rotas com ordinalidade maior do que "index_rota"
+	for (int pedido = 1; pedido <= inst.n; pedido++){
+		
+		if ((request_positions[pedido].at(0) > index_rota) && (request_positions[pedido].at(0) != 9999)){
+			
+			request_positions[pedido].at(0) -= 1;
+			
+		}
+		
+	}
+	
+	// Removendo rotas vazias dos vetores de rotas, cargas e tempos de visita
+	
+	// Removendo rota vazia da solução
+	Rotas.erase(Rotas.begin() + index_rota);
+	
+	// Removendo vetor de cargas
+	Cargas.erase(Cargas.begin() + index_rota);
+	
+	// Removendo vetor de tempos de visita
+	TemposDeVisita.erase(TemposDeVisita.begin() + index_rota);
+	
+	// Removendo posição no vetor de tamanhos
+	RotasSize.erase(RotasSize.begin() + index_rota);
 	
 }
 

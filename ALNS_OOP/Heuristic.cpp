@@ -664,11 +664,13 @@ Sol Heuristic::apply(Sol &S){
 			
 			// srand(time(NULL));
 			
+			
 			// Variável com quantidade de pedidos removidos
 			int n_pedidos_removidos {0};
 			
 			// Vetor com pedidos a serem removidos
 			std::vector<double> pedidos_a_remover {};
+			
 			
 			while (n_pedidos_removidos < mi){
 				
@@ -683,12 +685,25 @@ Sol Heuristic::apply(Sol &S){
 				
 			}
 			
+			
+			
+			
 			// Retirando pedidos da solução:
 			for (auto pedido: pedidos_a_remover){
+				
+				// std::cout << "\nPedido: " << pedido << std::endl;
+				
+				// S.print_sol();
+				
+				// double a;
+				
+				// std::cin >> a;
 				
 				S.remover_pedido(pedido);
 				
 			}
+			
+			
 			
 			// Fim da heurística random removal
 			break;
@@ -1086,7 +1101,11 @@ Sol Heuristic::apply(Sol &S){
 				std::vector<double> dados_melhor_insercao_min {};
 				
 				// Iterando para cada pedido não atendido no objeto solução
-				for (auto &pedido: S.L){
+				
+				std::vector<double> pedidos_nao_atendidos = S.L;
+				
+				
+				for (auto &pedido: pedidos_nao_atendidos){
 					
 					// Vetor de deltas para a melhor inserção em cada rota de cada pedido
 					std::vector<double> delta_min_por_rota {};
@@ -1231,11 +1250,10 @@ Sol Heuristic::apply(Sol &S){
 				}
 			}
 			
+			std::vector<double> pedidos_nao_atendidos = S.L;
 			
-			
-			for (auto &pedido: S.L){
+			for (auto &pedido: pedidos_nao_atendidos){
 				
-				// S = melhor_insercao(S, pedido);
 				S.executar_melhor_insercao(pedido);
 				
 			}
@@ -1258,6 +1276,7 @@ Sol Heuristic::apply(Sol &S){
     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 	
 	processing_time += elapsed.count() * 1e-9;
+	
 	
 	
 	return S;

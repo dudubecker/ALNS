@@ -95,6 +95,9 @@ public:
 	// Novo método de checagem de factibilidade, que usa vetor de cargas e tempos de visita
 	bool checar_factibilidade(double &pedido, int index_rota, int &pos_no_pickup, int &pos_no_delivery);
 	
+	// Método para remoção de uma rota (usado na heurística de remoção de rotas)
+	void remover_rota(int index_rota);
+	
 };
 
 #endif // _SOL_H

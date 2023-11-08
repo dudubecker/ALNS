@@ -283,13 +283,10 @@ Sol ALNS::routeReductionHeuristic(Sol &S_i, int max_it_RRH){
 		
 		if (n_it%100 == 0){
 			
-			std::cout << "Iteracao RR: " << n_it << std::endl;
+		std::cout << "Iteracao RR: " << n_it << std::endl;
 			
 		}
 		
-		
-		
-		// std::cout << "Iteracao " << n_it << " para remocao de rotas" << std::endl;
 		
 		// Caso "L" esteja vazio, a rota é excluída e os pedidos são colocados no banco de pedidos não atendidos
 		if (S.L.size() == 0){
@@ -302,23 +299,9 @@ Sol ALNS::routeReductionHeuristic(Sol &S_i, int max_it_RRH){
 			// Escolhendo índice da rota que será removida
 			double index_rota = rand()%(m);
 			
-			std::vector<double> Rota = S.Rotas.at(index_rota);
+			// Removendo rota
+			S.remover_rota(index_rota);
 			
-			// Removendo nós da solução
-			for (auto &node: Rota){
-				
-				// Caso seja um nó correspondente a um pedido de pickup:
-				if ((node > 0) && (node <= S.inst.n)){
-					
-					S.remover_pedido(node);
-					
-				}
-				
-			}
-			
-			// Removendo rota vazia da solução
-			S.Rotas.erase(S.Rotas.begin() + index_rota);
-		
 		}
 		
 		// Escolhendo heurísticas e aplicando-as à solução
@@ -326,11 +309,20 @@ Sol ALNS::routeReductionHeuristic(Sol &S_i, int max_it_RRH){
 		int index_h_rem = escolher_heuristica('R');
 		int index_h_ins = escolher_heuristica('I');
 		
-		S = removal_heuristics.at(index_h_rem).apply(S);
+		//if (n_it == 0){
+			
+		//	insertion_heuristics.at(index_h_ins).apply(S);
+			
+		//}
 		
-		S = insertion_heuristics.at(index_h_ins).apply(S);
+		removal_heuristics.at(index_h_rem).apply(S);
+		
+		insertion_heuristics.at(index_h_ins).apply(S);
+		
+		// S.print_sol();
 		
 		n_it += 1;
+		
 	}
 	
 	return BKS;

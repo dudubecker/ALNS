@@ -60,10 +60,11 @@ int main(){
 	// Para gerar valores aleatórios, tirar comentário:
 	// srand(time(NULL));
 	
+	/*
+	
 	// Para controlar a seed
 	srand(123);
 	
-	/*
 	
 	// String com instância
 	std::string instancia = "instances/AA20";
@@ -76,17 +77,31 @@ int main(){
 	
 	std::cout << "\n\nSolucao apos heuristica construtiva: \n";
 	
+	S.remover_rota(0);
+	
 	S.print_sol();
 	
 	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
 	
-	for (auto vec: S.TemposDeVisita){
+	for (int i = 1; i <= inst.n; i++){
 		
-		printDouble(vec);
-		
-		std::cout << "\n";
+		std::cout << i << " :";
+		printInt(S.request_positions[i]);
 		
 	}
+	
+	
+	Heuristic H_g('G');
+	
+	// Aplicando inserção gulosa:
+	
+	H_g.apply(S);
+	
+	//std::cout << "\nSolucao apos insercao gulosa: \n";
+	
+	S.print_sol();
+	
+	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
 	
 	
 	
@@ -97,30 +112,32 @@ int main(){
 	Heuristic H_w('W');
 	
 	// Random removal:
-	// Heuristic H_r('R');
+	Heuristic H_r('R');
 	
 	// Greedy insertion:
-	Heuristic H_g('G');
+	// Heuristic H_g('G');
 	
 	// Regret insertion
-	// Heuristic H_a('A');
+	Heuristic H_a('A');
 	
 	
 	// Aplicando worst removal:
 	
+	std::cout << "\nSolucao apos worst removal: \n";
+	
 	H_w.apply(S);
 	
-	std::cout << "\nSolucao apos worst removal: \n";
 	
 	S.print_sol();
 	
 	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
 	
-	for (auto vec: S.TemposDeVisita){
+	//for (auto vec: S.TemposDeVisita){
 		
-		printDouble(vec);
+	//	printDouble(vec);
 		
-	}
+	//}
+	
 	
 	
 	// Aplicando inserção gulosa:
@@ -134,17 +151,18 @@ int main(){
 	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
 	
 	
+	
 	//for (auto vec: S.Cargas){
 		
 	//	printDouble(vec);
 		
 	//}
 	
-	for (auto vec: S.TemposDeVisita){
+	//for (auto vec: S.TemposDeVisita){
 		
-		printDouble(vec);
+	//	printDouble(vec);
 		
-	}
+	//}
 	
 	
 	
@@ -159,6 +177,7 @@ int main(){
 	
 	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
 	
+	
 	// Aplicando inserção por arrependimento:
 	H_a.apply(S);
 	
@@ -169,19 +188,12 @@ int main(){
 	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
 	
 	
-	// Printando posições dos pedidos:
-	
-	//for (int i = 1; i <= inst.n; i++){
-		
-		//std::cout << i << " :";
-		//printInt(S.request_positions[i]);
-		
-	//}
+	*/
 	
 	
 	
 	// std::vector<std::string> instancias = {"instances/AA25","instances/CC20","instances/CC25","instances/DD25","instances/DD30"};
-	*/
+	
 	
 	// /*
 	std::vector<std::string> instancias = {"instances/AA75"};
@@ -248,14 +260,14 @@ int main(){
 			meta.removal_heuristics = {H_r,H_s,H_w, H_s_TTR, H_s_STR, H_s_DER};
 			
 			meta.insertion_heuristics = {H_a_1 ,H_a_2, H_g};
-			
+			// meta.insertion_heuristics = {H_g};
 			
 			// Definindo teomperatura inicial:
 			double T_inicial = (meta.S_i.FO())*((0.3)/log(0.5));
 			
 			meta.Temperature = T_inicial;
 			
-			meta.algo(1200, 0, 600);
+			meta.algo(15000, 1000, 600);
 			
 			meta.S_p.print_sol();
 			
@@ -299,7 +311,9 @@ int main(){
 		}
 	}
 	
+	
 	// */
+	
 	
 	return 0;
 	
