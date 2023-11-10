@@ -36,6 +36,9 @@ class Instance
 	// Capacidade de cada veículo
 	int Cap {};
 	
+	// Valor da máxima distância t_ij, utilizado para aplicar random noise no cálculo da FO
+	double max_dist = {};
+	
 	// Definindo vetor com "t_ij", para cada par de nós i j:
 	
 	std::vector<std::vector<double>> t {};

@@ -759,6 +759,18 @@ Sol WorstRemoval::specificApply(Sol &S) {
 			// Calculando variação no custo da rota com a remoção do pedido
 			double delta = S.delta_FO_rem(pedido);
 			
+			// Aplicando ruído no cálculo da FO
+			if (eta > 0){
+				
+				// Random noise, entre -eta*max_dist e +eta*max_dist
+				int randValue = std::rand();
+				
+				double noise = (-1.0 + (2.0 * randValue / RAND_MAX))*(eta)*(S.inst.max_dist);
+				
+				delta = std::max(0.0, delta + noise);
+				
+			}
+			
 			delta_custos.push_back(delta);
 			
 		}
@@ -1051,6 +1063,19 @@ Sol GreedyInsertion::specificApply(Sol &S) {
 			// Delta FO -> Primeiro dado do vetor retornado pela função
 			double delta = dados_melhor_insercao.at(0);
 			
+			// Aplicando ruído no cálculo da FO
+			if (eta > 0){
+				
+				// Random noise, entre -eta*max_dist e +eta*max_dist
+				int randValue = std::rand();
+				
+				double noise = (-1.0 + (2.0 * randValue / RAND_MAX))*(eta)*(S.inst.max_dist);
+				
+				delta = std::max(0.0, delta + noise);
+				
+			}
+			
+			
 			if (delta < delta_min){
 				
 				delta_min = delta;
@@ -1162,6 +1187,20 @@ Sol RegretInsertion::specificApply(Sol &S) {
 				
 				// Se houver uma posição de inserção factível para a rota (delta_min > 0, valor retornado pela função caso não tenha se achado posições factíveis)
 				if (delta_rota > 0){
+					
+					
+					// Aplicando ruído no cálculo da FO
+					if (eta > 0){
+						
+						// Random noise, entre -eta*max_dist e +eta*max_dist
+						int randValue = std::rand();
+						
+						double noise = (-1.0 + (2.0 * randValue / RAND_MAX))*(eta)*(S.inst.max_dist);
+						
+						delta_rota = std::max(0.0, delta_rota + noise);
+						
+					}
+					
 					
 					delta_min_por_rota.push_back(delta_rota);
 					

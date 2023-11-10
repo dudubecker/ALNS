@@ -100,7 +100,7 @@ public:
 	int n_it_total {0};
 	
 	// Tempo computacional empregado na heurística:
-	double processing_time {};
+	double processing_time {0};
 	
 	// Início das alterações!
 	
@@ -149,6 +149,17 @@ class RandomRemoval : public RemovalHeuristic {
 
 class WorstRemoval : public RemovalHeuristic {
 	
+public:
+	
+	// Parâmetro para controlar grau de aleatorização no cálculo do incremento da FO
+	double eta {};
+	
+	// Constructor:
+	WorstRemoval(double eta_value){
+		eta = eta_value;
+	};
+	
+	
 	Sol specificApply(Sol &S) override;
 	
 };
@@ -186,6 +197,16 @@ public:
 
 class GreedyInsertion : public InsertionHeuristic {
 	
+public:
+	
+	// Parâmetro para controlar grau de aleatorização no cálculo do incremento da FO
+	double eta {};
+	
+	// Constructor:
+	GreedyInsertion(double eta_value){
+		eta = eta_value;
+	};
+	
 	Sol specificApply(Sol &S) override;
 	
 };
@@ -193,14 +214,19 @@ class GreedyInsertion : public InsertionHeuristic {
 class RegretInsertion : public InsertionHeuristic {
 	
 public:
+
 	Sol specificApply(Sol &S) override;
 	
 	// Parâmetro da regret
 	double k {};
 	
+	// Parâmetro para controlar grau de aleatorização no cálculo do incremento da FO
+	double eta {};
+	
 	// Constructor:
-	RegretInsertion(int k_value){
+	RegretInsertion(double k_value, double eta_value){
 		k = k_value;
+		eta = eta_value;
 	};
 	
 	
