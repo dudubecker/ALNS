@@ -739,9 +739,6 @@ Sol WorstRemoval::specificApply(Sol &S) {
 	
 	int mi = RemovalHeuristic::initializeMethod(S);
 	
-	// Parâmetro "delta" para controle da aleatoriedade 
-	const int delta {6};
-	
 	// Pedidos contidos na solução: complemento de L!
 	std::vector<double> pedidos = S.A;
 	
@@ -837,9 +834,6 @@ Sol WorstRemoval::specificApply(Sol &S) {
 Sol ShawsRemoval::specificApply(Sol &S) {
 	
 	int mi = RemovalHeuristic::initializeMethod(S);
-	
-	// Parâmetro "delta" para controle da aleatoriedade 
-	const int delta {6};
 	
 	// Obtendo tempos de visita (T_i) de cada nó "i" na solução S
 	

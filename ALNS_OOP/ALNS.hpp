@@ -18,22 +18,12 @@ public:
 	// Vetor que guardará as heurísticas de inserção já inicializadas 
 	std::vector<Heuristic*> insertion_heuristics {};
 	
-	// Vetor com os pesos de cada heurística de remoção -> Talvez mais simples do que cada heurística ter um atributo "peso"!
-	// std::vector<double> W_rem {};
-	
-	// Vetor com os pesos de cada heurística de inserção -> Talvez mais simples do que cada heurística ter um atributo "peso"!
-	// std::vector<double> W_ins {};
-	
-	// OBS: Achei mais adequado fazer a soma dos pesos um atributo, para não ter que calcular esse valor em todas as iterações (na etapa de escolha das heurísticas);
-	
 	// Soma dos pesos das heurísticas de remoção:
 	double soma_W_rem {0};
 	
 	// Soma dos pesos das heurísticas de inserção:
 	double soma_W_ins {0};
 	
-	// Instância
-	Instance inst;
 	
 	// Melhor solução encontrada pelo algoritmo:
 	Sol S_p;
@@ -67,8 +57,15 @@ public:
 	// Atributo "w": utilizado no critério de aceitação, para o cálculo da temperatura inicial
 	double w {1.3};
 	
+	double delta {};
+	
+	double eta {};
+	
 	// Constructor/Destructor
-	//ALNS();
+	ALNS(Sol S_inicial, double w_value, double c_value, double sigma_1_value, double sigma_2_value, double sigma_3_value, double r_value, double eta_value, double delta_value);
+	
+	ALNS();
+	
 	~ALNS();
 	
 	// Methods

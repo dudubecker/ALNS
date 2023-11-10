@@ -7,10 +7,94 @@
 #include <chrono>
 
 
+// Inicialização do objeto ALNS
 
-//ALNS::ALNS()
-//{
-//}
+ALNS::ALNS(Sol S_inicial,
+		double w_value, double c_value, double sigma_1_value, double sigma_2_value,
+		double sigma_3_value, double r_value, double eta_value, double delta_value){
+	
+	
+	// Atribuindo valores aos atributos da ALNS
+	w = w_value;
+	c = c_value;
+	sigma_1 = sigma_1_value;
+	sigma_2 = sigma_2_value;
+	sigma_3 = sigma_3_value;
+	r = r_value;
+	
+	// Atribuindo valores aos atributos das heurísticas (eta e delta)
+	eta = eta_value;
+	delta = delta_value;
+	
+	// Definindo soluções incumbente e melhor solução como a solução construída inicialmente
+	S_p = S_inicial;
+	
+	S_i = S_inicial;
+	
+	// Definindo teomperatura inicial:
+	Temperature = (S_i.FO())*((0.3)/log(0.5));
+	
+	// Inicializando heurísticas
+	
+	// Random Removal
+	
+	RandomRemoval* H_r = new RandomRemoval;
+	
+	// Shaws Removal e derivadas
+	
+	ShawsRemoval* H_s = new ShawsRemoval(0.3, 0.4, 0.3, delta);
+	
+	ShawsRemoval* H_s_TTR = new ShawsRemoval(1, 0, 0, delta);
+	
+	ShawsRemoval* H_s_STR = new ShawsRemoval(0, 1, 0, delta);
+	
+	ShawsRemoval* H_s_DER = new ShawsRemoval(0, 0, 1, delta);
+	
+	// Worst Removal
+	
+		// Sem random noise
+	WorstRemoval* H_w = new WorstRemoval(0, delta);
+	
+		// Com random noise
+	WorstRemoval* H_w_random = new WorstRemoval(eta, delta);
+	
+	// Populando vetores de heurísticas de remoção
+	
+	removal_heuristics = {H_r, H_s, H_w, H_w_random, H_s_TTR, H_s_STR, H_s_DER};
+	
+	// Greedy Insertion
+	
+		// Sem random noise
+	GreedyInsertion* H_g = new GreedyInsertion(0.0);
+	
+		// Com random noise
+	GreedyInsertion* H_g_random = new GreedyInsertion(eta);
+	
+	insertion_heuristics = {H_g, H_g_random};
+	
+	// Regret insertion - k vai ser igual ao número de rotas da solução construída subtraído de 2 unidades
+	// Isso porque não lembro de haver, em nenhuma instância, a remoção de mais de uma rota com a heurística de remoção de rotas!
+	
+	int numero_de_rotas = S_inicial.Rotas.size();
+	
+	int max_k = std::max(1, numero_de_rotas - 2);
+	
+	for (int k = 1; k == max_k; k++){
+		
+		RegretInsertion* H_a = new RegretInsertion(k, 0);
+		insertion_heuristics.push_back(H_a);
+		
+		RegretInsertion* H_a_random = new RegretInsertion(k, eta);
+		insertion_heuristics.push_back(H_a_random);
+		
+	}
+	
+}
+
+
+ALNS::ALNS()
+{
+}
 
 ALNS::~ALNS()
 {

@@ -181,7 +181,7 @@ int main(){
 	// std::vector<std::string> instancias = {"instances/AA25","instances/CC20","instances/CC25","instances/DD25","instances/DD30"};
 	
 	
-	// /*
+	/*
 	std::vector<std::string> instancias = {"instances/BB50"};
 	
 	for (auto instancia: instancias){
@@ -206,19 +206,19 @@ int main(){
 			RandomRemoval* H_r = new RandomRemoval;
 
 			// Worst removal:
-			WorstRemoval* H_w = new WorstRemoval(0.02);
+			WorstRemoval* H_w = new WorstRemoval(0.02, 6);
 
 			// Shaw's removal:
-			ShawsRemoval* H_s = new ShawsRemoval(0.3, 0.4, 0.3);
+			ShawsRemoval* H_s = new ShawsRemoval(0.3, 0.4, 0.3, 6);
 
 			// Shaw's removal:
-			ShawsRemoval* H_s_TTR = new ShawsRemoval(1, 0, 0);
+			ShawsRemoval* H_s_TTR = new ShawsRemoval(1, 0, 0, 6);
 
 			// Shaw's removal:
-			ShawsRemoval* H_s_STR = new ShawsRemoval(0, 1, 0);
+			ShawsRemoval* H_s_STR = new ShawsRemoval(0, 1, 0, 6);
 
 			// Shaw's removal:
-			ShawsRemoval* H_s_DER = new ShawsRemoval(0, 0, 1);
+			ShawsRemoval* H_s_DER = new ShawsRemoval(0, 0, 1, 6);
 
 			// Greedy insertion:
 			GreedyInsertion* H_g_random = new GreedyInsertion(0.02);
@@ -245,14 +245,14 @@ int main(){
 
 			// Regret insertion 4:
 			RegretInsertion* H_a_4 = new RegretInsertion(4, 0.02);
-
+			
 			// Parâmetros da ALNS:
-
+			
 			// Definindo soluções incumbente e melhor solução como a solução construída inicialmente
 			meta.S_p = s;
-
+			
 			meta.S_i = s;
-
+			
 			meta.removal_heuristics = {H_r, H_s, H_w, H_s_TTR, H_s_STR, H_s_DER};
 			meta.insertion_heuristics = {H_a_1, H_a_2, H_a_3, H_g,
 										 H_a_1_random, H_a_2_random, H_a_3_random, H_g_random};
@@ -279,7 +279,59 @@ int main(){
 	}
 	
 	
+	*/
+	
+	// /*
+	std::vector<std::string> instancias = {"instances/BB50"};
+	
+	for (auto instancia: instancias){
+		
+		for (auto i {0}; i < 2; i++){
+			
+			// Medindo tempo
+			auto begin = std::chrono::high_resolution_clock::now();
+			
+			// Objeto instância
+			Instance inst(instancia);
+			
+			std::cout << "\n\n" << instancia << "\n\n" << std::endl;
+			
+			// Inicializando objeto solução;
+			Sol s(inst);
+			
+			
+			// Objeto ALNS
+			ALNS meta(
+			
+			s,
+			1.3,
+			0.9997,
+			27, 30, 22,
+			0.1,
+			0.02,
+			6
+			
+			);
+			
+			meta.algo(10000, 1000, 600);
+			
+			meta.S_p.print_sol();
+			
+			cout << "\n FO: " << std::setprecision(7) << meta.S_p.FO() << endl;
+			
+			cout << "\n Factibilidade:  " << meta.S_p.isFeasible() << endl;
+			
+			auto end = std::chrono::high_resolution_clock::now();
+			auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+			
+			std::cout << "Tempo de execucao: " << elapsed.count() * 1e-9 << "segundos. " << std::endl;
+		}
+	}
+	
+	
 	// */
+	
+	
 	
 	
 	return 0;

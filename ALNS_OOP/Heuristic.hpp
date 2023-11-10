@@ -154,9 +154,13 @@ public:
 	// Parâmetro para controlar grau de aleatorização no cálculo do incremento da FO
 	double eta {};
 	
+	// Parâmetro para controle de aleatoriedade na escolha dos pedidos
+	double delta {};
+	
 	// Constructor:
-	WorstRemoval(double eta_value){
+	WorstRemoval(double eta_value, double delta_value){
 		eta = eta_value;
+		delta = delta_value;
 	};
 	
 	
@@ -172,11 +176,15 @@ public:
 	double chi {};
 	double psi {};
 	
+	// Parâmetro para controle de aleatoriedade na escolha dos pedidos
+	double delta {};
+	
 	// Constructor:
-	ShawsRemoval(double phi_value, double chi_value, double psi_value){
+	ShawsRemoval(double phi_value, double chi_value, double psi_value, double delta_value){
 		phi = phi_value;
 		chi = chi_value;
 		psi = psi_value;
+		delta = delta_value;
 	};
 	
 	
