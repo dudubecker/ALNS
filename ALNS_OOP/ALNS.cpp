@@ -79,7 +79,7 @@ ALNS::ALNS(Sol S_inicial,
 	
 	int max_k = std::max(1, numero_de_rotas - 2);
 	
-	for (int k = 1; k == max_k; k++){
+	for (int k = 1; k <= max_k; k++){
 		
 		RegretInsertion* H_a = new RegretInsertion(k, 0);
 		insertion_heuristics.push_back(H_a);
@@ -379,8 +379,8 @@ Sol ALNS::routeReductionHeuristic(Sol &S_i, int max_it_RRH){
 		
 		if (n_it%100 == 0){
 			
-		std::cout << "Iteracao RR: " << n_it << std::endl;
-			
+		//std::cout << "Iteracao RR: " << n_it << std::endl;
+			;
 		}
 		
 		
@@ -426,7 +426,7 @@ void ALNS::algo(int max_it_ALNS, int max_it_RRH, double max_t_ALNS){
 	
 	S_i = routeReductionHeuristic(S_i, max_it_RRH);
 	
-	S_i.print_sol();
+	// S_i.print_sol();
 	
 	// Variável para o número de iterações:
 	int n_it {};
@@ -440,8 +440,8 @@ void ALNS::algo(int max_it_ALNS, int max_it_RRH, double max_t_ALNS){
 		
 		if (n_it%100 == 0){
 			
-			std::cout << "Iteracao ALNS: " << n_it << std::endl;
-			
+			// std::cout << "Iteracao ALNS: " << n_it << std::endl;
+			;
 		}
 		
 		// Medindo tempo
@@ -468,6 +468,23 @@ void ALNS::algo(int max_it_ALNS, int max_it_RRH, double max_t_ALNS){
 		removal_heuristics.at(index_h_rem)->apply(S);
 		
 		insertion_heuristics.at(index_h_ins)->apply(S);
+		
+		// Adição -> para remover rotas vazias
+		if (S.LSize == 0){
+			
+			for (int index_rota {0}; index_rota < S.Rotas.size(); index_rota++){
+				
+				if (S.RotasSize.at(index_rota) == 2){
+					
+					S.remover_rota(index_rota);
+					
+				}
+				
+				
+			}
+			
+		}
+		
 		
 		// Analisando se a solução é a melhor já encontrada e armazenando seu valor na região de soluções encontradas
 		

@@ -10,183 +10,25 @@
 #include <thread>
 #include <random>
 
-using namespace std;
-
-// Função para printar vetores: debug
-
-void printDouble(std::vector<double> const &input)
-{
-    for (auto const &i: input) {
-        cout << i << " ";
-    }
-	
-	cout << endl;
-	
-}
-
-void printInt(std::vector<int> const &input)
-{
-    for (auto const &i: input) {
-        cout << i << " ";
-    }
-	
-	cout << endl;
-	
-}
-
-// Função para printar soluções: debug
-
-void print_sol(Sol S)
-{
-	
-	for (auto &rota:S.Rotas){
-		
-		for (auto node: rota){
-			
-			cout << node << " ";
-		}
-		
-		cout << "\n";
-		
-	}
-	
-	cout << "\n";
-	
-}
-
-
 int main(){
 	
 	// Para gerar valores aleatórios, tirar comentário:
 	// srand(time(NULL));
 	
-	
 	// Para controlar a seed
 	srand(125);
 	
-	/*
 	
+	// /*
+	std::vector<std::string> instancias = {"instances/DD65"};
 	
-	// String com instância
-	std::string instancia = "instances/AA20";
+	// std::vector<std::string> instancias = {"instances/li_lim/400/LC1_4_1.txt"};
 	
-	// Objeto Instance
-	Instance inst(instancia);
-	
-	// Objeto Sol, inicializado a partir do objeto Instance
-	Sol S(inst);
-	
-	std::cout << "\n\nSolucao apos heuristica construtiva: \n";
-	
-	S.print_sol();
-	
-	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
-	
-	
-	// Inicializando heurísticas:
-	
-	RandomRemoval H_r {};
-	
-	WorstRemoval H_w {};
-	
-	ShawsRemoval H_s(0.3, 0.4, 0.3);
-	
-	GreedyInsertion H_g {};
-	
-	RegretInsertion H_a(2);
-	
-	// Aplicando remoção aleatória:
-	
-	H_r.apply(S);
-	
-	std::cout << "\nSolucao apos remocao aleatoria: \n";
-	
-	S.print_sol();
-	
-	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
-	
-	// Aplicando inserção gulosa:
-	
-	H_g.apply(S);
-	
-	std::cout << "\nSolucao apos regret: \n";
-	
-	S.print_sol();
-	
-	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
-	
-	
-	
-	
-	// Objetos Heuristic
-	
-	// Worst removal:
-	Heuristic H_w('W');
-	
-	// Random removal:
-	Heuristic H_r('R');
-	
-	// Greedy insertion:
-	Heuristic H_g('G');
-	
-	// Regret insertion
-	Heuristic H_a('A');
-	
-	
-	// Aplicando worst removal:
-	
-	std::cout << "\nSolucao apos worst removal: \n";
-	
-	H_w.apply(S);
-	
-	S.print_sol();
-	
-	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
-	
-	
-	// Aplicando inserção gulosa:
-	
-	H_g.apply(S);
-	
-	std::cout << "\nSolucao apos insercao gulosa: \n";
-	
-	S.print_sol();
-	
-	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
-	
-	
-	
-	// Aplicando remoção aleatória:
-	H_r.apply(S);
-	
-	std::cout << "\nSolucao apos remocao aleatoria: \n";
-	
-	S.print_sol();
-	
-	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
-	
-	
-	// Aplicando inserção por arrependimento:
-	H_a.apply(S);
-	
-	std::cout << "\nSolucao apos regret insertion: \n";
-	
-	S.print_sol();
-	
-	std::cout << "\n FO: " << std::setprecision(7) << S.FO() << std::endl;
-	
-	*/
-	
-	
-	// std::vector<std::string> instancias = {"instances/AA25","instances/CC20","instances/CC25","instances/DD25","instances/DD30"};
-	
-	
-	/*
-	std::vector<std::string> instancias = {"instances/BB50"};
+	// std::vector<std::string> instancias = {"instances/real_instances/R_75.txt"};
 	
 	for (auto instancia: instancias){
 		
-		for (auto i {0}; i < 2; i++){
+		for (auto i {0}; i < 10; i++){
 			
 			// Medindo tempo
 			auto begin = std::chrono::high_resolution_clock::now();
@@ -197,7 +39,7 @@ int main(){
 			// Objeto instância
 			Instance inst(instancia);
 			
-			std::cout << "\n\n" << instancia << "\n\n" << std::endl;
+			// std::cout << "\n\n" << instancia << "\n\n" << std::endl;
 			
 			// Inicializando objeto solução;
 			Sol s(inst);
@@ -254,22 +96,21 @@ int main(){
 			meta.S_i = s;
 			
 			meta.removal_heuristics = {H_r, H_s, H_w, H_s_TTR, H_s_STR, H_s_DER};
-			meta.insertion_heuristics = {H_a_1, H_a_2, H_a_3, H_g,
-										 H_a_1_random, H_a_2_random, H_a_3_random, H_g_random};
+			meta.insertion_heuristics = {H_a_1, H_a_2, H_g,
+										 H_a_1_random, H_a_2_random, H_g_random};
 			
 			// Definindo teomperatura inicial:
 			double T_inicial = (meta.S_i.FO())*((0.3)/log(0.5));
 			
 			meta.Temperature = T_inicial;
 			
-			meta.algo(10000, 1000, 600);
+			meta.algo(10000, 1000, 100);
 			
-			meta.S_p.print_sol();
+			// meta.S_p.print_sol();
 			
-			cout << "\n FO: " << std::setprecision(7) << meta.S_p.FO() << endl;
+			std::cout << "\n FO: " << std::setprecision(7) << meta.S_p.FO() << std::endl;
 			
-			cout << "\n Factibilidade:  " << meta.S_p.isFeasible() << endl;
-			
+			std::cout << "\n Factibilidade:  " << meta.S_p.isFeasible() << std::endl;
 			
 			auto end = std::chrono::high_resolution_clock::now();
 			auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
@@ -279,14 +120,18 @@ int main(){
 	}
 	
 	
-	*/
+	// */
 	
-	// /*
-	std::vector<std::string> instancias = {"instances/BB50"};
+	/*
+	// std::vector<std::string> instancias = {"instances/BB50"};
+	
+	std::vector<std::string> instancias = {"instances/li_lim/200/LC1_2_1.txt"};
+	
+	int iteracoes_por_instancia = 10;
 	
 	for (auto instancia: instancias){
 		
-		for (auto i {0}; i < 2; i++){
+		for (auto i {0}; i < iteracoes_por_instancia; i++){
 			
 			// Medindo tempo
 			auto begin = std::chrono::high_resolution_clock::now();
@@ -303,23 +148,29 @@ int main(){
 			// Objeto ALNS
 			ALNS meta(
 			
-			s,
-			1.3,
-			0.9997,
-			27, 30, 22,
-			0.1,
-			0.02,
-			6
+			s, // Solução inicial
+			1.3, // w
+			0.9997, // c
+			27, 30, 22, // sigma 1, sigma 2, sigma 3
+			0.1, // r
+			0.02, // eta
+			6 // delta
 			
 			);
 			
-			meta.algo(10000, 1000, 600);
+			meta.algo(
+			
+			1000, // Iterações
+			300, // Iterações RRH
+			600 // Tempo máximo
+			
+			);
 			
 			meta.S_p.print_sol();
 			
-			cout << "\n FO: " << std::setprecision(7) << meta.S_p.FO() << endl;
+			std::cout << "\n FO: " << std::setprecision(7) << meta.S_p.FO() << std::endl;
 			
-			cout << "\n Factibilidade:  " << meta.S_p.isFeasible() << endl;
+			std::cout << "\n Factibilidade:  " << meta.S_p.isFeasible() << std::endl;
 			
 			auto end = std::chrono::high_resolution_clock::now();
 			auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
@@ -329,7 +180,7 @@ int main(){
 	}
 	
 	
-	// */
+	*/
 	
 	
 	

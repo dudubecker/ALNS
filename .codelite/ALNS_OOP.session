@@ -1,42 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Session Name="C:\Users\User\Documents\ALNS_OOP\ALNS_OOP.workspace">
-  <int Value="3" Name="m_selectedTab"/>
+  <int Value="0" Name="m_selectedTab"/>
   <wxString Value="C:\Users\User\Documents\ALNS_OOP\ALNS_OOP.workspace" Name="m_workspaceName"/>
   <TabInfoArray Name="TabInfoArray">
     <TabInfo>
       <wxString Value="C:\Users\User\Documents\ALNS_OOP\ALNS_OOP\main.cpp" Name="FileName"/>
-      <int Value="53" Name="FirstVisibleLine"/>
-      <int Value="246" Name="CurrentLine"/>
+      <int Value="12" Name="FirstVisibleLine"/>
+      <int Value="27" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="C:\Users\User\Documents\ALNS_OOP\ALNS_OOP\Sol.cpp" Name="FileName"/>
+      <int Value="151" Name="FirstVisibleLine"/>
+      <int Value="194" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+      <IntVector Name="CollapsedFolds">
+        <IntVectorItem Value="158"/>
+        <IntVectorItem Value="196"/>
+        <IntVectorItem Value="382"/>
+        <IntVectorItem Value="547"/>
+      </IntVector>
     </TabInfo>
     <TabInfo>
       <wxString Value="C:\Users\User\Documents\ALNS_OOP\ALNS_OOP\ALNS.cpp" Name="FileName"/>
-      <int Value="264" Name="FirstVisibleLine"/>
-      <int Value="276" Name="CurrentLine"/>
+      <int Value="110" Name="FirstVisibleLine"/>
+      <int Value="430" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
-      <IntVector Name="CollapsedFolds"/>
-    </TabInfo>
-    <TabInfo>
-      <wxString Value="C:\Users\User\Documents\ALNS_OOP\ALNS_OOP\Heuristic.hpp" Name="FileName"/>
-      <int Value="129" Name="FirstVisibleLine"/>
-      <int Value="129" Name="CurrentLine"/>
-      <wxArrayString Name="Bookmarks"/>
-      <IntVector Name="CollapsedFolds"/>
-    </TabInfo>
-    <TabInfo>
-      <wxString Value="C:\Users\User\Documents\ALNS_OOP\ALNS_OOP\Heuristic.cpp" Name="FileName"/>
-      <int Value="437" Name="FirstVisibleLine"/>
-      <int Value="444" Name="CurrentLine"/>
-      <wxArrayString Name="Bookmarks"/>
-      <IntVector Name="CollapsedFolds"/>
-    </TabInfo>
-    <TabInfo>
-      <wxString Value="C:\Program Files\mingw-w64\mingw64\lib\gcc\x86_64-w64-mingw32\8.1.0\include\c++\bits\stl_construct.h" Name="FileName"/>
-      <int Value="124" Name="FirstVisibleLine"/>
-      <int Value="74" Name="CurrentLine"/>
-      <wxArrayString Name="Bookmarks"/>
-      <IntVector Name="CollapsedFolds"/>
+      <IntVector Name="CollapsedFolds">
+        <IntVectorItem Value="11"/>
+        <IntVectorItem Value="106"/>
+        <IntVectorItem Value="175"/>
+        <IntVectorItem Value="230"/>
+        <IntVectorItem Value="290"/>
+        <IntVectorItem Value="339"/>
+      </IntVector>
     </TabInfo>
   </TabInfoArray>
   <SerializedObject Name="m_breakpoints">

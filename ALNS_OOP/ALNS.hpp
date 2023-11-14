@@ -24,7 +24,7 @@ public:
 	// Soma dos pesos das heurísticas de inserção:
 	double soma_W_ins {0};
 	
-	
+
 	// Melhor solução encontrada pelo algoritmo:
 	Sol S_p;
 	
@@ -91,7 +91,7 @@ public:
 	// Método de inicialização para redução de rotas
 	Sol routeReductionHeuristic(Sol &S_i, int max_it_RRH);
 	
-
+	
 };
 
 #endif // _ALNS_H

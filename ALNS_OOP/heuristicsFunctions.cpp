@@ -11,6 +11,28 @@
 
 /*
 
+// Funções para printar vetores: debug
+
+void printDouble(std::vector<double> const &input)
+{
+    for (auto const &i: input) {
+        cout << i << " ";
+    }
+	
+	cout << endl;
+	
+}
+
+void printInt(std::vector<int> const &input)
+{
+    for (auto const &i: input) {
+        cout << i << " ";
+    }
+	
+	cout << endl;
+	
+}
+
 // Incremento por inserção: calcula o custo de inserção de um pedido em posições pré-determinadas e sem checar factibilidade!
 double delta_FO_ins(Sol &S_ins, double &pedido, int &index_rota, int &pos_no_pickup, int &pos_no_delivery){
 	
