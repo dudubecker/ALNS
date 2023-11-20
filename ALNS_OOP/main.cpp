@@ -20,7 +20,7 @@ int main(){
 	
 	
 	// /*
-	std::vector<std::string> instancias = {"instances/DD65"};
+	std::vector<std::string> instancias = {"instances/CC50","instances/DD50"};
 	
 	// std::vector<std::string> instancias = {"instances/li_lim/400/LC1_4_1.txt"};
 	
@@ -28,7 +28,7 @@ int main(){
 	
 	for (auto instancia: instancias){
 		
-		for (auto i {0}; i < 10; i++){
+		for (auto i {0}; i < 1; i++){
 			
 			// Medindo tempo
 			auto begin = std::chrono::high_resolution_clock::now();
