@@ -13,18 +13,17 @@ public:
 	// Atributos
 	
 	// Vetor que guardará as heurísticas de remoção já inicializadas 
-	std::vector<Heuristic*> removal_heuristics {};
+	std::vector<Heuristic*> heuristicas_remocao {};
 	
 	// Vetor que guardará as heurísticas de inserção já inicializadas 
-	std::vector<Heuristic*> insertion_heuristics {};
+	std::vector<Heuristic*> heuristicas_insercao {};
 	
 	// Soma dos pesos das heurísticas de remoção:
-	double soma_W_rem {0};
+	double soma_peso_rem {0};
 	
 	// Soma dos pesos das heurísticas de inserção:
-	double soma_W_ins {0};
+	double soma_peso_ins {0};
 	
-
 	// Melhor solução encontrada pelo algoritmo:
 	Sol S_p;
 	
@@ -32,9 +31,10 @@ public:
 	Sol S_i;
 	
 	// Soluções conhecidas: vetor com funções-objetivo já encontradas pelo algoritmo, usado na atualização dos scores!
-	std::vector<double> S_encontradas {};
+	std::vector<double> solucoes_encontradas {};
 	
 	// Atributos para o critério de aceitação:
+	
 	// Caso 1: as heurísticas resultaram um novo valor ótimo global
 	int sigma_1 {27};
 	
@@ -48,49 +48,50 @@ public:
 	double r {0.1};
 	
 	// Temperatura: utilizada no critério de aceitação, necessita um cálculo para seu valor inicial
-	double Temperature {};
+	double temperatura {};
 	
 	// Taxa de resfriamento
 	double c {0.9997};
-	//double c {0.8};
 	
 	// Atributo "w": utilizado no critério de aceitação, para o cálculo da temperatura inicial
 	double w {1.3};
 	
+	// Valores aos atributos das heurísticas (eta e delta)
+	
+	// Parâmetro para controle de aleatoriedade na escolha dos pedidos (Shaws e Worst)
 	double delta {};
 	
+	// Parâmetro para controlar grau de aleatorização no cálculo do incremento da FO
 	double eta {};
 	
-	// Constructor/Destructor
+	// Inicialização do objeto ALNS
 	ALNS(Sol S_inicial, double w_value, double c_value, double sigma_1_value, double sigma_2_value, double sigma_3_value, double r_value, double eta_value, double delta_value);
 	
-	ALNS();
-	
+	// Destructor
 	~ALNS();
 	
 	// Methods
 	
 	// Método para atualização do vetor de pesos, a partir do vetor de heurísticas
-	void atualizar_pesos();
-	
-	// Método para atualização de pontuações: necessário saber se a heurística passou pelo critério de aceitação, valor da melhor solução global, solução incumbente e solução recém-alterada (S);
-	void atualizar_pontuacoes(bool &CA, bool &BKS, int &index_h_rem, int &index_h_ins, double &FO);
-	
-	// Método para zerar pontuações
-	void zerar_pontuacoes();
+	void atualizarPesos();
 	
 	// Método para critério de aceitação: retorna valor booleano caso o critério tenha sido aceito ou não
-	bool criterio_aceitacao(Sol &S);
+	bool avaliarCriterioDeAceitacao(Sol &S);
 	
 	// Método para escolher heurísticas: retorna o índice de uma heurística a partir de uma escolha aleatória considerando os pesos
-	int escolher_heuristica(char type);
+	int escolherHeuristica(char type);
 	
-	// Método para o algoritmo geral, que utiliza todos os métodos acima e retorna a melhor função encontrada
-	void algo(int max_it_ALNS, int max_it_RRH, double max_t_ALNS);
+	// Método para atualização de pontuações: necessário saber se a heurística passou pelo critério de aceitação, valor da melhor solução global, solução incumbente e solução recém-alterada (S);
+	void atualizarPontuacoes(bool &CA, bool &BKS, int &index_h_rem, int &index_h_ins, double &FO);
+	
+	// Método para zerar pontuações
+	void zerarPontuacoes();
 	
 	// Método de inicialização para redução de rotas
-	Sol routeReductionHeuristic(Sol &S_i, int max_it_RRH);
+	Sol reduzirRotas(Sol &S_i, int it_RRH);
 	
+	// Método para o algoritmo geral, que utiliza todos os métodos acima e retorna a melhor função encontrada
+	void executarALNS(int max_it, int max_it_sem_melhoria, int it_RRH, double max_t);
 	
 };
 

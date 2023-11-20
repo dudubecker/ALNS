@@ -10,6 +10,93 @@
 #include <thread>
 #include <random>
 
+// init para rodar IRACE
+
+/*
+
+int main(int argc, char *argv[]){
+	
+		// Verifica se o número correto de argumentos foi fornecido
+	if (argc != 17) {
+		std::cerr << "Uso: seu_executavel <id_configuration> <id_instance> <seed> <instancia> --eta <eta> --kappa <kappa> --Gamma <Gamma> --d_b <d_b> --noise <noise> --alpha <alpha>" << std::endl;
+		return 1; // Retorna código de erro
+	}
+	
+	
+	// Mapeia as flags para os valores correspondentes
+	std::unordered_map<std::string, std::string> args;
+	for (int i = 5; i < argc; i += 2) {
+		args[argv[i]] = argv[i + 1];
+	}
+	
+	// Lendo argumentos e atribuindo variáveis
+	long long seed = std::stoll(argv[3]);
+	std::string instancia = argv[4];
+	double eta = std::stod(args["--eta"]);
+	double kappa = std::stod(args["--kappa"]);
+	int Gamma = std::stoi(args["--gamma"]);
+	int d_b = std::stoi(args["--d_b"]);
+	double noise = std::stod(args["--noise"]);
+	double alpha = std::stod(args["--alpha"]);
+	
+	// // Parâmetros:
+	
+	// instancia: Diretório para a instância (em relação ao diretório onde está o executável) e nome
+	// eta: Determina b_UP no critério de aceitação
+	// kappa: Porcentagem de soluções aceitas
+	// Gamma: Determina quantas iterações cada heurística de perturbação realizará com um mesmo "peso"
+	// d_b: Distância de referência ("ideal") entre soluções
+	// eta_noise: Utilizado no cálculo do ruído aleatório
+	// alpha: Probabilidade de aplicação do ruído aleatório
+	
+	
+	// Código principal
+	
+	// Para gerar valores aleatórios, tirar comentário:
+	// srand(time(NULL));
+	
+	// Para ter controle sobre os outputs
+	srand(seed);
+	
+	// Executando algoritmo
+	
+	// Objeto instância
+	Instance inst(instancia);
+	
+	// Inicializando objeto solução;
+	Sol S(inst);
+	
+	// Inicializando objeto da ALNS
+	
+	ALNS ALNSObject(S, // Solução inicial
+							1.3, // w
+							0.9997, // c
+							27, 30, 22, // sigma 1, sigma 2, sigma 3
+							0.1, // r
+							0.02, // eta
+							6 // delta
+	);
+	
+	// Executando algoritmo
+	ALNSObject.executeALNS(
+					
+					2000, // max_it: Número máximo de iterações do algoritmo
+					2000, // max_it_no_improv: Número máximo de iterações sem melhoria
+					500, // it_RRH: Número iterações da route reduction heuristic a cada intervalo
+					600 // max_t :Tempo máximo de execução do algoritmo
+					
+	);
+	
+	// Printando saída do algoritmo, para IRACE
+	std::cout << ALNSObject.S_p.FO() << std::endl;
+	
+}
+*/
+
+// Init normal, para ensaios computacionais
+
+// /*
+
 int main(){
 	
 	// Para gerar valores aleatórios, tirar comentário:
@@ -18,116 +105,75 @@ int main(){
 	// Para controlar a seed
 	srand(125);
 	
+	// Instâncias
 	
-	// /*
-	std::vector<std::string> instancias = {"instances/CC50","instances/DD50"};
-	
-	// std::vector<std::string> instancias = {"instances/li_lim/400/LC1_4_1.txt"};
-	
-	// std::vector<std::string> instancias = {"instances/real_instances/R_75.txt"};
-	
-	for (auto instancia: instancias){
+		std::vector<std::string> instancias = {
 		
-		for (auto i {0}; i < 1; i++){
-			
-			// Medindo tempo
-			auto begin = std::chrono::high_resolution_clock::now();
-			
-			// Objeto ALNS
-			ALNS meta;
-			
-			// Objeto instância
-			Instance inst(instancia);
-			
-			// std::cout << "\n\n" << instancia << "\n\n" << std::endl;
-			
-			// Inicializando objeto solução;
-			Sol s(inst);
-			
-			// Random removal:
-			RandomRemoval* H_r = new RandomRemoval;
-
-			// Worst removal:
-			WorstRemoval* H_w = new WorstRemoval(0.02, 6);
-
-			// Shaw's removal:
-			ShawsRemoval* H_s = new ShawsRemoval(0.3, 0.4, 0.3, 6);
-
-			// Shaw's removal:
-			ShawsRemoval* H_s_TTR = new ShawsRemoval(1, 0, 0, 6);
-
-			// Shaw's removal:
-			ShawsRemoval* H_s_STR = new ShawsRemoval(0, 1, 0, 6);
-
-			// Shaw's removal:
-			ShawsRemoval* H_s_DER = new ShawsRemoval(0, 0, 1, 6);
-
-			// Greedy insertion:
-			GreedyInsertion* H_g_random = new GreedyInsertion(0.02);
-			
-			GreedyInsertion* H_g = new GreedyInsertion(0.0);
-
-			// Regret insertion 1:
-			RegretInsertion* H_a_1 = new RegretInsertion(1, 0.0);
-
-			// Regret insertion 2:
-			RegretInsertion* H_a_2 = new RegretInsertion(2, 0.0);
-
-			// Regret insertion 3:
-			RegretInsertion* H_a_3 = new RegretInsertion(3, 0.0);
-			
-			// Regret insertion 1:
-			RegretInsertion* H_a_1_random = new RegretInsertion(1, 0.02);
-
-			// Regret insertion 2:
-			RegretInsertion* H_a_2_random = new RegretInsertion(2, 0.02);
-
-			// Regret insertion 3:
-			RegretInsertion* H_a_3_random = new RegretInsertion(3, 0.02);
-
-			// Regret insertion 4:
-			RegretInsertion* H_a_4 = new RegretInsertion(4, 0.02);
-			
-			// Parâmetros da ALNS:
-			
-			// Definindo soluções incumbente e melhor solução como a solução construída inicialmente
-			meta.S_p = s;
-			
-			meta.S_i = s;
-			
-			meta.removal_heuristics = {H_r, H_s, H_w, H_s_TTR, H_s_STR, H_s_DER};
-			meta.insertion_heuristics = {H_a_1, H_a_2, H_g,
-										 H_a_1_random, H_a_2_random, H_g_random};
-			
-			// Definindo teomperatura inicial:
-			double T_inicial = (meta.S_i.FO())*((0.3)/log(0.5));
-			
-			meta.Temperature = T_inicial;
-			
-			meta.algo(10000, 1000, 100);
-			
-			// meta.S_p.print_sol();
-			
-			std::cout << "\n FO: " << std::setprecision(7) << meta.S_p.FO() << std::endl;
-			
-			std::cout << "\n Factibilidade:  " << meta.S_p.isFeasible() << std::endl;
-			
-			auto end = std::chrono::high_resolution_clock::now();
-			auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-			
-			std::cout << "Tempo de execucao: " << elapsed.count() * 1e-9 << "segundos. " << std::endl;
-		}
-	}
+		//"instances/AA5",
+		//"instances/AA10",
+		//"instances/AA15",
+		//"instances/AA20",
+		//"instances/AA25",
+		//"instances/AA30",
+		//"instances/AA35",
+		//"instances/AA40",
+		//"instances/AA45",
+		//"instances/AA50",
+		//"instances/AA55",
+		//"instances/AA60",
+		//"instances/AA65",
+		//"instances/AA70",
+		//"instances/AA75",
+		//"instances/BB5",
+		//"instances/BB10",
+		//"instances/BB15",
+		//"instances/BB20",
+		//"instances/BB25",
+		//"instances/BB30",
+		//"instances/BB35",
+		//"instances/BB40",
+		//"instances/BB45",
+		//"instances/BB50",
+		//"instances/BB55",
+		//"instances/BB60",
+		//"instances/BB65",
+		//"instances/BB70",
+		//"instances/BB75",
+		//"instances/CC5",
+		//"instances/CC10",
+		//"instances/CC15",
+		//"instances/CC20",
+		//"instances/CC25",
+		//"instances/CC30",
+		//"instances/CC35",
+		//"instances/CC40",
+		//"instances/CC45",
+		//"instances/CC50",
+		//"instances/CC55",
+		//"instances/CC60",
+		//"instances/CC65",
+		//"instances/CC70",
+		//"instances/CC75",
+		//"instances/DD5",
+		"instances/DD10",
+		"instances/DD15",
+		"instances/DD20",
+		"instances/DD25",
+		"instances/DD30",
+		"instances/DD35",
+		"instances/DD40",
+		"instances/DD45",
+		"instances/DD50",
+		"instances/DD55",
+		"instances/DD60",
+		"instances/DD65",
+		"instances/DD70",
+		"instances/DD75",
+	};
 	
+	// std::vector<std::string> instancias = {"instances/li_lim/200/LC1_2_1.txt"};
 	
-	// */
-	
-	/*
-	// std::vector<std::string> instancias = {"instances/BB50"};
-	
-	std::vector<std::string> instancias = {"instances/li_lim/200/LC1_2_1.txt"};
-	
-	int iteracoes_por_instancia = 10;
+	int iteracoes_por_instancia = 3;
 	
 	for (auto instancia: instancias){
 		
@@ -139,14 +185,14 @@ int main(){
 			// Objeto instância
 			Instance inst(instancia);
 			
-			std::cout << "\n\n" << instancia << "\n\n" << std::endl;
+			std::cout << "\n" << instancia << std::endl;
 			
 			// Inicializando objeto solução;
 			Sol s(inst);
 			
 			
 			// Objeto ALNS
-			ALNS meta(
+			ALNS ALNSObject(
 			
 			s, // Solução inicial
 			1.3, // w
@@ -158,19 +204,20 @@ int main(){
 			
 			);
 			
-			meta.algo(
+			ALNSObject.executarALNS(
 			
-			1000, // Iterações
-			300, // Iterações RRH
+			10000, // Iterações
+			5000, // Número máximo de iterações sem melhorias
+			500, // Iterações RRH
 			600 // Tempo máximo
 			
 			);
 			
-			meta.S_p.print_sol();
+			// ALNSObject.S_p.print_sol();
 			
-			std::cout << "\n FO: " << std::setprecision(7) << meta.S_p.FO() << std::endl;
+			std::cout << "\nFO: " << std::setprecision(7) << ALNSObject.S_p.calcularFO() << std::endl;
 			
-			std::cout << "\n Factibilidade:  " << meta.S_p.isFeasible() << std::endl;
+			std::cout << "\nFactibilidade:  " << ALNSObject.S_p.checarFactibilidadeSolucao() << std::endl;
 			
 			auto end = std::chrono::high_resolution_clock::now();
 			auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
@@ -179,15 +226,8 @@ int main(){
 		}
 	}
 	
-	
-	*/
-	
-	
-	
-	
 	return 0;
 	
-	
-	
-	
 }
+
+// */

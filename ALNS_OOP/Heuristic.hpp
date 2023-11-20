@@ -5,118 +5,37 @@
 #include "Instance.hpp"
 
 
-/*
 class Heuristic
 {
 public:
-	
-	// Nome da heurística: Cons, Shaw, Worst, Random, Greedy, Regret
-	char name {};
 	
 	// Score da heurística, atualizado dinamicamente no algoritmo
 	double score {0};
 	
 	// Peso (probabilidade de escolha) da heurística, atualizado dinamicamente no algoritmo
-	double weight {0};
+	double peso {0};
 	
 	// Número de iterações pelas quais a heurística passou: talvez inicializar como 1
 	int n_it {0};
 	
 	// Número total de iterações pelas quais a heurística passou: talvez inicializar como 1
 	int n_it_total {0};
-	
-	// ... Demais parâmetros específicos de cada heurística
-	
-	// Mudar de lugar!
-	
-	// Shaw's Removal:
-	double phi {};
-	double chi {};
-	double psi {};
-	
-	// Regret insertion:
-	double k {};
-	
-	// Tempo computacional empregado na heurística:
-	double processing_time {};
-	
-	// Constructor/Destructor
-	
-	// Inicialização padrão, apenas com o character
-	Heuristic(char heuristic_name){
-		
-		name = heuristic_name;
-	}
-	
-	// Inicialização do Shaw's Removal
-	Heuristic(char heuristic_name, double phi_value, double chi_value, double psi_value){
-		
-		name = heuristic_name;
-		
-		phi = phi_value;
-		chi = chi_value;
-		psi = psi_value;
-		
-	}
-	
-	// Inicialização do Regret insertion
-	Heuristic(char heuristic_name, double k_value){
-		
-		name = heuristic_name;
-		
-		k = k_value;
-		
-	}
-	
-	~Heuristic();
-	
-	// Methods
-	
-	// Método de aplicação da heurística: tem como entrada uma solução e como saída uma solução alterada (Rotas, L e A)
-	Sol apply(Sol &S);
-	
-	
-};
-*/
-
-// /*
-class Heuristic
-{
-public:
-	
-	// Nome da heurística: Cons, Shaw, Worst, Random, Greedy, Regret
-	char name {};
-	
-	// Score da heurística, atualizado dinamicamente no algoritmo
-	double score {0};
-	
-	// Peso (probabilidade de escolha) da heurística, atualizado dinamicamente no algoritmo
-	double weight {0};
-	
-	// Número de iterações pelas quais a heurística passou: talvez inicializar como 1
-	int n_it {0};
-	
-	// Número total de iterações pelas quais a heurística passou: talvez inicializar como 1
-	int n_it_total {0};
-	
-	// Tempo computacional empregado na heurística:
-	double processing_time {0};
 	
 	// Início das alterações!
 	
 	// Métodos
 	
 	// Método "padrão" para os objetos Heuristic
-	virtual Sol apply(Sol &S);
+	virtual Sol aplicar(Sol &S);
 	
 	// Método para inicialização dos operadores de remoção (calcula porcentagem de "n" a ser removida da solução)
-	virtual int initializeMethod(Sol &S) = 0;
+	virtual int inicializarMetodo(Sol &S) = 0;
 	
 	// Método para inicialização dos operadores de inserção (placeholder)
-	virtual void initializeMethod() = 0;
+	virtual void inicializarMetodo() = 0;
 	
 	// Método específico para cada heurística
-	virtual Sol specificApply(Sol &S)  = 0;
+	virtual Sol aplicarMetodoEspecifico(Sol &S)  = 0;
 	
 	virtual ~Heuristic() {} // Adicionamos um destrutor virtual
 	
@@ -133,9 +52,9 @@ class RemovalHeuristic : public Heuristic {
 public:
 	
 	// Sobrescrita do método "specificApply" para a RemovalHeuristic
-	int initializeMethod(Sol &S) override;
+	int inicializarMetodo(Sol &S) override;
 	
-	void initializeMethod() override {};
+	void inicializarMetodo() override {};
 	
 };
 
@@ -143,7 +62,7 @@ public:
 
 class RandomRemoval : public RemovalHeuristic {
 	
-	Sol specificApply(Sol &S) override;
+	Sol aplicarMetodoEspecifico(Sol &S) override;
 	
 };
 
@@ -164,7 +83,7 @@ public:
 	};
 	
 	
-	Sol specificApply(Sol &S) override;
+	Sol aplicarMetodoEspecifico(Sol &S) override;
 	
 };
 
@@ -188,7 +107,7 @@ public:
 	};
 	
 	
-	Sol specificApply(Sol &S) override;
+	Sol aplicarMetodoEspecifico(Sol &S) override;
 	
 };
 
@@ -198,9 +117,9 @@ class InsertionHeuristic : public Heuristic {
 public:
 	
 	// Sobrescrita do método "specificApply" para a RemovalHeuristic
-    int initializeMethod(Sol &S) override {};
+    int inicializarMetodo(Sol &S) override {};
 	
-	void initializeMethod() override;
+	void inicializarMetodo() override;
 };
 
 class GreedyInsertion : public InsertionHeuristic {
@@ -215,7 +134,7 @@ public:
 		eta = eta_value;
 	};
 	
-	Sol specificApply(Sol &S) override;
+	Sol aplicarMetodoEspecifico(Sol &S) override;
 	
 };
 
@@ -223,7 +142,7 @@ class RegretInsertion : public InsertionHeuristic {
 	
 public:
 
-	Sol specificApply(Sol &S) override;
+	Sol aplicarMetodoEspecifico(Sol &S) override;
 	
 	// Parâmetro da regret
 	double k {};
@@ -239,7 +158,5 @@ public:
 	
 	
 };
-// */
-
 
 #endif // _HEURISTIC_H_

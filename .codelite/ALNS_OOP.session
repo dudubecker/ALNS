@@ -5,14 +5,14 @@
   <TabInfoArray Name="TabInfoArray">
     <TabInfo>
       <wxString Value="C:\Users\User\Documents\ALNS_OOP\ALNS_OOP\main.cpp" Name="FileName"/>
-      <int Value="37" Name="FirstVisibleLine"/>
-      <int Value="45" Name="CurrentLine"/>
+      <int Value="30" Name="FirstVisibleLine"/>
+      <int Value="41" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>
     <TabInfo>
       <wxString Value="C:\Users\User\Documents\ALNS_OOP\ALNS_OOP\Sol.cpp" Name="FileName"/>
-      <int Value="158" Name="FirstVisibleLine"/>
+      <int Value="0" Name="FirstVisibleLine"/>
       <int Value="194" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds">
@@ -24,8 +24,8 @@
     </TabInfo>
     <TabInfo>
       <wxString Value="C:\Users\User\Documents\ALNS_OOP\ALNS_OOP\ALNS.cpp" Name="FileName"/>
-      <int Value="107" Name="FirstVisibleLine"/>
-      <int Value="430" Name="CurrentLine"/>
+      <int Value="21" Name="FirstVisibleLine"/>
+      <int Value="92" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds">
         <IntVectorItem Value="11"/>

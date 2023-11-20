@@ -6,13 +6,10 @@
 #include <time.h>
 #include <chrono>
 
-
 // Inicialização do objeto ALNS
-
 ALNS::ALNS(Sol S_inicial,
 		double w_value, double c_value, double sigma_1_value, double sigma_2_value,
 		double sigma_3_value, double r_value, double eta_value, double delta_value){
-	
 	
 	// Atribuindo valores aos atributos da ALNS
 	w = w_value;
@@ -32,7 +29,7 @@ ALNS::ALNS(Sol S_inicial,
 	S_i = S_inicial;
 	
 	// Definindo teomperatura inicial:
-	Temperature = (S_i.FO())*((0.3)/log(0.5));
+	temperatura = (S_i.calcularFO())*((0.3)/log(0.5));
 	
 	// Inicializando heurísticas
 	
@@ -60,7 +57,7 @@ ALNS::ALNS(Sol S_inicial,
 	
 	// Populando vetores de heurísticas de remoção
 	
-	removal_heuristics = {H_r, H_s, H_w, H_w_random, H_s_TTR, H_s_STR, H_s_DER};
+	heuristicas_remocao = {H_r, H_s, H_w, H_w_random, H_s_TTR, H_s_STR, H_s_DER};
 	
 	// Greedy Insertion
 	
@@ -70,119 +67,110 @@ ALNS::ALNS(Sol S_inicial,
 		// Com random noise
 	GreedyInsertion* H_g_random = new GreedyInsertion(eta);
 	
-	insertion_heuristics = {H_g, H_g_random};
+	heuristicas_insercao = {H_g, H_g_random};
 	
-	// Regret insertion - k vai ser igual ao número de rotas da solução construída subtraído de 2 unidades
-	// Isso porque não lembro de haver, em nenhuma instância, a remoção de mais de uma rota com a heurística de remoção de rotas!
+	// Regret insertion - k vai ser limitado por 3
 	
-	int numero_de_rotas = S_inicial.Rotas.size();
+	int numero_de_rotas = S_inicial.rotas.size();
 	
-	int max_k = std::max(1, numero_de_rotas - 2);
+	// Regret só faz sentido para soluções com mais de 1 rota!
 	
-	for (int k = 1; k <= max_k; k++){
+	if (numero_de_rotas > 1){
 		
-		RegretInsertion* H_a = new RegretInsertion(k, 0);
-		insertion_heuristics.push_back(H_a);
+		int max_k = std::min(3, numero_de_rotas - 1);
 		
-		RegretInsertion* H_a_random = new RegretInsertion(k, eta);
-		insertion_heuristics.push_back(H_a_random);
-		
+		for (int k = 1; k <= max_k; k++){
+			
+			RegretInsertion* H_a = new RegretInsertion(k, 0);
+			heuristicas_insercao.push_back(H_a);
+			
+			RegretInsertion* H_a_random = new RegretInsertion(k, eta);
+			heuristicas_insercao.push_back(H_a_random);
+			
+		}
 	}
 	
 }
 
-
-ALNS::ALNS()
-{
-}
-
+// Destructor
 ALNS::~ALNS()
 {
 }
 
 // Método para atualização de pesos, realizado no início de cada segmento
-
-
-
-void ALNS::atualizar_pesos(){
+void ALNS::atualizarPesos(){
 	
 	// Caso seja a primeira atualização dos pesos, as heurísticas terão o mesmo peso
 	// A soma dos pesos inicial será arbitrariamente igual a 100, e cada heurística terá um peso igual a 100 dividido pelo número de heurísticas
 	
-	if (soma_W_rem == 0){
+	if (soma_peso_rem == 0){
 		
-		double novo_W_removal = (double) 100/(removal_heuristics.size());
+		double novo_peso_remocao = (double) 100/(heuristicas_remocao.size());
 		
-		double novo_W_insertion = (double) 100/(insertion_heuristics.size());
+		double novo_peso_insercao = (double) 100/(heuristicas_insercao.size());
 		
 		// Atualizando pesos para as heurísticas de remoção:
-		for (auto &heuristic: removal_heuristics){
+		for (auto &heuristic: heuristicas_remocao){
 			
-			heuristic->weight = novo_W_removal;
+			heuristic->peso = novo_peso_remocao;
 			
 		}
 		
 		// Atualizando pesos para as heurísticas de inserção:
-		for (auto &heuristic: insertion_heuristics){
+		for (auto &heuristic: heuristicas_insercao){
 			
-			heuristic->weight = novo_W_insertion;
+			heuristic->peso = novo_peso_insercao;
 			
 		}
 		
-		soma_W_rem = 100;
-		soma_W_ins = 100;
+		
+		soma_peso_rem = 100;
+		soma_peso_ins = 100;
 		
 	// Caso contrário, a atualização levará em consideração os pesos pré-estabelecidos, scores e número de iterações de cada heurística
 	} else {
 		
 		// Variáveis que armazenarão a nova soma de pesos:
 		
-		double nova_soma_W_rem {};
+		double nova_soma_peso_rem {};
 		
-		double nova_soma_W_ins {};
+		double nova_soma_peso_ins {};
 		
 		// Atualizando pesos para as heurísticas de remoção:
-		for (auto &heuristic: removal_heuristics){
+		for (auto &heuristic: heuristicas_remocao){
 			
 			// Atualizando peso
-			heuristic->weight = heuristic->weight*(1-r) + r*((heuristic->score)/(heuristic->n_it));
+			heuristic->peso = heuristic->peso*(1-r) + r*((heuristic->score)/(heuristic->n_it));
 			
 			// Incrementando nova soma de pesos:
-			nova_soma_W_rem += heuristic->weight;
+			nova_soma_peso_rem += heuristic->peso;
 			
 		}
 		// Atualizando pesos para as heurísticas de inserção:
-		for (auto &heuristic: insertion_heuristics){
+		for (auto &heuristic: heuristicas_insercao){
 			
-			heuristic->weight = heuristic->weight*(1-r) + r*((heuristic->score)/(heuristic->n_it));
+			heuristic->peso = heuristic->peso*(1-r) + r*((heuristic->score)/(heuristic->n_it));
 			
 			// Incrementando nova soma de pesos:
-			nova_soma_W_ins += heuristic->weight;
+			nova_soma_peso_ins += heuristic->peso;
 		}
 		
 		// Atualizando valores de soma de pesos:
-		soma_W_rem = nova_soma_W_rem;
+		soma_peso_rem = nova_soma_peso_rem;
 		
-		soma_W_ins = nova_soma_W_ins;
+		soma_peso_ins = nova_soma_peso_ins;
 	
 	}
-	
 }
 
-
-
 // Método para critério de aceitação:
-
-bool ALNS::criterio_aceitacao(Sol &S){
-	
-	// Para gerar números aleatórios:
-	// srand(time(NULL));
+bool ALNS::avaliarCriterioDeAceitacao(Sol &S){
 	
 	// Variável para retornar resultado do critério de aceitação
 	bool CA = true;
 	
 	// Caso todos os pedidos tenham sido atendidos, o cálculo é feito (Gasque)
-	if (S.L.size() == 0){
+	if (S.L_size == 0){
 		
 		// Calculando probabilidade de aceitação:
 		
@@ -190,7 +178,7 @@ bool ALNS::criterio_aceitacao(Sol &S){
 		const double e = std::exp(1.0);
 		
 		// Valor do expoente:
-		double expoente = (double) (S.FO() - S_i.FO())/Temperature;
+		double expoente = (double) (S.calcularFO() - S_i.calcularFO())/temperatura;
 		
 		// Cálculo da probabilidade
 		double prob = pow(e, (-1)*expoente);
@@ -213,40 +201,33 @@ bool ALNS::criterio_aceitacao(Sol &S){
 		
 	}
 	
-	
 	// Atualizando valor da temperatura
-	Temperature = Temperature*c;
+	temperatura = temperatura*c;
 	
 	return CA;
 	
 }
 
-
-
-	// Método para escolher heurísticas: retorna o índice de uma heurística ou a própria heurística?
-	
-	// OBS: ver um jeito melhor para não criar código redundante! Possivelmente passar o vetor de heurísticas como um argumento
-	// Possível melhoria: identificar inserção e remoção não por meio de atributos diferentes, mas por meio de um atributo do próprio objeto heurística!
-	
-int ALNS::escolher_heuristica(char type){
+// Método para escolher heurísticas: retorna o índice de uma heurística ou a própria heurística?
+int ALNS::escolherHeuristica(char type){
 	
 	// Vetor de heurísticas (inicialmente vazio)
-	std::vector<Heuristic*> heuristics_vector {};
+	std::vector<Heuristic*> heuristicas {};
 	
 	// Soma dos pesos das heurísticas 
-	double soma_W {};
+	double soma_peso {};
 	
 	// Caso se queira escolher uma heurística de remoção
 	if (type == 'R'){
 		
-		heuristics_vector = removal_heuristics;
-		soma_W = soma_W_rem;
+		heuristicas = heuristicas_remocao;
+		soma_peso = soma_peso_rem;
 		
 	// Caso se queira escolher uma heurística de inserção
 	} else {
 		
-		heuristics_vector = insertion_heuristics;
-		soma_W = soma_W_ins;
+		heuristicas = heuristicas_insercao;
+		soma_peso = soma_peso_ins;
 		
 	}
 	
@@ -262,10 +243,10 @@ int ALNS::escolher_heuristica(char type){
 	int index_heuristica {0};
 	
 	// Determinando índice da heurística de remoção:
-	for (Heuristic* &heuristic: heuristics_vector){
+	for (Heuristic* &heuristic: heuristicas){
 		
 		// Probabilidade de escolha da heurística:
-		double prob_heuristica = heuristic->weight/soma_W;
+		double prob_heuristica = heuristic->peso/soma_peso;
 		
 		prob_acumulada += prob_heuristica;
 		
@@ -287,61 +268,52 @@ int ALNS::escolher_heuristica(char type){
 	
 }
 
-
-void ALNS::atualizar_pontuacoes(bool &CA, bool &BKS,int &index_h_rem, int &index_h_ins, double &FO){
-	
-	//std::cout << FO << std::endl;
+// Método para atualização de pontuações: necessário saber se a heurística passou pelo critério de aceitação, valor da melhor solução global, solução incumbente e solução recém-alterada (S);
+void ALNS::atualizarPontuacoes(bool &CA, bool &BKS, int &index_h_rem, int &index_h_ins, double &FO){
 	
 	if (BKS){
 		
-		removal_heuristics[index_h_rem]->score += sigma_1;
-		insertion_heuristics[index_h_ins]->score += sigma_1;
-		
-		//std::cout << "Case 1" << std::endl;
+		heuristicas_remocao[index_h_rem]->score += sigma_1;
+		heuristicas_insercao[index_h_ins]->score += sigma_1;
 		
 	} else {
 		
 		
-		if ((CA) && (!count(S_encontradas.begin(), S_encontradas.end(), FO))){
+		if ((CA) && (!count(solucoes_encontradas.begin(), solucoes_encontradas.end(), FO))){
 			
-			if (FO < S_i.FO()){
+			if (FO < S_i.calcularFO()){
 				
-				removal_heuristics[index_h_rem]->score += sigma_2;
-				insertion_heuristics[index_h_ins]->score += sigma_2;
-				
-				//std::cout << "Case 2" << std::endl;
+				heuristicas_remocao[index_h_rem]->score += sigma_2;
+				heuristicas_insercao[index_h_ins]->score += sigma_2;
 				
 			}else{
 				
-				removal_heuristics[index_h_rem]->score += sigma_3;
-				insertion_heuristics[index_h_ins]->score += sigma_3;
-				
-				//std::cout << "Case 3" << std::endl;
+				heuristicas_remocao[index_h_rem]->score += sigma_3;
+				heuristicas_insercao[index_h_ins]->score += sigma_3;
 				
 			}
 			
 		}
 	}
+	
 	// Incrementando a quantidade de iterações da heurística no segmento:
 	
-	removal_heuristics[index_h_rem]->n_it += 1;
-	insertion_heuristics[index_h_ins]->n_it += 1;
+	heuristicas_remocao[index_h_rem]->n_it += 1;
+	heuristicas_insercao[index_h_ins]->n_it += 1;
 	
 	// Incrementando a quantidade total de iterações da heurística (debug):
 	
-	removal_heuristics[index_h_rem]->n_it_total += 1;
-	insertion_heuristics[index_h_ins]->n_it_total += 1;
-	
+	heuristicas_remocao[index_h_rem]->n_it_total += 1;
+	heuristicas_insercao[index_h_ins]->n_it_total += 1;
 	
 }
 
-
-
-void ALNS::zerar_pontuacoes(){
+// Método para zerar pontuações
+void ALNS::zerarPontuacoes(){
 	
 	// Zerando pontuações e número de iterações no segmento para heurísticas de remoção:
 	
-	for (auto &heuristic: removal_heuristics){
+	for (auto &heuristic: heuristicas_remocao){
 		
 		heuristic->score = 0;
 		heuristic->n_it = 0;
@@ -350,18 +322,16 @@ void ALNS::zerar_pontuacoes(){
 	
 	// Zerando pontuações e número de iterações no segmento para heurísticas de inserção:
 	
-	for (auto &heuristic: insertion_heuristics){
+	for (auto &heuristic: heuristicas_insercao){
 		
 		heuristic->score = 0;
 		heuristic->n_it = 0;
 		
 	}
-	
 }
 
-
-
-Sol ALNS::routeReductionHeuristic(Sol &S_i, int max_it_RRH){
+// Método de inicialização para redução de rotas
+Sol ALNS::reduzirRotas(Sol &S_i, int it_RRH){
 	
 	// Criando uma cópia da rota:
 	Sol S = S_i;
@@ -369,64 +339,61 @@ Sol ALNS::routeReductionHeuristic(Sol &S_i, int max_it_RRH){
 	// Solução para armazenar a melhor solução (de menor número de rotas)
 	Sol BKS = S_i;
 	
-	// Para gerar números aleatórios
-	// srand(time(NULL));
-	
 	// Variável para o número de iterações:
 	int n_it {0};
 	
-	while (n_it < max_it_RRH){
+	while (n_it < it_RRH){
 		
-		if (n_it%100 == 0){
+		//if (n_it%100 == 0){
 			
-		//std::cout << "Iteracao RR: " << n_it << std::endl;
-			;
-		}
-		
+		//	std::cout << "Iteracao RR: " << n_it << std::endl;
+			
+		//}
 		
 		// Caso "L" esteja vazio, a rota é excluída e os pedidos são colocados no banco de pedidos não atendidos
-		if (S.L.size() == 0){
+		if (S.L_size == 0){
 			
 			BKS = S;
 			
 			// Quantidade "m" de rotas na solução:
-			int m = S.Rotas.size();
+			int m = S.rotas.size();
 			
 			// Escolhendo índice da rota que será removida
 			double index_rota = rand()%(m);
 			
 			// Removendo rota
-			S.remover_rota(index_rota);
+			S.removerRota(index_rota);
 			
 		}
 		
 		// Escolhendo heurísticas e aplicando-as à solução
 		
-		int index_h_rem = escolher_heuristica('R');
-		int index_h_ins = escolher_heuristica('I');
+		int index_h_rem = escolherHeuristica('R');
+		int index_h_ins = escolherHeuristica('I');
 		
-		removal_heuristics.at(index_h_rem)->apply(S);
-		
-		insertion_heuristics.at(index_h_ins)->apply(S);
-		
-		// S.print_sol();
+		heuristicas_remocao.at(index_h_rem)->aplicar(S);
+		heuristicas_insercao.at(index_h_ins)->aplicar(S);
 		
 		n_it += 1;
 		
 	}
 	
 	return BKS;
-	
 }
 
 
 // Método do algoritmo em si
-
-void ALNS::algo(int max_it_ALNS, int max_it_RRH, double max_t_ALNS){
+void ALNS::executarALNS(int max_it, int max_it_sem_melhoria, int it_RRH, double max_t){
 	
-	S_i = routeReductionHeuristic(S_i, max_it_RRH);
+	// Código para redução de rotas
 	
-	// S_i.print_sol();
+	if (S_i.rotas.size() > 1){
+		
+		S_i = reduzirRotas(S_i, it_RRH);
+		
+	}
+	
+	// Código principal
 	
 	// Variável para o número de iterações:
 	int n_it {};
@@ -434,85 +401,77 @@ void ALNS::algo(int max_it_ALNS, int max_it_RRH, double max_t_ALNS){
 	// Variável para o tempo de execução
 	double t_ALNS {0};
 	
-	while ((n_it < max_it_ALNS) && (t_ALNS < max_t_ALNS)){
+	// Variável para o número de iterações sem melhoria:
+	int it_sem_melhoria = 0;
+	
+	while ((n_it < max_it) && (t_ALNS < max_t)){
 		
-		// std::cout << t_ALNS << std::endl;
-		
-		if (n_it%100 == 0){
+		//if (n_it%1000 == 0){
 			
-			// std::cout << "Iteracao ALNS: " << n_it << std::endl;
-			;
-		}
+		//	std::cout << "Iteracao ALNS: " << n_it << std::endl;
+			
+		//}
 		
 		// Medindo tempo
 		auto begin = std::chrono::high_resolution_clock::now();
 		
-		// std::cout << "Iteracao " << n_it << " da ALNS" << std::endl;
+		// Interrompendo execução no caso de o algoritmo ter chegado no número máximo de iterações sem melhoria
+		
+		if (it_sem_melhoria == max_it_sem_melhoria){
+			
+			break;
+			
+		}
 		
 		// Modificando a solução incumbente
 		Sol S = S_i;
 		
-		// Atualizando pesos, scores e número de iterações para cada heurística no início de cada segmento
+		// Atualizando pesos, scores e número de iterações para cada heurística no início de cada segmento (100 iterações)
 		if (n_it % 100 == 0){
 			
-			atualizar_pesos();
-			zerar_pontuacoes();
+			atualizarPesos();
+			zerarPontuacoes();
 			
 		}
 		
 		// Escolhendo e aplicando heurísticas
 		
-		int index_h_rem = escolher_heuristica('R');
-		int index_h_ins = escolher_heuristica('I');
+		int index_h_rem = escolherHeuristica('R');
+		int index_h_ins = escolherHeuristica('I');
 		
-		removal_heuristics.at(index_h_rem)->apply(S);
-		
-		insertion_heuristics.at(index_h_ins)->apply(S);
-		
-		// Adição -> para remover rotas vazias
-		if (S.LSize == 0){
-			
-			for (int index_rota {0}; index_rota < S.Rotas.size(); index_rota++){
-				
-				if (S.RotasSize.at(index_rota) == 2){
-					
-					S.remover_rota(index_rota);
-					
-				}
-				
-				
-			}
-			
-		}
-		
+		heuristicas_remocao.at(index_h_rem)->aplicar(S);
+		heuristicas_insercao.at(index_h_ins)->aplicar(S);
 		
 		// Analisando se a solução é a melhor já encontrada e armazenando seu valor na região de soluções encontradas
 		
 		// Variável para armazenar função objetivo
-		double FO = (double) S.FO();
-		
-		// std::cout << "FO: " << FO << "\n\n";
+		double FO = (double) S.calcularFO();
 		
 		bool BKS = false;
 		
-		if (FO < S_p.FO()){
+		if (FO < S_p.calcularFO()){
 			
-			if (S.L.size() == 0){
+			if (S.L_size == 0){
 				
 				S_p = S;
 			}
 			
 			S_p = S;
 			BKS = true;
+			it_sem_melhoria = 0;
+			
+		} else {
+			
+			it_sem_melhoria += 1;
 			
 		}
 		
 		// Avaliando se a solução passa pelo critério de aceitação
 		
-		bool CA = criterio_aceitacao(S);
+		bool CA = avaliarCriterioDeAceitacao(S);
 		
 		// Atualizando pontuações das respectivas heurísticas, de acordo com os resultados da iteração
-		atualizar_pontuacoes(CA, BKS, index_h_rem, index_h_ins, FO);
+		atualizarPontuacoes(CA, BKS, index_h_rem, index_h_ins, FO);
 		
 		if (CA){
 			
@@ -521,7 +480,7 @@ void ALNS::algo(int max_it_ALNS, int max_it_RRH, double max_t_ALNS){
 		}
 		
 		// Armazenando função objetivo nas soluções já encontradas, para ter o controle delas
-		S_encontradas.push_back(FO);
+		solucoes_encontradas.push_back(FO);
 		
 		n_it += 1;
 		
@@ -531,7 +490,4 @@ void ALNS::algo(int max_it_ALNS, int max_it_RRH, double max_t_ALNS){
 		t_ALNS += elapsed.count() * 1e-9;
 		
 	}
-	
 }
-/*
-*/

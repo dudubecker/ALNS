@@ -13,7 +13,7 @@ CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
 User                   :=User
-Date                   :=16/11/2023
+Date                   :=20/11/2023
 CodeLitePath           :="C:/Program Files/CodeLite"
 LinkerName             :="C:/Program Files/mingw-w64/mingw64/bin/g++.exe"
 SharedObjectLinkerName :="C:/Program Files/mingw-w64/mingw64/bin/g++.exe" -shared -fPIC
@@ -62,7 +62,7 @@ AS       := "C:/Program Files/mingw-w64/mingw64/bin/as.exe"
 ## User defined environment variables
 ##
 CodeLiteDir:=C:\Program Files\CodeLite
-Objects0=$(IntermediateDirectory)/Sol.cpp$(ObjectSuffix) $(IntermediateDirectory)/heuristicsFunctions.cpp$(ObjectSuffix) $(IntermediateDirectory)/ALNS.cpp$(ObjectSuffix) $(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/Heuristic.cpp$(ObjectSuffix) $(IntermediateDirectory)/Instance.cpp$(ObjectSuffix) 
+Objects0=$(IntermediateDirectory)/ALNS.cpp$(ObjectSuffix) $(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/Heuristic.cpp$(ObjectSuffix) $(IntermediateDirectory)/Instance.cpp$(ObjectSuffix) $(IntermediateDirectory)/Sol.cpp$(ObjectSuffix) 
 
 
 
@@ -93,18 +93,6 @@ PreBuild:
 ##
 ## Objects
 ##
-$(IntermediateDirectory)/Sol.cpp$(ObjectSuffix): Sol.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Sol.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Sol.cpp$(DependSuffix) -MM Sol.cpp
-	$(CXX) $(IncludePCH) $(SourceSwitch) "C:/Users/User/Documents/ALNS_OOP/ALNS_OOP/Sol.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Sol.cpp$(ObjectSuffix) $(IncludePath)
-$(IntermediateDirectory)/Sol.cpp$(PreprocessSuffix): Sol.cpp
-	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Sol.cpp$(PreprocessSuffix) Sol.cpp
-
-$(IntermediateDirectory)/heuristicsFunctions.cpp$(ObjectSuffix): heuristicsFunctions.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/heuristicsFunctions.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/heuristicsFunctions.cpp$(DependSuffix) -MM heuristicsFunctions.cpp
-	$(CXX) $(IncludePCH) $(SourceSwitch) "C:/Users/User/Documents/ALNS_OOP/ALNS_OOP/heuristicsFunctions.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/heuristicsFunctions.cpp$(ObjectSuffix) $(IncludePath)
-$(IntermediateDirectory)/heuristicsFunctions.cpp$(PreprocessSuffix): heuristicsFunctions.cpp
-	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/heuristicsFunctions.cpp$(PreprocessSuffix) heuristicsFunctions.cpp
-
 $(IntermediateDirectory)/ALNS.cpp$(ObjectSuffix): ALNS.cpp
 	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/ALNS.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/ALNS.cpp$(DependSuffix) -MM ALNS.cpp
 	$(CXX) $(IncludePCH) $(SourceSwitch) "C:/Users/User/Documents/ALNS_OOP/ALNS_OOP/ALNS.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/ALNS.cpp$(ObjectSuffix) $(IncludePath)
@@ -128,6 +116,12 @@ $(IntermediateDirectory)/Instance.cpp$(ObjectSuffix): Instance.cpp
 	$(CXX) $(IncludePCH) $(SourceSwitch) "C:/Users/User/Documents/ALNS_OOP/ALNS_OOP/Instance.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Instance.cpp$(ObjectSuffix) $(IncludePath)
 $(IntermediateDirectory)/Instance.cpp$(PreprocessSuffix): Instance.cpp
 	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Instance.cpp$(PreprocessSuffix) Instance.cpp
+
+$(IntermediateDirectory)/Sol.cpp$(ObjectSuffix): Sol.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Sol.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Sol.cpp$(DependSuffix) -MM Sol.cpp
+	$(CXX) $(IncludePCH) $(SourceSwitch) "C:/Users/User/Documents/ALNS_OOP/ALNS_OOP/Sol.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Sol.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/Sol.cpp$(PreprocessSuffix): Sol.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Sol.cpp$(PreprocessSuffix) Sol.cpp
 
 
 -include $(IntermediateDirectory)/*$(DependSuffix)

@@ -1,1 +1,1 @@
-Release/Sol.cpp.o Release/heuristicsFunctions.cpp.o Release/ALNS.cpp.o Release/main.cpp.o Release/Heuristic.cpp.o Release/Instance.cpp.o   
+Release/ALNS.cpp.o Release/main.cpp.o Release/Heuristic.cpp.o Release/Instance.cpp.o Release/Sol.cpp.o   

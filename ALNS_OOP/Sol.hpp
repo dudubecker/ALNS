@@ -7,96 +7,88 @@
 
 class Sol
 {
-	//// Atributos:
-	//private:
+	
 public:
 	
 	// Rotas da solução:
-	std::vector<std::vector<double>> Rotas {};
+	std::vector<std::vector<double>> rotas {};
 	
 	// Vetor de cargas
-	std::vector<std::vector<double>> Cargas {};
+	std::vector<std::vector<double>> cargas {};
 	
 	// Vetor de tempos de visita
-	std::vector<std::vector<double>> TemposDeVisita {};
-	
-	// Tamanho das rotas na solução
-	std::vector<int> RotasSize {};
+	std::vector<std::vector<double>> tempos_de_visita {};
 	
 	// Pedidos não atendidos na solução (chamados aqui de "L")
 	std::vector<double> L {};
 	
-	// Tamanho do vetor de pedidos não atendidos
-	int LSize {};
-	
 	// Pedidos atendidos na solução (chamados aqui de "A")
 	std::vector<double> A {};
 	
+	// Tamanho das rotas na solução
+	std::vector<int> rotas_size {};
+	
+	// Tamanho do vetor de pedidos não atendidos
+	int L_size {};
+	
 	// Tamanho do vetor de pedidos atendidos
-	int ASize {};
+	int A_size {};
 	
 	// Posição do pedido na solução
-	std::map<int, std::vector<int>> request_positions {};
+	std::map<int, std::vector<int>> posicoes_pedidos {};
 	
 	// Instância da solução
 	Instance inst;
 	
 	// Constructor/Destructor
-	// Constructor com objeto instance:
-	Sol(Instance &inst_data);
 	
-	// Adicionado na última atualização:
+	// Constructor com objeto instance:
+	Sol(Instance &dados_instancia);
+	
+	// Atribuição direta
 	Sol();
 	
+	// Destructor
 	~Sol();
 	
-	// Methods
-	
-	// Cálculo da função objetivo:
-	double FO();
-	
-	// Cálculo da função objetivo penalizada:
-	// double FO_W();
+	// Métodos
 	
 	// Método para inserção de um pedido
-	void inserir_pedido(double &pedido, int index_rota, int pos_no_pickup, int pos_no_delivery); // Somente posições factíveis?
+	void inserirPedido(double &pedido, int index_rota, int pos_no_pickup, int pos_no_delivery); // Somente posições factíveis?
 	
 	// Método para remoção de um pedido
-	void remover_pedido(double &pedido);
+	void removerPedido(double &pedido);
 	
-	// Checagem se uma solução é factível ou não:
-	bool isFeasible();
+	// Método para remoção de uma rota (usado na heurística de remoção de rotas)
+	void removerRota(int index_rota);
 	
-	// Checagem se uma rota da solução é factível ou não:
-	bool isFeasible(int &index_rota);
-	
-	// Método para printar solução
-	void print_sol();
+	// Cálculo da função objetivo:
+	double calcularFO();
 	
 	// Incremento por inserção: calcula o custo de inserção de um pedido em posições pré-determinadas e sem checar factibilidade!
-	double delta_FO_ins(double &pedido, int &index_rota, int &pos_no_pickup, int &pos_no_delivery);
+	double calcularVariacaoFO(double &pedido, int &index_rota, int &pos_no_pickup, int &pos_no_delivery);
 	
 	// Decréscimo por remoção: calcula o decréscimo na FO pela remoção de um pedido
-	double delta_FO_rem(double &pedido);
+	double calcularVariacaoFO(double &pedido);
 	
-	// Retorna um vetor com o delta de melhor inserção, rota, posição de nó pickup e delivery correspondentes ao pedido passado
-	std::vector<double> delta_melhor_insercao(double &pedido);
+	// Checagem se uma solução é factível ou não:
+	bool checarFactibilidadeSolucao();
+	
+	// Novo método de checagem de factibilidade, que usa vetor de cargas e tempos de visita
+	bool checarFactibilidadeInsercao(double &pedido, int index_rota, int &pos_no_pickup, int &pos_no_delivery);
+	
+	// Retorna um vetor com o delta de melhor inserção, rota, posição de nó pickup e delivery correspondentes a um dado pedido
+	std::vector<double> calcularDadosMelhorInsercao(double &pedido);
 	
 	// Delta melhor inserção considerando rota (regret insertion):
 	// Retorna um vetor com o delta de melhor inserção, rota, posição de nó pickup e delivery correspondentes ao pedido passado
-	std::vector<double> delta_melhor_insercao(double &pedido, int &index_rota);
+	std::vector<double> calcularDadosMelhorInsercao(double &pedido, int &index_rota);
 	
 	// Executa a melhor inserção considerando todas as rotas:
-	void executar_melhor_insercao(double &pedido);
+	void executarMelhorInsercao(double &pedido);
 	
-	// Avaliando factibilidade da inserção de um pedido (sem realizar a inserção!)
-	bool isInsertionFeasible(double &pedido, int index_rota, int &pos_no_pickup, int &pos_no_delivery);
-	
-	// Novo método de checagem de factibilidade, que usa vetor de cargas e tempos de visita
-	bool checar_factibilidade(double &pedido, int index_rota, int &pos_no_pickup, int &pos_no_delivery);
-	
-	// Método para remoção de uma rota (usado na heurística de remoção de rotas)
-	void remover_rota(int index_rota);
+	// Método para printar solução
+	void printSol();
 	
 };
 

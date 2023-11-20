@@ -7,9 +7,6 @@ Instance::Instance()
 {
 }
 
-
-
-
 // Método de leitura:
 
 Instance::Instance(std::string file_name){
@@ -123,11 +120,10 @@ Instance::Instance(std::string file_name){
 			}
 			
 		}
-		
-
-		
 	}
 	
+	
+	// Atribuindo valor máximo de t para o atributo "max_dist" (utilizado na aplicação de ruído no cálculo da FO)
 	max_dist = max_t;
 	
 	// Dados normalizados para Shaw's removal: demandas (q) e tempos de viagem (t)

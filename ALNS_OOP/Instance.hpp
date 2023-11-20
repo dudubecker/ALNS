@@ -8,8 +8,7 @@
 
 class Instance
 {
-	//// Atributos:
-	//private:
+	
 	public:
 	
 	// Coordenadas x de cada nó i da instância
@@ -51,14 +50,11 @@ class Instance
 	
 	// Constructor/Destructor
 	
-	Instance();
-	
 	Instance(std::string file_name);
 	
-	~Instance();
+	Instance();
 	
-	// Methods
-	// void read();
+	~Instance();
 	
 };
 
