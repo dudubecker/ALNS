@@ -109,6 +109,27 @@ int main(int argc, char *argv[]){
 
 int main(){
 	
+	// Parâmetros de controle dos critérios de parada
+	
+	int max_it 2000; // Número máximo de iterações do algoritmo
+	int max_it_no_improv 2000; // Número máximo de iterações sem melhoria
+	int it_RRH 500; // Número iterações da route reduction heuristic a cada intervalo
+	int max_t 600; // Tempo máximo de execução do algoritmo
+	int iteracoes_por_instancia = 3; 
+	
+	// Parâmetros da meta-heurística
+	
+	long long seed = 125;
+	double w = 1.3;
+	double c = 0.9997;
+	int sigma1 = 27;
+	int sigma2 = 30;
+	int sigma3 = 22;
+	double r = 0.1;
+	double eta = 0.02;
+	double delta = 6;
+	
+	
 	// Para gerar valores aleatórios, tirar comentário:
 	// srand(time(NULL));
 	
@@ -181,9 +202,8 @@ int main(){
 		"instances/DD75",
 	};
 	
-	// std::vector<std::string> instancias = {"instances/li_lim/200/LC1_2_1.txt"};
 	
-	int iteracoes_por_instancia = 3;
+	// Executando algoritmo
 	
 	for (auto instancia: instancias){
 		
@@ -200,26 +220,24 @@ int main(){
 			// Inicializando objeto solução;
 			Sol s(inst);
 			
-			
 			// Objeto ALNS
 			ALNS ALNSObject(
 			
 			s, // Solução inicial
-			1.3, // w
-			0.9997, // c
-			27, 30, 22, // sigma 1, sigma 2, sigma 3
-			0.1, // r
-			0.02, // eta
-			6 // delta
-			
+			w, // w
+			c, // c
+			sigma1, sigma2, sigma3, // sigma 1, sigma 2, sigma 3
+			r, // r
+			eta, // eta
+			delta // delta
 			);
 			
 			ALNSObject.executarALNS(
 			
-			10000, // Iterações
-			5000, // Número máximo de iterações sem melhorias
-			500, // Iterações RRH
-			600 // Tempo máximo
+			max_it, // Iterações
+			max_it_no_improv, // Número máximo de iterações sem melhorias
+			it_RRH, // Iterações RRH
+			max_t // Tempo máximo
 			
 			);
 			

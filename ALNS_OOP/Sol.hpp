@@ -54,7 +54,7 @@ public:
 	// Métodos
 	
 	// Método para inserção de um pedido
-	void inserirPedido(double &pedido, int index_rota, int pos_no_pickup, int pos_no_delivery); // Somente posições factíveis?
+	void inserirPedido(int pedido, int index_rota, int pos_no_pickup, int pos_no_delivery); // Somente posições factíveis?
 	
 	// Método para remoção de um pedido
 	void removerPedido(double &pedido);
@@ -66,16 +66,16 @@ public:
 	double calcularFO();
 	
 	// Incremento por inserção: calcula o custo de inserção de um pedido em posições pré-determinadas e sem checar factibilidade!
-	double calcularVariacaoFO(double &pedido, int &index_rota, int &pos_no_pickup, int &pos_no_delivery);
+	double calcularVariacaoFO(int pedido, int index_rota, int &pos_no_pickup, int &pos_no_delivery);
 	
 	// Decréscimo por remoção: calcula o decréscimo na FO pela remoção de um pedido
-	double calcularVariacaoFO(double &pedido);
+	double calcularVariacaoFO(int pedido);
 	
 	// Checagem se uma solução é factível ou não:
 	bool checarFactibilidadeSolucao();
 	
 	// Novo método de checagem de factibilidade, que usa vetor de cargas e tempos de visita
-	bool checarFactibilidadeInsercao(double &pedido, int index_rota, int &pos_no_pickup, int &pos_no_delivery);
+	bool checarFactibilidadeInsercao(int pedido, int index_rota, int &pos_no_pickup, int &pos_no_delivery);
 	
 	// Retorna um vetor com o delta de melhor inserção, rota, posição de nó pickup e delivery correspondentes a um dado pedido
 	std::vector<double> calcularDadosMelhorInsercao(double &pedido);

@@ -224,8 +224,8 @@ Sol ShawsRemoval::aplicarMetodoEspecifico(Sol &S) {
 	// Vetor com graus de semelhança
 	std::vector<std::vector<double>> R(S.inst.n + 1, std::vector<double> (S.inst.n + 1, 9999));
 	
-	for (unsigned i {1}; i < S.inst.n + 1; i++){
-		for (unsigned j {1}; j < S.inst.n + 1; j++){
+	for (int i {1}; i < S.inst.n + 1; i++){
+		for (int j {1}; j < S.inst.n + 1; j++){
 			
 			 // Calculando valor de R_ij
 			
@@ -337,7 +337,7 @@ Sol ShawsRemoval::aplicarMetodoEspecifico(Sol &S) {
 		
 		// Inicia-se por 1, pois o pedido de índice 0 é o pedido que já está em L!
 		
-		for (int index {1}; index < D.size() ; index++){
+		for (size_t index {1}; index < D.size() ; index++){
 			
 			S.removerPedido(D.at(index));
 			
@@ -431,7 +431,7 @@ Sol GreedyInsertion::aplicarMetodoEspecifico(Sol &S) {
 		// Caso não tenha se achado pelo menos uma posição de inserção factível (delta_min == 99999, valor retornado pela função)
 		} else {
 			
-			qtd_insercoes_factiveis == 0;
+			qtd_insercoes_factiveis = 0;
 			
 		}
 		

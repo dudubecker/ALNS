@@ -102,10 +102,7 @@ Sol::~Sol()
 }
 
 // Método para inserção de um pedido
-void Sol::inserirPedido(double &pedido, int index_rota, int pos_no_pickup, int pos_no_delivery){
-	
-	// Vetor que sofrerá inserção
-	//std::vector novaRota = Rotas.at(index_rota);
+void Sol::inserirPedido(int pedido, int index_rota, int pos_no_pickup, int pos_no_delivery){
 	
 	// Índice do nó de pickup correspondente ao request
 	int no_pickup {pedido};
@@ -286,7 +283,7 @@ void Sol::inserirPedido(double &pedido, int index_rota, int pos_no_pickup, int p
 	
 	if (L_size == 0){
 		
-		for (int index_rota {0}; index_rota < rotas.size(); index_rota++){
+		for (size_t index_rota {0}; index_rota < rotas.size(); index_rota++){
 			
 			if (rotas_size.at(index_rota) == 2){
 				
@@ -303,12 +300,6 @@ void Sol::inserirPedido(double &pedido, int index_rota, int pos_no_pickup, int p
 
 // Método para remoção de um pedido
 void Sol::removerPedido(double &pedido){
-	
-	// Índice do nó de pickup correspondente ao request
-	int no_pickup {pedido};
-	
-	// Índice do nó de delivery correspondente ao request
-	int no_delivery {pedido + inst.n};
 	
 	// Índice da rota onde o pedido está:
 	int index_rota = posicoes_pedidos[pedido].at(0);
@@ -527,11 +518,11 @@ double Sol::calcularFO(){
 	// Custos totais
 	double custos_totais = 0;
 	
-	for (int index_rota {0}; index_rota < rotas.size(); index_rota++){
+	for (size_t index_rota {0}; index_rota < rotas.size(); index_rota++){
 		
 		custos_totais += custo_veiculo;
 		
-		for (unsigned index_no {0}; index_no < rotas_size.at(index_rota) - 1; index_no++){
+		for (int index_no {0}; index_no < rotas_size.at(index_rota) - 1; index_no++){
 			
 			custos_totais += inst.t[rotas.at(index_rota)[index_no]][rotas.at(index_rota)[index_no + 1]];
 			
@@ -539,17 +530,15 @@ double Sol::calcularFO(){
 	}
 	
 	// Penalizando número de pedidos não atendidos:
-	for (auto &pedido: L){
-		
-		custos_totais += 10000;
-		
-	}
+	
+	custos_totais += 10000*(L_size);
+	
 	
 	return (double) custos_totais;
 }
 
 // Incremento por inserção: calcula o custo de inserção de um pedido em posições pré-determinadas e sem checar factibilidade!
-double Sol::calcularVariacaoFO(double &pedido, int &index_rota, int &pos_no_pickup, int &pos_no_delivery){
+double Sol::calcularVariacaoFO(int pedido, int index_rota, int &pos_no_pickup, int &pos_no_delivery){
 	
 	// Índice do nó de pickup correspondente ao request
 	int no_pickup {pedido};
@@ -585,7 +574,7 @@ double Sol::calcularVariacaoFO(double &pedido, int &index_rota, int &pos_no_pick
 }
 
 // Decréscimo por remoção: calcula o decréscimo na FO pela remoção de um pedido
-double Sol::calcularVariacaoFO(double &pedido){
+double Sol::calcularVariacaoFO(int pedido){
 	
 	// Índice do nó de pickup correspondente ao request
 	int no_pickup {pedido};
@@ -695,7 +684,7 @@ bool Sol::checarFactibilidadeSolucao(){
 }
 
 // Novo método de checagem de factibilidade, que usa vetor de cargas e tempos de visita
-bool Sol::checarFactibilidadeInsercao(double &pedido, int index_rota, int &pos_no_pickup, int &pos_no_delivery){
+bool Sol::checarFactibilidadeInsercao(int pedido, int index_rota, int &pos_no_pickup, int &pos_no_delivery){
 	
 	// Variável booleana, que controla a factibilidade
 	bool factivel = true;
@@ -705,9 +694,6 @@ bool Sol::checarFactibilidadeInsercao(double &pedido, int index_rota, int &pos_n
 	
 	// Índice do nó de delivery correspondente ao request
 	int no_delivery {pedido + inst.n};
-	
-	// Demanda a ser adicionada na chunk entre P e D
-	double demanda = inst.q.at(pedido);
 	
 	// Carga atual - Anterior à posição de pickup
 	double cap_atual = cargas.at(index_rota).at(pos_no_pickup - 1);
@@ -845,12 +831,6 @@ bool Sol::checarFactibilidadeInsercao(double &pedido, int index_rota, int &pos_n
 // Retorna um vetor com o delta de melhor inserção, rota, posição de nó pickup e delivery correspondentes a um dado pedido
 std::vector<double> Sol::calcularDadosMelhorInsercao(double &pedido){
 	
-	// Índice do nó de pickup correspondente ao request
-	int no_pickup {pedido};
-	
-	// Índice do nó de delivery correspondente ao request
-	int no_delivery {pedido + inst.n};
-	
 	// Variável que controlará o número de rotas factíveis encontradas
 	int num_rotas_factiveis {0};
 	
@@ -858,20 +838,20 @@ std::vector<double> Sol::calcularDadosMelhorInsercao(double &pedido){
 	double delta_min {9999};
 	
 	// Posição de inserção de nó de pickup com delta mínimo
-	int pos_insercao_no_pickup_min {};
+	double pos_insercao_no_pickup_min {};
 	
 	// Posição de inserção de nó de delivery com delta mínimo
-	int pos_insercao_no_delivery_min {};
+	double pos_insercao_no_delivery_min {};
 	
 	// Índice da rota com o menor valor de inserção
-	int index_rota_min {};
+	double index_rota_min {};
 	
 	// Vetor a ser retornado pela função:
 	std::vector<double> return_vector {};
 	
 	// Avaliando inserções
 	
-	for (auto index_rota {0}; index_rota < rotas.size(); index_rota++){
+	for (size_t index_rota {0}; index_rota < rotas.size(); index_rota++){
 		
 		for (auto pos_insercao_no_pickup {1}; pos_insercao_no_pickup < rotas_size.at(index_rota) + 1; pos_insercao_no_pickup++){
 			
@@ -925,12 +905,6 @@ std::vector<double> Sol::calcularDadosMelhorInsercao(double &pedido){
 // Delta melhor inserção considerando rota (regret insertion):
 std::vector<double> Sol::calcularDadosMelhorInsercao(double &pedido, int &index_rota){
 	
-	// Índice do nó de pickup correspondente ao request
-	int no_pickup {pedido};
-	
-	// Índice do nó de delivery correspondente ao request
-	int no_delivery {pedido + inst.n};
-	
 	// Variável que controlará o número de rotas factíveis encontradas
 	int num_rotas_factiveis {0};
 	
@@ -938,13 +912,13 @@ std::vector<double> Sol::calcularDadosMelhorInsercao(double &pedido, int &index_
 	double delta_min {9999};
 	
 	// Posição de inserção de nó de pickup com delta mínimo
-	int pos_insercao_no_pickup_min {};
+	double pos_insercao_no_pickup_min {};
 	
 	// Posição de inserção de nó de delivery com delta mínimo
-	int pos_insercao_no_delivery_min {};
+	double pos_insercao_no_delivery_min {};
 	
 	// Índice da rota com o menor valor de inserção
-	int index_rota_min {};
+	double index_rota_min {};
 	
 	// Vetor a ser retornado pela função:
 	std::vector<double> return_vector {};

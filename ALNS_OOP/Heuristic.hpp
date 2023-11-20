@@ -116,8 +116,9 @@ public:
 class InsertionHeuristic : public Heuristic {
 public:
 	
-	// Sobrescrita do método "specificApply" para a RemovalHeuristic
-    int inicializarMetodo(Sol &S) override {};
+	int inicializarMetodo(Sol &S) override {
+		return 0;
+	};
 	
 	void inicializarMetodo() override;
 };
