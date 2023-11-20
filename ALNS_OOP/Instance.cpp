@@ -13,17 +13,17 @@ Instance::Instance(std::string file_name){
 	
 	// A string "instancia" armazenará os dados linha a linha
 	std::string instancia;
-	std::fstream myFile;
+	std::fstream my_file;
 	
-	myFile.open(file_name, std::ios::in);
-	if (myFile.is_open()){
+	my_file.open(file_name, std::ios::in);
+	if (my_file.is_open()){
 		std::string line;
 		
-		while (getline(myFile, line)){
+		while (getline(my_file, line)){
 			instancia.append(line + ' ');
 			
 		}
-		myFile.close();
+		my_file.close();
 		
 	}
 	
@@ -44,9 +44,9 @@ Instance::Instance(std::string file_name){
 		double f;
 		iss >> std::noskipws >> f;
 		
-		bool isFloat = (iss.eof() && !iss.fail());
+		bool is_float = (iss.eof() && !iss.fail());
 		
-		if (isFloat){
+		if (is_float){
 			
 			i += 1;
 			
@@ -86,6 +86,7 @@ Instance::Instance(std::string file_name){
 				}
 			}
 		}
+	
 	instancia.erase(0, pos + delim.length());
 	}
 	

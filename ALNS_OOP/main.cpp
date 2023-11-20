@@ -16,12 +16,18 @@
 
 int main(int argc, char *argv[]){
 	
-		// Verifica se o número correto de argumentos foi fornecido
-	if (argc != 17) {
-		std::cerr << "Uso: seu_executavel <id_configuration> <id_instance> <seed> <instancia> --eta <eta> --kappa <kappa> --Gamma <Gamma> --d_b <d_b> --noise <noise> --alpha <alpha>" << std::endl;
+	// Controle dos critérios de parada do algoritmo
+	
+	int max_it 2000; // Número máximo de iterações do algoritmo
+	int max_it_no_improv 2000; // Número máximo de iterações sem melhoria
+	int it_RRH 500; // Número iterações da route reduction heuristic a cada intervalo
+	int max_t 600; // Tempo máximo de execução do algoritmo
+	
+	// Verifica se o número correto de argumentos foi fornecido
+	if (argc != 21) {
+		std::cerr << "Uso: seu_executavel <id_configuration> <id_instance> <seed> <instancia> --w <w> --c <c> --sigma1 <sigma1> --sigma2 <sigma2> --sigma3 <sigma3> --r <r> --eta <eta> --delta <delta>" << std::endl;
 		return 1; // Retorna código de erro
 	}
-	
 	
 	// Mapeia as flags para os valores correspondentes
 	std::unordered_map<std::string, std::string> args;
@@ -32,23 +38,26 @@ int main(int argc, char *argv[]){
 	// Lendo argumentos e atribuindo variáveis
 	long long seed = std::stoll(argv[3]);
 	std::string instancia = argv[4];
+	double w = std::stod(args["--w"]);
+	double c = std::stod(args["--c"]);
+	int sigma1 = std::stoi(args["--sigma1"]);
+	int sigma2 = std::stoi(args["--sigma2"]);
+	int sigma3 = std::stod(args["--sigma3"]);
+	double r = std::stod(args["--r"]);
 	double eta = std::stod(args["--eta"]);
-	double kappa = std::stod(args["--kappa"]);
-	int Gamma = std::stoi(args["--gamma"]);
-	int d_b = std::stoi(args["--d_b"]);
-	double noise = std::stod(args["--noise"]);
-	double alpha = std::stod(args["--alpha"]);
+	double delta = std::stod(args["--delta"]);
 	
 	// // Parâmetros:
 	
 	// instancia: Diretório para a instância (em relação ao diretório onde está o executável) e nome
-	// eta: Determina b_UP no critério de aceitação
-	// kappa: Porcentagem de soluções aceitas
-	// Gamma: Determina quantas iterações cada heurística de perturbação realizará com um mesmo "peso"
-	// d_b: Distância de referência ("ideal") entre soluções
-	// eta_noise: Utilizado no cálculo do ruído aleatório
-	// alpha: Probabilidade de aplicação do ruído aleatório
-	
+	// w: Utilizado no critério de aceitação, para o cálculo da temperatura inicial
+	// c: Taxa de resfriamento
+	// sigma1: Atualização de scores das heurísticas - Caso 1: as heurísticas resultaram um novo valor ótimo global
+	// sigma2: Atualização de scores das heurísticas - Caso 2: as heurísticas resultaram um valor que passou pelo critério de aceitação, ainda não foram aceitas anteriormente e S* < S
+	// sigma3: Atualização de scores das heurísticas - // Caso 3: as heurísticas resultaram um valor que passou pelo critério de aceitação, ainda não foram aceitas anteriormente e S* > S
+	// r: Fator de reação: utilizado para a atualização dos pesos
+	// eta: Utilizado no cálculo do ruído aleatório
+	// delta: Utilizado em worst e shaw's removal, para determinar posição de retirada na lista ordenada
 	
 	// Código principal
 	
@@ -69,28 +78,29 @@ int main(int argc, char *argv[]){
 	// Inicializando objeto da ALNS
 	
 	ALNS ALNSObject(S, // Solução inicial
-							1.3, // w
-							0.9997, // c
-							27, 30, 22, // sigma 1, sigma 2, sigma 3
-							0.1, // r
-							0.02, // eta
-							6 // delta
+							w, // w
+							c, // c
+							sigma1, sigma2, sigma3, // sigma 1, sigma 2, sigma 3
+							r, // r
+							eta, // eta
+							delta // delta
 	);
 	
 	// Executando algoritmo
 	ALNSObject.executeALNS(
 					
-					2000, // max_it: Número máximo de iterações do algoritmo
-					2000, // max_it_no_improv: Número máximo de iterações sem melhoria
-					500, // it_RRH: Número iterações da route reduction heuristic a cada intervalo
-					600 // max_t :Tempo máximo de execução do algoritmo
+					max_it,
+					max_it_no_improv,
+					it_RRH,
+					max_t
 					
 	);
 	
 	// Printando saída do algoritmo, para IRACE
-	std::cout << ALNSObject.S_p.FO() << std::endl;
+	std::cout << ALNSObject.S_p.calcularFO() << std::endl;
 	
 }
+
 */
 
 // Init normal, para ensaios computacionais

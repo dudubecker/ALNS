@@ -62,7 +62,7 @@ Sol::Sol(Instance &dados_instancia){
 			
 			// Rota vazia com depósito central
 			
-			std::vector <double> nova_rota {0, 2*(inst.n) + 1};
+			std::vector <int> nova_rota {0, 2*(inst.n) + 1};
 			
 			// Adicionando informações nos vetores de rotas, cargas e tempos de visita
 			
@@ -648,7 +648,6 @@ bool Sol::checarFactibilidadeSolucao(){
 		
 		// Tempo atual da rota (inicia como 0)
 		double t_atual {0};
-		
 		
 		for (unsigned index_no {1}; index_no < rota.size(); index_no++){
 		

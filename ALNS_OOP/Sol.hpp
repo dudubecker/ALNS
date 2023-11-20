@@ -11,7 +11,7 @@ class Sol
 public:
 	
 	// Rotas da solução:
-	std::vector<std::vector<double>> rotas {};
+	std::vector<std::vector<int>> rotas {};
 	
 	// Vetor de cargas
 	std::vector<std::vector<double>> cargas {};
