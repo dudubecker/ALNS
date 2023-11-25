@@ -58,6 +58,7 @@ ALNS::ALNS(Sol S_inicial,
 	// Populando vetores de heurísticas de remoção
 	
 	heuristicas_remocao = {H_r, H_s, H_w, H_w_random, H_s_TTR, H_s_STR, H_s_DER};
+	qtd_heuristicas_remocao = heuristicas_remocao.size();
 	
 	// Greedy Insertion
 	
@@ -89,6 +90,8 @@ ALNS::ALNS(Sol S_inicial,
 			
 		}
 	}
+	
+	qtd_heuristicas_insercao = heuristicas_insercao.size();
 	
 }
 
@@ -264,6 +267,18 @@ int ALNS::escolherHeuristica(char type){
 		
 	}
 	
+	// Corrigindo bug muito raro de escolher um índice acima do tamanho do vetor
+	if ((type == 'R') and (index_heuristica == qtd_heuristicas_remocao)){
+		
+		index_heuristica -= 1;
+		
+	} else if ((type == 'I') and (index_heuristica == qtd_heuristicas_insercao)) {
+		
+		index_heuristica -= 1;
+		
+	}
+	
+	
 	return index_heuristica;
 	
 }
@@ -406,7 +421,7 @@ void ALNS::executarALNS(int max_it, int max_it_sem_melhoria, int it_RRH, double 
 	
 	while ((n_it < max_it) && (t_ALNS < max_t)){
 		
-		//if (n_it%1000 == 0){
+		//if (n_it%20000 == 0){
 			
 		//	std::cout << "Iteracao ALNS: " << n_it << std::endl;
 			
@@ -434,6 +449,7 @@ void ALNS::executarALNS(int max_it, int max_it_sem_melhoria, int it_RRH, double 
 			
 		}
 		
+		
 		// Escolhendo e aplicando heurísticas
 		
 		int index_h_rem = escolherHeuristica('R');
@@ -441,6 +457,7 @@ void ALNS::executarALNS(int max_it, int max_it_sem_melhoria, int it_RRH, double 
 		
 		heuristicas_remocao.at(index_h_rem)->aplicar(S);
 		heuristicas_insercao.at(index_h_ins)->aplicar(S);
+		
 		
 		// Analisando se a solução é a melhor já encontrada e armazenando seu valor na região de soluções encontradas
 		

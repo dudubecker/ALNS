@@ -15,8 +15,14 @@ public:
 	// Vetor que guardará as heurísticas de remoção já inicializadas 
 	std::vector<Heuristic*> heuristicas_remocao {};
 	
+	// Quantidade de heurísticas de remoção
+	double qtd_heuristicas_remocao {0};
+	
 	// Vetor que guardará as heurísticas de inserção já inicializadas 
 	std::vector<Heuristic*> heuristicas_insercao {};
+	
+	// Quantidade de heurísticas de remoção
+	double qtd_heuristicas_insercao {0};
 	
 	// Soma dos pesos das heurísticas de remoção:
 	double soma_peso_rem {0};

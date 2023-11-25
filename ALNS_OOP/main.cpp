@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <thread>
 #include <random>
+#include <unordered_map>
 
 // init para rodar IRACE
 
@@ -18,10 +19,10 @@ int main(int argc, char *argv[]){
 	
 	// Controle dos critérios de parada do algoritmo
 	
-	int max_it 2000; // Número máximo de iterações do algoritmo
-	int max_it_no_improv 2000; // Número máximo de iterações sem melhoria
-	int it_RRH 500; // Número iterações da route reduction heuristic a cada intervalo
-	int max_t 600; // Tempo máximo de execução do algoritmo
+	int max_it = 2000; // Número máximo de iterações do algoritmo
+	int max_it_no_improv = 2000; // Número máximo de iterações sem melhoria
+	int it_RRH = 500; // Número iterações da route reduction heuristic a cada intervalo
+	int max_t = 600; // Tempo máximo de execução do algoritmo
 	
 	// Verifica se o número correto de argumentos foi fornecido
 	if (argc != 21) {
@@ -87,7 +88,7 @@ int main(int argc, char *argv[]){
 	);
 	
 	// Executando algoritmo
-	ALNSObject.executeALNS(
+	ALNSObject.executarALNS(
 					
 					max_it,
 					max_it_no_improv,
@@ -111,30 +112,29 @@ int main(){
 	
 	// Parâmetros de controle dos critérios de parada
 	
-	int max_it 2000; // Número máximo de iterações do algoritmo
-	int max_it_no_improv 2000; // Número máximo de iterações sem melhoria
-	int it_RRH 500; // Número iterações da route reduction heuristic a cada intervalo
-	int max_t 600; // Tempo máximo de execução do algoritmo
+	int max_it = 3000; // Número máximo de iterações do algoritmo
+	int max_it_no_improv = 2000; // Número máximo de iterações sem melhoria
+	int it_RRH = 5000; // Número iterações da route reduction heuristic a cada intervalo
+	int max_t = 600; // Tempo máximo de execução do algoritmo
 	int iteracoes_por_instancia = 3; 
 	
 	// Parâmetros da meta-heurística
 	
-	long long seed = 125;
-	double w = 1.3;
-	double c = 0.9997;
-	int sigma1 = 27;
-	int sigma2 = 30;
-	int sigma3 = 22;
-	double r = 0.1;
-	double eta = 0.02;
-	double delta = 6;
-	
+	long long seed = 1382364237;
+	double w = 0.94;
+	double c = 0.997;
+	int sigma1 = 29;
+	int sigma2 = 32;
+	int sigma3 = 25;
+	double r = 0.35;
+	double eta = 0.04;
+	double delta = 1;
 	
 	// Para gerar valores aleatórios, tirar comentário:
 	// srand(time(NULL));
 	
 	// Para controlar a seed
-	srand(125);
+	srand(seed);
 	
 	// Instâncias
 	
@@ -164,7 +164,7 @@ int main(){
 		//"instances/BB35",
 		//"instances/BB40",
 		//"instances/BB45",
-		//"instances/BB50",
+		"instances/BB50",
 		//"instances/BB55",
 		//"instances/BB60",
 		//"instances/BB65",
@@ -186,20 +186,22 @@ int main(){
 		//"instances/CC70",
 		//"instances/CC75",
 		//"instances/DD5",
-		"instances/DD10",
-		"instances/DD15",
-		"instances/DD20",
-		"instances/DD25",
-		"instances/DD30",
-		"instances/DD35",
-		"instances/DD40",
-		"instances/DD45",
-		"instances/DD50",
-		"instances/DD55",
-		"instances/DD60",
-		"instances/DD65",
-		"instances/DD70",
-		"instances/DD75",
+		//"instances/DD10",
+		//"instances/DD15",
+		//"instances/DD20",
+		//"instances/DD25",
+		//"instances/DD30",
+		//"instances/DD35",
+		//"instances/DD40",
+		//"instances/DD45",
+		//"instances/DD50",
+		//"instances/DD55",
+		//"instances/DD60",
+		//"instances/DD65",
+		//"instances/DD70",
+		//"instances/DD75",
+		//"instances/real_instances/R50.txt",
+		//"instances/li_lim/100/lc101.txt"
 	};
 	
 	
@@ -241,7 +243,7 @@ int main(){
 			
 			);
 			
-			// ALNSObject.S_p.print_sol();
+			// ALNSObject.S_p.printSol();
 			
 			std::cout << "\nFO: " << std::setprecision(7) << ALNSObject.S_p.calcularFO() << std::endl;
 			

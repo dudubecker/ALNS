@@ -859,7 +859,7 @@ std::vector<double> Sol::calcularDadosMelhorInsercao(double &pedido){
 				
 				// Testando apenas índices de inserção válidos: índice de delivery maior do que o de pickup (precedence) e diferente dele!
 				// A iteração começa em 1 e termina no tamanho da rota porque não se considera a primeira e última posição da rota, que são o depósito
-				if ((pos_insercao_no_pickup != pos_insercao_no_delivery) and (pos_insercao_no_pickup < pos_insercao_no_delivery)){
+				if (pos_insercao_no_pickup < pos_insercao_no_delivery){
 					
 					// Checando factibilidade das posições de inserção
 					if (checarFactibilidadeInsercao(pedido, index_rota, pos_insercao_no_pickup, pos_insercao_no_delivery)){
@@ -931,7 +931,7 @@ std::vector<double> Sol::calcularDadosMelhorInsercao(double &pedido, int &index_
 			
 			// Testando apenas índices de inserção válidos: índice de delivery maior do que o de pickup (precedence) e diferente dele!
 			// A iteração começa em 1 e termina no tamanho da rota porque não se considera a primeira e última posição da rota, que são o depósito
-			if ((pos_insercao_no_pickup != pos_insercao_no_delivery) and (pos_insercao_no_pickup < pos_insercao_no_delivery)){
+			if (pos_insercao_no_pickup < pos_insercao_no_delivery){
 				
 				// Checando factibilidade das posições de inserção
 				if (checarFactibilidadeInsercao(pedido, index_rota, pos_insercao_no_pickup, pos_insercao_no_delivery)){
