@@ -137,25 +137,31 @@ int main(){
 	// Para controlar a seed
 	srand(seed);
 	
-	// Printando parâmetros
 	
-	std::cout << "/****Parametros de controle dos criterios de parada****/\n\n";
+	// Arquivo de saída
+	std::string output = "output.txt";
 	
-	std::cout << "max_it : " << max_it << std::endl;
-	std::cout << "max_it_no_improv : " << max_it_no_improv << std::endl;
-	std::cout << "it_RRH : " << it_RRH << std::endl;
+	std::ofstream output_file(output, std::ios::app);
 	
-	std::cout << "\n\n/****Parametros da meta-heuristica****/\n\n";
+	// Escrevendo parâmetros
 	
-	std::cout << "seed : " << seed << std::endl;
-	std::cout << "w : " << w << std::endl;
-	std::cout << "c : " << c << std::endl;
-	std::cout << "sigma1 : " << sigma1 << std::endl;
-	std::cout << "sigma2 : " << sigma2 << std::endl;
-	std::cout << "sigma3 : " << sigma3 << std::endl;
-	std::cout << "r : " << r << std::endl;
-	std::cout << "eta : " << eta << std::endl;
-	std::cout << "delta : " << delta << std::endl;
+	output_file << "/****Parametros de controle dos criterios de parada****/\n\n";
+	
+	output_file << "max_it : " << max_it << std::endl;
+	output_file << "max_it_no_improv : " << max_it_no_improv << std::endl;
+	output_file << "it_RRH : " << it_RRH << std::endl;
+	
+	output_file << "\n\n/****Parametros da meta-heuristica****/\n\n";
+	
+	output_file << "seed : " << seed << std::endl;
+	output_file << "w : " << w << std::endl;
+	output_file << "c : " << c << std::endl;
+	output_file << "sigma1 : " << sigma1 << std::endl;
+	output_file << "sigma2 : " << sigma2 << std::endl;
+	output_file << "sigma3 : " << sigma3 << std::endl;
+	output_file << "r : " << r << std::endl;
+	output_file << "eta : " << eta << std::endl;
+	output_file << "delta : " << delta << "\n\n\n";
 	
 	
 	// Instâncias
@@ -227,9 +233,6 @@ int main(){
 		//"DD75",
 	};
 	
-	
-	// Arquivo de saída
-	std::string output = "output.txt";
 	
 	// Executando algoritmo
 	
