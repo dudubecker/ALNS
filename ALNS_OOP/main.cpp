@@ -249,12 +249,6 @@ int main(){
 			// Objeto instância
 			Instance inst(path_to_instance);
 			
-			if (instancia == "CC55"){
-				
-				break;
-				
-			}
-			
 			// Inicializando objeto solução;
 			Sol s(inst);
 			
