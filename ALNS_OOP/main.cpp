@@ -1,10 +1,11 @@
-#include <iostream>
-#include <vector>
 #include "Instance.hpp"
 #include "Sol.hpp"
 #include "Heuristic.hpp"
 #include "ALNS.hpp"
 #include <iomanip>
+#include <iostream>
+#include <vector>
+#include <fstream>
 #include <iterator>
 #include <algorithm>
 #include <thread>
@@ -136,74 +137,99 @@ int main(){
 	// Para controlar a seed
 	srand(seed);
 	
+	// Printando parâmetros
+	
+	std::cout << "/****Parametros de controle dos criterios de parada****/\n\n";
+	
+	std::cout << "max_it : " << max_it << std::endl;
+	std::cout << "max_it_no_improv : " << max_it_no_improv << std::endl;
+	std::cout << "it_RRH : " << it_RRH << std::endl;
+	
+	std::cout << "\n\n/****Parametros da meta-heuristica****/\n\n";
+	
+	std::cout << "seed : " << seed << std::endl;
+	std::cout << "w : " << w << std::endl;
+	std::cout << "c : " << c << std::endl;
+	std::cout << "sigma1 : " << sigma1 << std::endl;
+	std::cout << "sigma2 : " << sigma2 << std::endl;
+	std::cout << "sigma3 : " << sigma3 << std::endl;
+	std::cout << "r : " << r << std::endl;
+	std::cout << "eta : " << eta << std::endl;
+	std::cout << "delta : " << delta << std::endl;
+	
+	
 	// Instâncias
+	
+	// Caminho para as instância:
+	std::string path = "instances/";
 	
 		std::vector<std::string> instancias = {
 		
-		//"instances/AA5",
-		//"instances/AA10",
-		//"instances/AA15",
-		//"instances/AA20",
-		//"instances/AA25",
-		//"instances/AA30",
-		//"instances/AA35",
-		//"instances/AA40",
-		//"instances/AA45",
-		//"instances/AA50",
-		//"instances/AA55",
-		//"instances/AA60",
-		//"instances/AA65",
-		//"instances/AA70",
-		//"instances/AA75",
-		//"instances/BB5",
-		//"instances/BB10",
-		//"instances/BB15",
-		//"instances/BB20",
-		//"instances/BB25",
-		//"instances/BB30",
-		//"instances/BB35",
-		//"instances/BB40",
-		//"instances/BB45",
-		"instances/BB50",
-		//"instances/BB55",
-		//"instances/BB60",
-		//"instances/BB65",
-		//"instances/BB70",
-		//"instances/BB75",
-		//"instances/CC5",
-		//"instances/CC10",
-		//"instances/CC15",
-		//"instances/CC20",
-		//"instances/CC25",
-		//"instances/CC30",
-		//"instances/CC35",
-		//"instances/CC40",
-		//"instances/CC45",
-		//"instances/CC50",
-		//"instances/CC55",
-		//"instances/CC60",
-		//"instances/CC65",
-		//"instances/CC70",
-		//"instances/CC75",
-		//"instances/DD5",
-		//"instances/DD10",
-		//"instances/DD15",
-		//"instances/DD20",
-		//"instances/DD25",
-		//"instances/DD30",
-		//"instances/DD35",
-		//"instances/DD40",
-		//"instances/DD45",
-		//"instances/DD50",
-		//"instances/DD55",
-		//"instances/DD60",
-		//"instances/DD65",
-		//"instances/DD70",
-		//"instances/DD75",
-		//"instances/real_instances/R50.txt",
-		//"instances/li_lim/100/lc101.txt"
+		"AA5",
+		"AA10",
+		"AA15",
+		//"AA20",
+		//"AA25",
+		//"AA30",
+		//"AA35",
+		//"AA40",
+		//"AA45",
+		//"AA50",
+		//"AA55",
+		//"AA60",
+		//"AA65",
+		//"AA70",
+		//"AA75",
+		"BB5",
+		"BB10",
+		"BB15",
+		//"BB20",
+		//"BB25",
+		//"BB30",
+		//"BB35",
+		//"BB40",
+		//"BB45",
+		//"BB50",
+		//"BB55",
+		//"BB60",
+		//"BB65",
+		//"BB70",
+		//"BB75",
+		"CC5",
+		"CC10",
+		"CC15",
+		//"CC20",
+		//"CC25",
+		//"CC30",
+		//"CC35",
+		//"CC40",
+		//"CC45",
+		//"CC50",
+		"CC55",
+		//"CC60",
+		//"CC65",
+		//"CC70",
+		//"CC75",
+		"DD5",
+		"DD10",
+		"DD15",
+		"DD20",
+		//"DD25",
+		//"DD30",
+		//"DD35",
+		//"DD40",
+		//"DD45",
+		//"DD50",
+		//"DD55",
+		//"DD60",
+		//"DD65",
+		//"DD70",
+		//"DD75",
 	};
 	
+	
+	// Arquivo de saída
+	std::string output = "output.txt";
 	
 	// Executando algoritmo
 	
@@ -211,13 +237,23 @@ int main(){
 		
 		for (auto i {0}; i < iteracoes_por_instancia; i++){
 			
+			// Abrindo arquivo de saída
+			// Modo append
+			std::ofstream output_file(output, std::ios::app);
+			
 			// Medindo tempo
 			auto begin = std::chrono::high_resolution_clock::now();
 			
-			// Objeto instância
-			Instance inst(instancia);
+			std::string path_to_instance = path + instancia;
 			
-			std::cout << "\n" << instancia << std::endl;
+			// Objeto instância
+			Instance inst(path_to_instance);
+			
+			if (instancia == "CC55"){
+				
+				break;
+				
+			}
 			
 			// Inicializando objeto solução;
 			Sol s(inst);
@@ -245,14 +281,24 @@ int main(){
 			
 			// ALNSObject.S_p.printSol();
 			
-			std::cout << "\nFO: " << std::setprecision(7) << ALNSObject.S_p.calcularFO() << std::endl;
+			//std::cout << "\nFO: " << std::setprecision(7) << ALNSObject.S_p.calcularFO() << std::endl;
 			
-			std::cout << "\nFactibilidade:  " << ALNSObject.S_p.checarFactibilidadeSolucao() << std::endl;
+			//std::cout << "\nFactibilidade:  " << ALNSObject.S_p.checarFactibilidadeSolucao() << std::endl;
 			
 			auto end = std::chrono::high_resolution_clock::now();
 			auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 			
-			std::cout << "Tempo de execucao: " << elapsed.count() * 1e-9 << "segundos. " << std::endl;
+			//std::cout << "Tempo de execucao: " << elapsed.count() * 1e-9 << "segundos. " << std::endl;
+			
+			// Printando output
+			std::cout << instancia << ";" << std::setprecision(7) << ALNSObject.S_p.calcularFO() << ";" << ALNSObject.S_p.checarFactibilidadeSolucao() << ";" << elapsed.count() * 1e-9 << std::endl;
+			
+			// Escrevendo output no arquivo
+			output_file << instancia << ";" << std::setprecision(7) << ALNSObject.S_p.calcularFO() << ";" << ALNSObject.S_p.checarFactibilidadeSolucao() << ";" << elapsed.count() * 1e-9 << std::endl;
+			
+			// Fechando arquivo
+			output_file.close();
+			
 		}
 	}
 	
