@@ -21,8 +21,8 @@ int main(int argc, char *argv[]){
 	// Controle dos critérios de parada do algoritmo
 	
 	int max_it = 2000; // Número máximo de iterações do algoritmo
-	int max_it_no_improv = 2000; // Número máximo de iterações sem melhoria
-	int it_RRH = 500; // Número iterações da route reduction heuristic a cada intervalo
+	int max_it_no_improv = 1000; // Número máximo de iterações sem melhoria
+	int it_RRH = 800; // Número iterações da route reduction heuristic a cada intervalo
 	int max_t = 600; // Tempo máximo de execução do algoritmo
 	
 	// Verifica se o número correto de argumentos foi fornecido
@@ -113,9 +113,9 @@ int main(){
 	
 	// Parâmetros de controle dos critérios de parada
 	
-	int max_it = 3000; // Número máximo de iterações do algoritmo
-	int max_it_no_improv = 2000; // Número máximo de iterações sem melhoria
-	int it_RRH = 5000; // Número iterações da route reduction heuristic a cada intervalo
+	int max_it = 2000; // Número máximo de iterações do algoritmo
+	int max_it_no_improv = 1000; // Número máximo de iterações sem melhoria
+	int it_RRH = 500; // Número iterações da route reduction heuristic a cada intervalo
 	int max_t = 600; // Tempo máximo de execução do algoritmo
 	int iteracoes_por_instancia = 3; 
 	
@@ -145,13 +145,13 @@ int main(){
 	
 	// Escrevendo parâmetros
 	
-	output_file << "/****Parametros de controle dos criterios de parada****/\n\n";
+	output_file << "***Parametros de controle dos criterios de parada***\n\n";
 	
 	output_file << "max_it : " << max_it << std::endl;
 	output_file << "max_it_no_improv : " << max_it_no_improv << std::endl;
 	output_file << "it_RRH : " << it_RRH << std::endl;
 	
-	output_file << "\n\n/****Parametros da meta-heuristica****/\n\n";
+	output_file << "\n\n***Parametros da meta-heuristica***\n\n";
 	
 	output_file << "seed : " << seed << std::endl;
 	output_file << "w : " << w << std::endl;
@@ -167,13 +167,13 @@ int main(){
 	// Instâncias
 	
 	// Caminho para as instância:
-	std::string path = "instances/";
+	std::string path = "instances/1_unit_demands/";
 	
 		std::vector<std::string> instancias = {
 		
-		"AA5",
-		"AA10",
-		"AA15",
+		//"AA5",
+		//"AA10",
+		//"AA15",
 		//"AA20",
 		//"AA25",
 		//"AA30",
@@ -186,9 +186,9 @@ int main(){
 		//"AA65",
 		//"AA70",
 		//"AA75",
-		"BB5",
-		"BB10",
-		"BB15",
+		//"BB5",
+		//"BB10",
+		//"BB15",
 		//"BB20",
 		//"BB25",
 		//"BB30",
@@ -201,9 +201,9 @@ int main(){
 		//"BB65",
 		//"BB70",
 		//"BB75",
-		"CC5",
-		"CC10",
-		"CC15",
+		//"CC5",
+		//"CC10",
+		//"CC15",
 		//"CC20",
 		//"CC25",
 		//"CC30",
@@ -211,15 +211,15 @@ int main(){
 		//"CC40",
 		//"CC45",
 		//"CC50",
-		"CC55",
+		//"CC55",
 		//"CC60",
 		//"CC65",
 		//"CC70",
 		//"CC75",
-		"DD5",
-		"DD10",
-		"DD15",
-		"DD20",
+		//"DD5",
+		//"DD10",
+		//"DD15",
+		//"DD20",
 		//"DD25",
 		//"DD30",
 		//"DD35",
@@ -231,6 +231,8 @@ int main(){
 		//"DD65",
 		//"DD70",
 		//"DD75",
+		//"LC1_8_1.txt"
+		"XX55"
 	};
 	
 	
@@ -251,6 +253,7 @@ int main(){
 			
 			// Objeto instância
 			Instance inst(path_to_instance);
+			
 			
 			// Inicializando objeto solução;
 			Sol s(inst);
@@ -289,6 +292,8 @@ int main(){
 			
 			// Printando output
 			std::cout << instancia << ";" << std::setprecision(7) << ALNSObject.S_p.calcularFO() << ";" << ALNSObject.S_p.checarFactibilidadeSolucao() << ";" << elapsed.count() * 1e-9 << std::endl;
+			
+			ALNSObject.S_p.printSol();
 			
 			// Escrevendo output no arquivo
 			output_file << instancia << ";" << std::setprecision(7) << ALNSObject.S_p.calcularFO() << ";" << ALNSObject.S_p.checarFactibilidadeSolucao() << ";" << elapsed.count() * 1e-9 << std::endl;

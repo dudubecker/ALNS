@@ -359,7 +359,7 @@ Sol ALNS::reduzirRotas(Sol &S_i, int it_RRH){
 	
 	while (n_it < it_RRH){
 		
-		//if (n_it%100 == 0){
+		//if (n_it%5 == 0){
 			
 		//	std::cout << "Iteracao RR: " << n_it << std::endl;
 			
@@ -421,7 +421,7 @@ void ALNS::executarALNS(int max_it, int max_it_sem_melhoria, int it_RRH, double 
 	
 	while ((n_it < max_it) && (t_ALNS < max_t)){
 		
-		//if (n_it%20000 == 0){
+		//if (n_it%10 == 0){
 			
 		//	std::cout << "Iteracao ALNS: " << n_it << std::endl;
 			

@@ -5,35 +5,25 @@
   <TabInfoArray Name="TabInfoArray">
     <TabInfo>
       <wxString Value="C:\Users\User\Documents\ALNS_OOP\ALNS_OOP\main.cpp" Name="FileName"/>
-      <int Value="0" Name="FirstVisibleLine"/>
-      <int Value="11" Name="CurrentLine"/>
+      <int Value="9" Name="FirstVisibleLine"/>
+      <int Value="25" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>
     <TabInfo>
       <wxString Value="C:\Users\User\Documents\ALNS_OOP\ALNS_OOP\ALNS.cpp" Name="FileName"/>
-      <int Value="244" Name="FirstVisibleLine"/>
+      <int Value="57" Name="FirstVisibleLine"/>
       <int Value="426" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds">
+        <IntVectorItem Value="9"/>
         <IntVectorItem Value="103"/>
         <IntVectorItem Value="169"/>
         <IntVectorItem Value="214"/>
+        <IntVectorItem Value="286"/>
+        <IntVectorItem Value="326"/>
+        <IntVectorItem Value="348"/>
       </IntVector>
-    </TabInfo>
-    <TabInfo>
-      <wxString Value="C:\Users\User\Documents\ALNS_OOP\ALNS_OOP\ALNS.hpp" Name="FileName"/>
-      <int Value="12" Name="FirstVisibleLine"/>
-      <int Value="18" Name="CurrentLine"/>
-      <wxArrayString Name="Bookmarks"/>
-      <IntVector Name="CollapsedFolds"/>
-    </TabInfo>
-    <TabInfo>
-      <wxString Value="C:\Users\User\Documents\ALNS_OOP\ALNS_OOP\Sol.cpp" Name="FileName"/>
-      <int Value="957" Name="FirstVisibleLine"/>
-      <int Value="622" Name="CurrentLine"/>
-      <wxArrayString Name="Bookmarks"/>
-      <IntVector Name="CollapsedFolds"/>
     </TabInfo>
   </TabInfoArray>
   <SerializedObject Name="m_breakpoints">

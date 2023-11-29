@@ -113,7 +113,7 @@ Instance::Instance(std::string file_name){
 			t[i][j] = floor(sqrt(pow(x[i]-x[j], 2) + pow(y[i]-y[j],2))*10000.0)/10000.0;
 			
 			// Adição -> tempo de serviço (instâncias li-lim)
-			// t[i][j] += d[i];
+			t[i][j] += d[i];
 			
 			// Determinando maiores e menores tempos de viagem (útil para normalização dos dados)
 			if (t[i][j] > max_t){
