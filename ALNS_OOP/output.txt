@@ -490,3 +490,1568 @@ XX55;31349.85;1;17.7777
 delta : 1
 
 
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+XX30;20851.66;1;2.825783
+XX30;30790.42;1;1.929906
+XX30;20851.66;1;3.019841
+delta : 1
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+XX30;20851.66;1;2.559851
+XX30;30790.42;1;1.889889
+XX30;20851.66;1;3.048762
+delta : 1
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+R50.txt;353763.6;0;3.809783
+R50.txt;353763.6;0;12.73063
+R50.txt;353763.6;0;2.559939
+delta : 1
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+RS100.txt;567441.7;0;13.08419
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+RL100.txt;346292;0;37.66061
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+RL100.txt;336122.4;0;15.63906
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+RL100.txt;336122.4;0;14.19822
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+RL100.txt;336122.4;0;13.90812
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+delta : 1
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+delta : 1
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+RL100.txt;336122.4;0;15.37803
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+RL100.txt;376578.7;0;18.28595
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+delta : 1
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+delta : 1
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+delta : 1
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+delta : 1
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+delta : 1
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+delta : 1
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+delta : 1
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+delta : 1
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+delta : 1
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+RL100.txt;336122.3;1;19.20751
+RL100.txt;336087.6;1;21.60284
+RL100.txt;336094.1;1;22.83764
+delta : 1
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+RL30.txt;163220.8;0;1.067388
+RL30.txt;163220.8;0;19.0207
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+RL30.txt;163220.8;0;0.9504545
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+RL30.txt;163180.7;1;1.123356
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+RS20.txt;141687.7;0;0.7149138
+RS20.txt;141687.7;0;0.5676766
+RS20.txt;141687.7;0;10.29298
+delta : 1
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+delta : 1
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+delta : 1
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+delta : 1
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+delta : 1
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+delta : 1
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+delta : 1
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+delta : 1
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+delta : 1
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+delta : 1
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+delta : 1
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+delta : 1
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+delta : 1
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+delta : 1
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+delta : 1
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+RS150.txt;650044;1;54.82138
+RS150.txt;629926.4;1;58.14507
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+RL50.txt;233877.3;1;3.082932
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+RL75.txt;294828.9;1;7.932339
+RL75.txt;294840.2;1;8.196083
+RL75.txt;294819.1;1;8.115382
+delta : 1
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+RL100.txt;336122.3;1;19.22285
+RL100.txt;336087.6;1;19.32767
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+RL50.txt;233877.3;1;3.105404
+RL50.txt;233872.1;1;14.89326
+RL50.txt;233879.8;1;2.807067
+delta : 1
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 5000
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+RL50.txt;233878.9;1;10.65907
+RL50.txt;233872.9;1;8.897053
+RL50.txt;233868.5;1;8.622229
+delta : 1
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 20000
+max_it_no_improv : 10000
+it_RRH : 2000
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+RL50.txt;233881.9;1;14.89573
+RL50.txt;233870.3;1;14.37614
+RL50.txt;233870.9;1;14.14234
+delta : 1
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 20000
+max_it_no_improv : 10000
+it_RRH : 2000
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+RL50.txt;233889.8;1;14.52034
+RL50.txt;233871.1;1;13.66502
+RL50.txt;233863.1;1;16.99483
+delta : 1
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 200000
+max_it_no_improv : 100000
+it_RRH : 20000
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+RL50.txt;233894.1;1;139.7233
+***Parametros de controle dos criterios de parada***
+
+max_it : 200000
+max_it_no_improv : 100000
+it_RRH : 20000
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 0.94
+c : 0.997
+sigma1 : 29
+sigma2 : 32
+sigma3 : 25
+r : 0.35
+eta : 0.04
+RL50.txt;233875.6;1;135.7077
+***Parametros de controle dos criterios de parada***
+
+max_it : 200000
+max_it_no_improv : 100000
+it_RRH : 20000
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 1.25
+c : 0.99
+sigma1 : 31
+sigma2 : 6
+sigma3 : 26
+r : 0.38
+eta : 0.04
+RL50.txt;233875.2;1;139.6806
+RL50.txt;233888.2;1;139.4265
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 2000
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 1.25
+c : 0.99
+sigma1 : 31
+sigma2 : 6
+sigma3 : 26
+r : 0.38
+eta : 0.04
+RL50.txt;233868.6;1;5.347065
+RL50.txt;233890.1;1;5.026409
+RL50.txt;233878;1;4.935506
+delta : 3
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 2000
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 1.25
+c : 0.99
+sigma1 : 31
+sigma2 : 6
+sigma3 : 26
+r : 0.38
+eta : 0.04
+RL75.txt;294828.3;1;15.32886
+RL75.txt;294837.2;1;13.37827
+RL75.txt;294817.9;1;28.2201
+delta : 3
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 10000
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 1.25
+c : 0.99
+sigma1 : 31
+sigma2 : 6
+sigma3 : 26
+r : 0.38
+eta : 0.04
+RL75.txt;284882.4;1;55.6682
+RL75.txt;294813.1;1;43.84762
+RL75.txt;294836.9;1;45.96367
+delta : 3
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 10000
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 1.25
+c : 0.99
+sigma1 : 31
+sigma2 : 6
+sigma3 : 26
+r : 0.38
+eta : 0.04
+RL100.txt;336110.8;1;133.2607
+RL100.txt;336108.8;1;105.8054
+RL100.txt;336127.5;1;106.0832
+delta : 3
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 1500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 1.25
+c : 0.99
+sigma1 : 31
+sigma2 : 6
+sigma3 : 26
+r : 0.38
+eta : 0.04
+RL125.txt;407567.8;1;64.61697
+RL125.txt;397548.5;1;52.76229
+RL125.txt;397625;1;57.14693
+delta : 3
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 1500
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 1.25
+c : 0.99
+sigma1 : 31
+sigma2 : 6
+sigma3 : 26
+r : 0.38
+eta : 0.04
+RS200.txt;723046.6;1;220.1007
+***Parametros de controle dos criterios de parada***
+
+max_it : 3000
+max_it_no_improv : 2000
+it_RRH : 3000
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 1.25
+c : 0.99
+sigma1 : 31
+sigma2 : 6
+sigma3 : 26
+r : 0.38
+eta : 0.04
+RS200.txt;713081.3;1;428.6829
+***Parametros de controle dos criterios de parada***
+
+max_it : 3000
+max_it_no_improv : 2000
+it_RRH : 3000
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 1.25
+c : 0.99
+sigma1 : 31
+sigma2 : 6
+sigma3 : 26
+r : 0.38
+eta : 0.04
+RS200.txt;713049.6;1;426.188
+***Parametros de controle dos criterios de parada***
+
+max_it : 3000
+max_it_no_improv : 2000
+it_RRH : 2000
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 1.25
+c : 0.99
+sigma1 : 31
+sigma2 : 6
+sigma3 : 26
+r : 0.38
+eta : 0.04
+RL200.txt;531075.1;1;387.776
+***Parametros de controle dos criterios de parada***
+
+max_it : 3000
+max_it_no_improv : 2000
+it_RRH : 2000
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 1.25
+c : 0.99
+sigma1 : 31
+sigma2 : 6
+sigma3 : 26
+r : 0.38
+eta : 0.04
+AA5;10184.84;1;0.4130586
+AA5;10184.84;1;0.4041498
+***Parametros de controle dos criterios de parada***
+
+max_it : 3000
+max_it_no_improv : 2000
+it_RRH : 2000
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 1.25
+c : 0.99
+sigma1 : 31
+sigma2 : 6
+sigma3 : 26
+r : 0.38
+eta : 0.04
+AA15;20542.45;1;1.090375
+AA15;20542.45;1;1.501831
+***Parametros de controle dos criterios de parada***
+
+max_it : 3000
+max_it_no_improv : 2000
+it_RRH : 2000
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 1.25
+c : 0.99
+sigma1 : 31
+sigma2 : 6
+sigma3 : 26
+r : 0.38
+eta : 0.04
+AA5;10184.84;1;0.1744821
+AA5;10184.84;1;0.2078805
+AA5;10184.84;1;0.1449171
+delta : 3
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 600
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 1.25
+c : 0.99
+sigma1 : 31
+sigma2 : 6
+sigma3 : 26
+r : 0.38
+eta : 0.04
+AA30;31123.14;1;1.771984
+AA30;31119.1;1;1.499662
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 600
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 1.25
+c : 0.99
+sigma1 : 31
+sigma2 : 6
+sigma3 : 26
+r : 0.38
+eta : 0.04
+AA30;31123.14;1;1.673039
+AA30;31119.1;1;1.405192
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 600
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 1.25
+c : 0.99
+sigma1 : 31
+sigma2 : 6
+sigma3 : 26
+r : 0.38
+eta : 0.04
+AA30;31123.14;1;1.668085
+AA30;31119.1;1;1.550044
+AA30;31119.99;1;1.515032
+AA50;41792.12;1;5.502115
+AA50;41824.51;1;6.826466
+AA50;41816.58;1;6.197434
+BB30;31088.95;1;1.437242
+BB30;31092.21;1;1.263926
+BB30;31092.97;1;1.555407
+BB50;41749.52;1;6.174419
+BB50;41758.94;1;6.13722
+BB50;41735.13;1;6.105667
+CC30;31102.97;1;1.217668
+CC30;31104.01;1;1.634087
+CC30;31107.49;1;1.386216
+CC50;41746.68;1;5.384038
+CC50;41769.66;1;5.66051
+CC50;41768.19;1;6.417539
+delta : 3
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 600
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 1.25
+c : 0.99
+sigma1 : 31
+sigma2 : 6
+sigma3 : 26
+r : 0.38
+eta : 0.04
+AA30;31123.14;1;2.25067
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 600
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 1.25
+c : 0.99
+sigma1 : 31
+sigma2 : 6
+sigma3 : 26
+r : 0.38
+eta : 0.04
+AA70;52496.67;1;20.40629
+AA70;52471.63;1;16.95062
+AA70;52463.4;1;17.98222
+BB70;73009.38;1;12.081
+BB70;72944.52;1;11.6779
+BB70;83007.55;1;10.09573
+delta : 3
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 600
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 1.25
+c : 0.99
+sigma1 : 31
+sigma2 : 6
+sigma3 : 26
+r : 0.38
+eta : 0.04
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 600
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 1.25
+c : 0.99
+sigma1 : 31
+sigma2 : 6
+sigma3 : 26
+r : 0.38
+eta : 0.04
+AA70;52467.72;1;16.31315
+AA70;52476.56;1;19.10967
+AA70;52486.83;1;18.05786
+BB70;73012.19;1;14.95685
+BB70;73001.05;1;14.92921
+BB70;73036.85;1;14.49731
+delta : 3
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 10000
+max_it_no_improv : 0
+it_RRH : 5000
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 1.25
+c : 0.99
+sigma1 : 31
+sigma2 : 6
+sigma3 : 26
+r : 0.38
+eta : 0.04
+AA70;62952.4;1;70.3494
+AA70;62952.4;1;57.70118
+AA70;62952.4;1;58.50155
+***Parametros de controle dos criterios de parada***
+
+max_it : 2000
+max_it_no_improv : 1000
+it_RRH : 600
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 1.25
+c : 0.99
+sigma1 : 31
+sigma2 : 6
+sigma3 : 26
+r : 0.38
+eta : 0.04
+AA70;52467.72;1;16.43844
+AA70;52476.56;1;15.12805
+AA70;52486.83;1;15.49421
+BB70;73012.19;1;11.62948
+BB70;73001.05;1;12.00711
+BB70;73036.85;1;11.00142
+delta : 3
+
+
+***Parametros de controle dos criterios de parada***
+
+max_it : 10000
+max_it_no_improv : 2000
+it_RRH : 5000
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 1.25
+c : 0.99
+sigma1 : 31
+sigma2 : 6
+sigma3 : 26
+r : 0.38
+eta : 0.04
+AA70;52467.08;1;137.878
+***Parametros de controle dos criterios de parada***
+
+max_it : 10000
+max_it_no_improv : 2000
+it_RRH : 1000
+
+
+***Parametros da meta-heuristica***
+
+seed : 1382364237
+w : 1.25
+c : 0.99
+sigma1 : 31
+sigma2 : 6
+sigma3 : 26
+r : 0.38
+eta : 0.04

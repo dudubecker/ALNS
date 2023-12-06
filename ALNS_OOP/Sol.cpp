@@ -651,6 +651,7 @@ bool Sol::checarFactibilidadeSolucao(){
 				
 				// Atribuindo valor falso para a variável de factibilidade e quebrando o laço for
 				factivel = false;
+				
 				break;
 				
 			// Caso seja possível, os valores são atualizados
@@ -675,6 +676,9 @@ bool Sol::checarFactibilidadeSolucao(){
 		// Caso alguma rota da solução tenha sido infactível, a busca termina
 		
 		if (!factivel){
+			
+			std::cout << "\n" << rota.at(1) << std::endl;
+			
 			break;
 		}
 	}

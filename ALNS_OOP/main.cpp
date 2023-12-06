@@ -114,22 +114,22 @@ int main(){
 	// Parâmetros de controle dos critérios de parada
 	
 	int max_it = 2000; // Número máximo de iterações do algoritmo
-	int max_it_no_improv = 1000; // Número máximo de iterações sem melhoria
-	int it_RRH = 500; // Número iterações da route reduction heuristic a cada intervalo
-	int max_t = 600; // Tempo máximo de execução do algoritmo
-	int iteracoes_por_instancia = 3; 
+	int max_it_no_improv = 1200; // Número máximo de iterações sem melhoria
+	int it_RRH = 750; // Número iterações da route reduction heuristic a cada intervalo
+	int max_t = 3600; // Tempo máximo de execução do algoritmo
+	int iteracoes_por_instancia = 3;
 	
 	// Parâmetros da meta-heurística
 	
 	long long seed = 1382364237;
-	double w = 0.94;
-	double c = 0.997;
-	int sigma1 = 29;
-	int sigma2 = 32;
-	int sigma3 = 25;
-	double r = 0.35;
+	double w = 1.25;
+	double c = 0.9997;
+	int sigma1 = 31;
+	int sigma2 = 6;
+	int sigma3 = 26;
+	double r = 0.38;
 	double eta = 0.04;
-	double delta = 1;
+	double delta = 3;
 	
 	// Para gerar valores aleatórios, tirar comentário:
 	// srand(time(NULL));
@@ -167,81 +167,81 @@ int main(){
 	// Instâncias
 	
 	// Caminho para as instância:
-	std::string path = "instances/1_unit_demands/";
+	std::string path = "instances/li_lim/200/";
 	
 		std::vector<std::string> instancias = {
 		
-		//"AA5",
-		//"AA10",
-		//"AA15",
-		//"AA20",
-		//"AA25",
-		//"AA30",
-		//"AA35",
-		//"AA40",
-		//"AA45",
-		//"AA50",
-		//"AA55",
-		//"AA60",
-		//"AA65",
-		//"AA70",
-		//"AA75",
-		//"BB5",
-		//"BB10",
-		//"BB15",
-		//"BB20",
-		//"BB25",
-		//"BB30",
-		//"BB35",
-		//"BB40",
-		//"BB45",
-		//"BB50",
-		//"BB55",
-		//"BB60",
-		//"BB65",
-		//"BB70",
-		//"BB75",
-		//"CC5",
-		//"CC10",
-		//"CC15",
-		//"CC20",
-		//"CC25",
-		//"CC30",
-		//"CC35",
-		//"CC40",
-		//"CC45",
-		//"CC50",
-		//"CC55",
-		//"CC60",
-		//"CC65",
-		//"CC70",
-		//"CC75",
-		//"DD5",
-		//"DD10",
-		//"DD15",
-		//"DD20",
-		//"DD25",
-		//"DD30",
-		//"DD35",
-		//"DD40",
-		//"DD45",
-		//"DD50",
-		//"DD55",
-		//"DD60",
-		//"DD65",
-		//"DD70",
-		//"DD75",
-		//"LC1_8_1.txt"
-		"XX55"
+		"LC1_2_1.txt",
+		"LC1_2_10.txt",
+		"LC1_2_2.txt",
+		"LC1_2_3.txt",
+		"LC1_2_4.txt",
+		"LC1_2_5.txt",
+		"LC1_2_6.txt",
+		"LC1_2_7.txt",
+		"LC1_2_8.txt",
+		"LC1_2_9.txt",
+		"LC2_2_1.txt",
+		"LC2_2_10.txt",
+		"LC2_2_2.txt",
+		"LC2_2_3.txt",
+		"LC2_2_4.txt",
+		"LC2_2_5.txt",
+		"LC2_2_6.txt",
+		"LC2_2_7.txt",
+		"LC2_2_8.txt",
+		"LC2_2_9.txt",
+		"LR1_2_1.txt",
+		"LR1_2_10.txt",
+		"LR1_2_2.txt",
+		"LR1_2_3.txt",
+		"LR1_2_4.txt",
+		"LR1_2_5.txt",
+		"LR1_2_6.txt",
+		"LR1_2_7.txt",
+		"LR1_2_8.txt",
+		"LR1_2_9.txt",
+		"LR2_2_1.txt",
+		"LR2_2_10.txt",
+		"LR2_2_2.txt",
+		"LR2_2_3.txt",
+		"LR2_2_4.txt",
+		"LR2_2_5.txt",
+		"LR2_2_6.txt",
+		"LR2_2_7.txt",
+		"LR2_2_8.txt",
+		"LR2_2_9.txt",
+		"LRC1_2_1.txt",
+		"LRC1_2_10.txt",
+		"LRC1_2_2.txt",
+		"LRC1_2_3.txt",
+		"LRC1_2_4.txt",
+		"LRC1_2_5.txt",
+		"LRC1_2_6.txt",
+		"LRC1_2_7.txt",
+		"LRC1_2_8.txt",
+		"LRC1_2_9.txt",
+		"LRC2_2_1.txt",
+		"LRC2_2_10.txt",
+		"LRC2_2_2.txt",
+		"LRC2_2_3.txt",
+		"LRC2_2_4.txt",
+		"LRC2_2_5.txt",
+		"LRC2_2_6.txt",
+		"LRC2_2_7.txt",
+		"LRC2_2_8.txt",
+		"LRC2_2_9.txt"
+
+
 	};
 	
 	
 	// Executando algoritmo
 	
 	for (auto instancia: instancias){
-		
+
 		for (auto i {0}; i < iteracoes_por_instancia; i++){
-			
+
 			// Abrindo arquivo de saída
 			// Modo append
 			std::ofstream output_file(output, std::ios::app);
@@ -250,10 +250,9 @@ int main(){
 			auto begin = std::chrono::high_resolution_clock::now();
 			
 			std::string path_to_instance = path + instancia;
-			
+
 			// Objeto instância
 			Instance inst(path_to_instance);
-			
 			
 			// Inicializando objeto solução;
 			Sol s(inst);
@@ -279,7 +278,7 @@ int main(){
 			
 			);
 			
-			// ALNSObject.S_p.printSol();
+			//ALNSObject.S_p.printSol();
 			
 			//std::cout << "\nFO: " << std::setprecision(7) << ALNSObject.S_p.calcularFO() << std::endl;
 			
@@ -291,13 +290,13 @@ int main(){
 			//std::cout << "Tempo de execucao: " << elapsed.count() * 1e-9 << "segundos. " << std::endl;
 			
 			// Printando output
-			std::cout << instancia << ";" << std::setprecision(7) << ALNSObject.S_p.calcularFO() << ";" << ALNSObject.S_p.checarFactibilidadeSolucao() << ";" << elapsed.count() * 1e-9 << std::endl;
-			
-			ALNSObject.S_p.printSol();
+			std::cout << instancia << ";" << std::setprecision(7) << ALNSObject.S_p.calcularFO() << ";" << ALNSObject.S_p.checarFactibilidadeSolucao() << ";" << ALNSObject.S_p.rotas.size() << ";" << elapsed.count() * 1e-9 << std::endl;
+
+			// ALNSObject.S_p.printSol();
 			
 			// Escrevendo output no arquivo
-			output_file << instancia << ";" << std::setprecision(7) << ALNSObject.S_p.calcularFO() << ";" << ALNSObject.S_p.checarFactibilidadeSolucao() << ";" << elapsed.count() * 1e-9 << std::endl;
-			
+			output_file << instancia << ";" << std::setprecision(7) << ALNSObject.S_p.calcularFO() << ";" << ALNSObject.S_p.checarFactibilidadeSolucao() << ";" << ALNSObject.S_p.rotas.size() << ";" << elapsed.count() * 1e-9 << std::endl;
+
 			// Fechando arquivo
 			output_file.close();
 			

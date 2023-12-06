@@ -78,7 +78,7 @@ ALNS::ALNS(Sol S_inicial,
 	
 	if (numero_de_rotas > 1){
 		
-		int max_k = std::min(3, numero_de_rotas - 1);
+		int max_k = std::min(4, numero_de_rotas - 1);
 		
 		for (int k = 1; k <= max_k; k++){
 			
@@ -421,7 +421,7 @@ void ALNS::executarALNS(int max_it, int max_it_sem_melhoria, int it_RRH, double 
 	
 	while ((n_it < max_it) && (t_ALNS < max_t)){
 		
-		//if (n_it%10 == 0){
+		//if (n_it%100 == 0){
 			
 		//	std::cout << "Iteracao ALNS: " << n_it << std::endl;
 			
@@ -468,18 +468,17 @@ void ALNS::executarALNS(int max_it, int max_it_sem_melhoria, int it_RRH, double 
 		
 		if (FO < S_p.calcularFO()){
 			
-			if (S.L_size == 0){
+			if ((S.L_size == 0)){
 				
 				S_p = S;
+				BKS = true;
+				it_sem_melhoria = 0;
+				
+			} else {
+			
+				it_sem_melhoria += 1;
+			
 			}
-			
-			S_p = S;
-			BKS = true;
-			it_sem_melhoria = 0;
-			
-		} else {
-			
-			it_sem_melhoria += 1;
 			
 		}
 		
